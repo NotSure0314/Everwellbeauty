@@ -21,7 +21,7 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
     if (!el) return;
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
+        if (e?.isIntersecting) {
           el.classList.add("is-visible");
           io.disconnect();
         }
@@ -233,7 +233,10 @@ export function Newsletter() {
             className="mt-8 flex flex-col gap-3 sm:flex-row"
             onSubmit={(e) => {
               e.preventDefault();
-              if (!/^\S+@\S+\.\S+$/.test(email)) return toast.error("Please enter a valid email.");
+              if (!/^\S+@\S+\.\S+$/.test(email)) {
+                toast.error("Please enter a valid email.");
+                return;
+              }
               setDone(true);
             }}
           >
