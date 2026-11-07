@@ -30,7 +30,7 @@ function Help() {
       <section className="mx-auto max-w-3xl px-5 py-20">
         <div className="divide-y border-y">
           {faqs.map(([q, a]) => (
-            <details key={q} className="group py-5" open={q === faqs[0][0]}>
+            <details key={q} className="group py-5" open={q === faqs[0]?.[0]}>
               <summary className="flex cursor-pointer list-none items-center justify-between font-serif text-xl">
                 {q}
                 <span className="text-primary transition group-open:rotate-45">+</span>
