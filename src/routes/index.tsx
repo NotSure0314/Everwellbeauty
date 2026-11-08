@@ -3,6 +3,24 @@ import hero from "@/assets/hero.jpg";
 import curls from "@/assets/curls-lifestyle.jpg";
 import { products } from "@/lib/products";
 import { Newsletter, ProductCard, Reveal, TrustBar } from "@/components/site";
+import StickerSwapHeadline, { type StickerWord } from "@/components/ui/sticker-swap-headline";
+import { words as demoWords } from "@/components/ui/demo";
+
+const heroWords: StickerWord[] = [
+  ...demoWords,
+  {
+    word: "Glowing",
+    alt: "Everwell hair ritual",
+    sticker: hero,
+    tilt: 6,
+  },
+  {
+    word: "Soft",
+    alt: "Soft heatless curls",
+    sticker: curls,
+    tilt: -7,
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,26 +37,17 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <>
-      <section className="relative overflow-hidden bg-cream">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-12 md:grid-cols-2 md:py-20">
-          <div className="order-2 md:order-1">
-            <p className="eyebrow animate-in fade-in slide-in-from-bottom-2 duration-700">The Everwell ritual</p>
-            <h1 className="mt-5 text-5xl leading-[1.05] animate-in fade-in slide-in-from-bottom-4 duration-1000 md:text-7xl">
-              You're already beautiful. <em className="text-primary">Let your hair feel it too.</em>
-            </h1>
-            <p className="mt-6 max-w-md text-lg text-muted-foreground animate-in fade-in duration-1000">
-              Gentle tools for a slower, softer hair routine — made for the moments you keep just for yourself.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Link to="/shop" className="btn-primary">Shop the ritual</Link>
-              <Link to="/about" className="btn-outline">Our story</Link>
-            </div>
-          </div>
-          <div className="order-1 md:order-2">
-            <img src={hero} alt="Woman with soft, glossy waves smiling with eyes closed" width={1536} height={1024} className="aspect-[4/5] w-full rounded-[2rem] object-cover shadow-soft md:aspect-[4/5]" />
-          </div>
-        </div>
-      </section>
+      <StickerSwapHeadline
+        lead="Stay"
+        words={heroWords}
+        description="Gentle tools for a slower, softer hair routine — made for the moments you keep just for yourself."
+        primaryCta={{ label: "Shop the ritual", href: "/shop" }}
+        secondaryCta={{ label: "Our story", href: "/about" }}
+        paper="#fbf8f2"
+        ink="#2c1810"
+        accent="#c86d56"
+        height="80svh"
+      />
 
       <section className="mx-auto max-w-7xl px-5 py-14">
         <TrustBar />
