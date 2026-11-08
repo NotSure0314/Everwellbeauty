@@ -46,7 +46,7 @@ function Home() {
         paper="#fbf8f2"
         ink="#2c1810"
         accent="#c86d56"
-        height="80svh"
+        height="min(76svh, 720px)"
       />
 
       <section className="mx-auto max-w-7xl px-5 py-14">

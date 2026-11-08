@@ -69,10 +69,10 @@ const FONT = "@font-face{font-family:'SSH Anton';src:url(data:font/woff2;base64,
 
 const CSS =
   FONT +
-  ".ssh-root{position:relative;width:100%;overflow:hidden;isolation:isolate;display:flex;align-items:center;justify-content:center;color:var(--ssh-ink);background:var(--ssh-paper);font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif}" +
+  ".ssh-root{position:relative;width:100%;overflow:hidden;isolation:isolate;display:flex;align-items:center;justify-content:center;padding:clamp(2rem,4vh,4rem) 16px;color:var(--ssh-ink);background:var(--ssh-paper);font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif}" +
   ".ssh-root *{box-sizing:border-box}" +
   ".ssh-inner{position:relative;width:100%;max-width:1280px;padding:0 24px;container-type:inline-size;display:flex;flex-direction:column;align-items:center;text-align:center}" +
-  ".ssh-h{margin:0;font-family:var(--ssh-font);font-weight:400;text-transform:uppercase;font-size:clamp(64px,25cqi,340px);line-height:.86;letter-spacing:-.005em}" +
+  ".ssh-h{margin:0;padding-top:.04em;font-family:var(--ssh-font);font-weight:400;text-transform:uppercase;font-size:clamp(44px,14cqi,160px);line-height:.88;letter-spacing:-.005em}" +
   ".ssh-line{display:block;white-space:nowrap}" +
   ".ssh-reel{position:relative;display:block;overflow:hidden;padding:.07em 0;margin:-.07em 0}" +
   ".ssh-word{display:block;white-space:nowrap;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}" +
@@ -83,15 +83,15 @@ const CSS =
   ".ssh-stk{position:absolute;inset:0;border-radius:50%;background:#fbf8f2;padding:.04em;box-shadow:0 .03em .06em rgba(40,22,6,.28)}" +
   ".ssh-stk>img{display:block;width:100%;height:100%;max-width:none;border-radius:50%;object-fit:cover;user-select:none;-webkit-user-drag:none}" +
   ".ssh-spin>img{animation:ssh-spin 6s linear infinite}" +
-  ".ssh-desc{margin:32px 0 0;max-width:36ch;font-size:clamp(15px,1.5cqi,18px);line-height:1.55;opacity:.72;text-wrap:balance}" +
-  ".ssh-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}" +
+  ".ssh-desc{margin:24px 0 0;max-width:40ch;font-size:clamp(15px,1.5cqi,18px);line-height:1.55;opacity:.78;text-wrap:balance}" +
+  ".ssh-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:24px}" +
   ".ssh-btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:0;transition:transform .2s cubic-bezier(.2,.8,.2,1),background-color .2s}" +
   ".ssh-btn:active{transform:scale(.97)}" +
   ".ssh-btn:focus-visible{outline:2px solid var(--ssh-ink);outline-offset:3px}" +
   ".ssh-primary{background:var(--ssh-ink);color:var(--ssh-paper)}" +
   ".ssh-ghost{background:transparent;color:var(--ssh-ink);box-shadow:inset 0 0 0 1.5px color-mix(in oklab,var(--ssh-ink) 25%,transparent)}" +
   ".ssh-ghost:hover{background:color-mix(in oklab,var(--ssh-ink) 6%,transparent)}" +
-  "@container (max-width:560px){.ssh-h{font-size:clamp(52px,30cqi,340px);line-height:.9}}" +
+  "@container (max-width:560px){.ssh-h{font-size:clamp(36px,18cqi,76px);line-height:.92}}" +
   ".ssh-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}" +
   "@keyframes ssh-spin{to{transform:rotate(360deg)}}" +
   "@media (prefers-reduced-motion:reduce){.ssh-spin>img{animation:none}.ssh-btn{transition:none}}"
@@ -238,7 +238,7 @@ export default function StickerSwapHeadline({
       className={"ssh-root" + (className ? " " + className : "")}
       style={
         {
-          height,
+          minHeight: height,
           "--ssh-paper": paper,
           "--ssh-ink": ink,
           "--ssh-accent": accent,
