@@ -30,4 +30,13 @@ describe("Product Shelf Customization with 3D Studio Packaging", () => {
     expect(item4?.short).toBe("Coming Soon");
     expect(item4?.price).toBe(0);
   });
+
+  it("provides multiple product gallery images for both active products", () => {
+    const comb = DEFAULT_PRODUCTS[0];
+    const curler = DEFAULT_PRODUCTS[1];
+    expect(comb?.images).toBeDefined();
+    expect(comb?.images?.length).toBeGreaterThanOrEqual(3);
+    expect(curler?.images).toBeDefined();
+    expect(curler?.images?.length).toBeGreaterThanOrEqual(3);
+  });
 });

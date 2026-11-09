@@ -16,8 +16,14 @@
 
 import { useEffect, useId, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode, type RefObject } from "react";
 import { AnimatePresence, LayoutGroup, animate, motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { ChevronDown, ChevronLeft, Minus, Plus, ShoppingBag, Star } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Minus, Plus, Rotate3d, ShoppingBag, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import combImg from "@/assets/comb.jpg";
+import curlerImg from "@/assets/curler.jpg";
+import curlsLifestyleImg from "@/assets/curls-lifestyle.jpg";
+import heroImg from "@/assets/hero.jpg";
+import curlerStudioImg from "@/assets/heatless-curler.png";
+import combStudioImg from "@/assets/scalp-oil-comb.png";
 
 type Kind = "jar" | "tube" | "pump" | "dropper" | "perfume" | "mist" | "bottle" | "stick" | "lip" | "comb" | "curler";
 
@@ -47,6 +53,7 @@ export type Product = {
   benefits: string[];
   ingredients: string;
   howTo: string;
+  images?: string[];
 };
 
 export const DEFAULT_PRODUCTS: Product[] = [
@@ -81,6 +88,7 @@ export const DEFAULT_PRODUCTS: Product[] = [
       "BPA-free medical resin reservoir, surgical stainless steel rollerball dispensers, rose-gold electroplated alloy accent bands, airtight silicone seal.",
     howTo:
       "Fill reservoir with your favorite hair oil or serum up to 50ml. Part dry or towel-damp hair and gently glide comb over scalp in slow passes. Rollerballs dispense oil evenly as they roll.",
+    images: [combImg, combStudioImg, heroImg],
   },
   {
     id: "heatless-curler",
@@ -111,6 +119,7 @@ export const DEFAULT_PRODUCTS: Product[] = [
       "100% Grade 6A 22-Momme Mulberry Silk exterior, ultra-soft hypoallergenic memory microfoam core.",
     howTo:
       "Place the curler across the crown of slightly damp or dry hair. Wrap 1-2 inch sections around the rod moving away from your face. Secure ends with the silk scrunchies and sleep comfortably.",
+    images: [curlerImg, curlerStudioImg, curlsLifestyleImg],
   },
   {
     id: "coming-soon-1",
@@ -877,6 +886,7 @@ function ProductPage({
 }) {
   const reduce = useReducedMotion();
   const spin = useMotionValue(0);
+  const [selectedMedia, setSelectedMedia] = useState<number | "3d">("3d");
   const [size, setSize] = useState(p.sizes[0] ?? "");
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -939,37 +949,149 @@ function ProductPage({
     <motion.div role="dialog" aria-modal="true" aria-label={p.name} className="fixed inset-0 z-50 overflow-y-auto">
       <motion.div className="fixed inset-0 bg-[#f3f1ed]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} />
       <div className="relative mx-auto grid min-h-full max-w-[1080px] grid-cols-1 items-center gap-8 px-5 pt-20 pb-12 md:grid-cols-[1.05fr_1fr] md:gap-14">
-        {/* The 3D product, moved over from the shelf, standing on a white surface */}
-        <div className="relative flex flex-col items-center justify-center md:h-[calc(100dvh-7rem)]">
-          <motion.div
-            layoutId={`product-${p.id}`}
-            transition={SPRING}
-            className="relative z-10 aspect-[2/3] h-[44vh] cursor-grab touch-none select-none active:cursor-grabbing md:h-[62vh]"
-            onPointerDown={onDown}
-            onPointerMove={onMove}
-            onPointerUp={onUp}
-            onPointerCancel={onUp}
-          >
-            <motion.div
-              className="pointer-events-none size-full"
-              style={{ transformOrigin: "50% 96.7%" }}
-              initial={{ scale: 1 }}
-              animate={{ scale: pageZoom(p.kind) }}
-              exit={{ scale: 1 }}
-              transition={SPRING}
-            >
-              <ProductArt p={p} spin={spin} className="size-full" />
-            </motion.div>
-          </motion.div>
-          <motion.div
-            aria-hidden
-            className="relative -mt-[1.5%] h-[18px] w-[86%] rounded-[3px] bg-[linear-gradient(to_bottom,#ffffff,#ececf0)] shadow-[0_18px_40px_-12px_rgba(0,0,0,0.18)]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          />
-          <p className="mt-6 text-[12px] text-[#8f8982]">Drag to turn 360°</p>
+        {/* The 3D product or photo gallery, moved over from the shelf, standing on a white surface */}
+        <div className="relative flex flex-col items-center justify-center md:min-h-[calc(100dvh-7rem)]">
+          <div className="relative flex w-full flex-col items-center justify-center">
+            {/* 3D 360 interactive model */}
+            <div className={cn("relative flex w-full flex-col items-center justify-center", selectedMedia !== "3d" && "hidden")}>
+              <motion.div
+                layoutId={`product-${p.id}`}
+                transition={SPRING}
+                className="relative z-10 aspect-[2/3] h-[38vh] cursor-grab touch-none select-none active:cursor-grabbing sm:h-[42vh] md:h-[50vh]"
+                onPointerDown={onDown}
+                onPointerMove={onMove}
+                onPointerUp={onUp}
+                onPointerCancel={onUp}
+              >
+                <motion.div
+                  className="pointer-events-none size-full"
+                  style={{ transformOrigin: "50% 96.7%" }}
+                  initial={{ scale: 1 }}
+                  animate={{ scale: pageZoom(p.kind) }}
+                  exit={{ scale: 1 }}
+                  transition={SPRING}
+                >
+                  <ProductArt p={p} spin={spin} className="size-full" />
+                </motion.div>
+              </motion.div>
+              <motion.div
+                aria-hidden
+                className="relative -mt-[1.5%] h-[18px] w-[86%] max-w-[280px] rounded-[3px] bg-[linear-gradient(to_bottom,#ffffff,#ececf0)] shadow-[0_18px_40px_-12px_rgba(0,0,0,0.18)]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+              <p className="mt-4 text-[12px] font-medium tracking-wide text-[#8f8982]">Drag to turn 360°</p>
+            </div>
+
+            {/* Photo display */}
+            {p.images && typeof selectedMedia === "number" && p.images[selectedMedia] && (
+              <motion.div
+                key={`photo-${selectedMedia}`}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                className="relative flex w-full flex-col items-center justify-center"
+              >
+                <div className="relative aspect-square w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] overflow-hidden rounded-[2rem] bg-white p-2.5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.12)] border border-[#e8e4de]">
+                  <img
+                    src={p.images[selectedMedia]}
+                    alt={`${p.name} photo ${selectedMedia + 1}`}
+                    className="size-full rounded-[1.5rem] object-cover object-center transition-transform duration-500 hover:scale-[1.02]"
+                  />
+                  {/* Prev/Next arrow buttons */}
+                  {p.images.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedMedia((prev) =>
+                            typeof prev === "number" ? (prev > 0 ? prev - 1 : p.images!.length - 1) : 0
+                          );
+                        }}
+                        aria-label="Previous photo"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 flex size-9 items-center justify-center rounded-full bg-white/90 text-[#111111] shadow-md backdrop-blur-sm transition-all hover:bg-white hover:scale-110 active:scale-95"
+                      >
+                        <ChevronLeft className="size-4" strokeWidth={2.4} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedMedia((prev) =>
+                            typeof prev === "number" ? (prev < p.images!.length - 1 ? prev + 1 : 0) : 0
+                          );
+                        }}
+                        aria-label="Next photo"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 flex size-9 items-center justify-center rounded-full bg-white/90 text-[#111111] shadow-md backdrop-blur-sm transition-all hover:bg-white hover:scale-110 active:scale-95"
+                      >
+                        <ChevronRight className="size-4" strokeWidth={2.4} />
+                      </button>
+                    </>
+                  )}
+                </div>
+                <p className="mt-4 text-[12px] font-medium tracking-wide text-[#8f8982]">
+                  Photo {selectedMedia + 1} of {p.images.length}
+                </p>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Gallery switcher below product */}
+          {p.images && p.images.length > 0 && (
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+              {/* 360 interactive button */}
+              <button
+                type="button"
+                onClick={() => setSelectedMedia("3d")}
+                aria-label="Interactive 360 3D view"
+                className={cn(
+                  "group relative flex size-14 sm:size-16 flex-col items-center justify-center overflow-hidden rounded-2xl border-2 bg-white transition-all duration-200",
+                  selectedMedia === "3d"
+                    ? "border-[#111111] shadow-md ring-2 ring-[#111111]/20 scale-105"
+                    : "border-[#e5e0d8] opacity-75 hover:opacity-100 hover:border-[#b8b0a5]"
+                )}
+              >
+                <Rotate3d className="size-5 text-[#111111] transition-transform duration-300 group-hover:rotate-180" />
+                <span className="mt-1 text-[10px] font-bold tracking-wider text-[#111111] uppercase">360°</span>
+                {selectedMedia === "3d" && (
+                  <span className="absolute bottom-0 inset-x-0 h-1 bg-[#111111]" />
+                )}
+              </button>
+
+              {/* Photo thumbnails */}
+              {p.images.map((src, idx) => {
+                const isSelected = selectedMedia === idx;
+                return (
+                  <button
+                    key={src}
+                    type="button"
+                    onClick={() => setSelectedMedia(idx)}
+                    aria-label={`View photo ${idx + 1}`}
+                    className={cn(
+                      "group relative size-14 sm:size-16 overflow-hidden rounded-2xl border-2 bg-white transition-all duration-200",
+                      isSelected
+                        ? "border-[#111111] shadow-md ring-2 ring-[#111111]/20 scale-105"
+                        : "border-[#e5e0d8] opacity-75 hover:opacity-100 hover:border-[#b8b0a5]"
+                    )}
+                  >
+                    <img
+                      src={src}
+                      alt=""
+                      className="size-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    {isSelected && (
+                      <span className="absolute bottom-0 inset-x-0 h-1 bg-[#111111]" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         <motion.div
