@@ -1,16 +1,15 @@
 /**
  * Product Shelf. Designed & built by Aakash Mehra.
- * Customized for Everwell Beauty rituals.
+ * Customized for Everwell Beauty rituals using original brand product artwork.
  *
  * A store wall featuring a single floating shelf with Everwell's signature rituals:
- * 1. Rollerball Scalp Oil Applicator Comb (ergonomic ivory handle, graduated 30ml oil cylinder, stainless rollerball teeth)
- * 2. Wire-Free Side-Sleeper Heatless Curler (blush 100% mulberry silk rod with ruched silk scrunchie cuffs)
+ * 1. Scalp Treatment Oil Infuser Comb (original Everwell studio artwork)
+ * 2. Wire-Free Heatless Curler Set (original Everwell studio artwork)
  * 3. Botanical Rosemary Scalp Elixir (Coming Soon)
  * 4. Cloud Silk Overnight Hair Glaze (Coming Soon)
  *
- * Click one and it moves from its place on the shelf to the left of a product page and turns once,
- * its print wrapping round the body. Drag it to turn it yourself; let go and it carries your speed,
- * then settles facing front.
+ * Click one and it moves from its place on the shelf to the left of a product page and turns once.
+ * Drag it to turn it in 3D; let go and it carries your speed, then settles facing front.
  */
 "use client";
 
@@ -19,12 +18,16 @@ import { AnimatePresence, LayoutGroup, animate, motion, useMotionValue, useReduc
 import { ChevronDown, ChevronLeft, Minus, Plus, ShoppingBag, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import combImg from "@/assets/scalp-oil-comb.png";
+import curlerImg from "@/assets/heatless-curler.png";
+
 type Kind = "jar" | "tube" | "pump" | "dropper" | "perfume" | "mist" | "bottle" | "stick" | "lip" | "comb" | "curler";
 
 export type Product = {
   id: string;
   kind: Kind;
   name: string;
+  image?: string;
   /** Name printed on the pack, with an optional second line. */
   short: string;
   sub?: string;
@@ -53,54 +56,56 @@ export const DEFAULT_PRODUCTS: Product[] = [
   {
     id: "scalp-oil-comb",
     kind: "comb",
-    name: "Rollerball Scalp Oil Applicator Comb",
+    image: combImg,
+    name: "Scalp Treatment Oil Infuser Comb",
     short: "Scalp Oil Comb",
-    sub: "Targeted Scalp Ritual",
+    sub: "Oil Infuser 50 ml",
     category: "Hair & Scalp Tool",
     color: "#fcfaf7",
     cap: "#f5ece2",
     label: "#ffffff",
     ink: "#1d1715",
     glass: true,
-    liquid: "#e5a73b", // Golden botanical rosemary oil
+    liquid: "#e5a73b",
     price: 21.99,
     compareAt: 28.0,
-    sizes: ["30 ml"],
+    sizes: ["50 ml"],
     rating: 4.9,
     reviews: 1420,
     tagline: "Your oil ritual, beautifully simple.",
     description:
-      "Surgical-grade stainless steel rollerball teeth distribute scalp oils and serums directly to the roots without mess, waste, or greasy hands. 30ml graduated reservoir with smooth ergonomic grip.",
+      "Precision surgical-grade dispenser teeth distribute scalp oils and treatments directly to the roots without mess, waste, or greasy hands. Graduated 50ml reservoir with ergonomic comfort grip and rose-gold knurled accents.",
     benefits: [
       "Targeted root-level delivery",
       "Zero oil on hands or hair lengths",
-      "6 soothing massage rollerballs",
-      "Easy-to-clean graduated 30ml reservoir",
+      "9 precision massage rollerballs",
+      "Easy-to-clean graduated 50ml reservoir",
     ],
     ingredients:
       "BPA-free medical-grade resin reservoir, surgical stainless steel rollerball dispensers, rose-gold electroplated alloy accent bands, airtight silicone seal.",
     howTo:
-      "Fill reservoir with your favorite hair oil or serum up to 30ml. Part dry or towel-damp hair and gently glide comb over scalp in slow passes. Rollerballs dispense oil evenly as they roll.",
+      "Fill reservoir with your favorite hair oil or serum up to 50ml. Part dry or towel-damp hair and gently glide comb over scalp in slow passes. Rollerballs dispense oil evenly as they roll.",
   },
   {
     id: "heatless-curler",
     kind: "curler",
-    name: "Wire-Free Side-Sleeper Heatless Curler",
+    image: curlerImg,
+    name: "Wire-Free Heatless Curler Set",
     short: "Heatless Curler",
-    sub: "Wire-Free 100% Silk",
+    sub: "Includes Silk Rod & 2 Scrunchies",
     category: "Styling Tool",
-    color: "#f3d1cf", // Blush silk
+    color: "#f3d1cf",
     cap: "#ecc5c3",
     label: "#fdf8f7",
     ink: "#2c1c1b",
     price: 28.99,
     compareAt: 36.0,
-    sizes: ["One Size"],
+    sizes: ["1 Set (Silk)"],
     rating: 4.9,
     reviews: 2180,
     tagline: "Fall asleep. Wake up to soft curls.",
     description:
-      "Made for side-sleepers who want effortless volume without rigid metal wires or heat damage. Filled with featherlight cloud foam and wrapped in 100% high-grade mulberry silk that prevents friction and frizz.",
+      "Made for side-sleepers who want effortless volume without rigid metal wires or heat damage. Filled with featherlight cloud foam and wrapped in 100% high-grade mulberry silk that prevents friction and frizz. Includes 2 matching silk scrunchies.",
     benefits: [
       "Zero wires — 100% side-sleeper comfortable",
       "22-Momme pure mulberry silk",
@@ -208,7 +213,6 @@ type Shape = {
 const rr = (x: number, y: number, w: number, h: number, r: number) =>
   `M${x + r} ${y} H${x + w - r} Q${x + w} ${y} ${x + w} ${y + r} V${y + h - r} Q${x + w} ${y + h} ${x + w - r} ${y + h} H${x + r} Q${x} ${y + h} ${x} ${y + h - r} V${y + r} Q${x} ${y} ${x + r} ${y} Z`;
 
-// knurled grip: fine vertical ridges across a cap
 const ridges = (x: number, y: number, w: number, h: number, step = 2.6) =>
   Array.from({ length: Math.floor(w / step) }, (_, i) => (
     <line key={i} x1={x + 1 + i * step} y1={y + 1.5} x2={x + 1 + i * step} y2={y + h - 1.5} stroke="#000" strokeOpacity={i % 2 ? 0.14 : 0.06} strokeWidth="1" />
@@ -216,138 +220,18 @@ const ridges = (x: number, y: number, w: number, h: number, step = 2.6) =>
 
 const SHAPES: Record<Kind, Shape> = {
   comb: {
-    body: rr(71, 138, 58, 106, 6),
-    box: { x: 71, y: 138, w: 58, h: 106 },
-    print: { x: 71, y: 154, w: 58, h: 74 },
+    body: rr(70, 138, 60, 106, 6),
+    box: { x: 70, y: 138, w: 60, h: 106 },
+    print: { x: 70, y: 154, w: 60, h: 74 },
     tube: true,
     fill: 150,
-    cap: (id) => (
-      <>
-        {/* Upper rose-gold collar */}
-        <rect x="70" y="132" width="60" height="7" rx="2" fill={`url(#${id}-metal)`} />
-        <line x1="71" y1="133" x2="129" y2="133" stroke="#fff" strokeOpacity="0.7" strokeWidth="0.8" />
-        {/* Lower rose-gold collar */}
-        <rect x="70" y="243" width="60" height="7" rx="2" fill={`url(#${id}-metal)`} />
-        <line x1="71" y1="244" x2="129" y2="244" stroke="#fff" strokeOpacity="0.7" strokeWidth="0.8" />
-
-        {/* Ergonomic sculpted ivory handle tapering to rounded crown */}
-        <path
-          d="M74 133 C73 102, 82 66, 92 50 C96 44, 104 44, 108 50 C118 66, 127 102, 126 133 Z"
-          fill={`url(#${id}-handle)`}
-        />
-        {/* Handle specular highlight */}
-        <path
-          d="M86 122 C84 98, 92 68, 98 52"
-          stroke="#fff"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          fill="none"
-          opacity="0.85"
-        />
-        {/* Ergonomic thumb grip indentation */}
-        <ellipse cx="100" cy="98" rx="8" ry="14" fill="#000" opacity="0.04" />
-        <ellipse cx="100" cy="98" rx="7.5" ry="13.5" fill="none" stroke="#fff" strokeOpacity="0.3" strokeWidth="0.8" />
-
-        {/* Graduated reservoir measurements (30ml, 20ml, 10ml) */}
-        <g opacity="0.6">
-          <line x1="74" y1="168" x2="83" y2="168" stroke="#ffffff" strokeWidth="1" />
-          <text x="86" y="170" fontSize="4.6" fill="#ffffff" fontWeight="600" letterSpacing="-0.2">30ml</text>
-          <line x1="74" y1="194" x2="81" y2="194" stroke="#ffffff" strokeWidth="1" />
-          <text x="84" y="196" fontSize="4.6" fill="#ffffff" fontWeight="600" letterSpacing="-0.2">20ml</text>
-          <line x1="74" y1="220" x2="79" y2="220" stroke="#ffffff" strokeWidth="1" />
-          <text x="82" y="222" fontSize="4.6" fill="#ffffff" fontWeight="600" letterSpacing="-0.2">10ml</text>
-        </g>
-
-        {/* Comb manifold head */}
-        <path
-          d="M65 249 H135 Q141 249 141 256 V267 Q141 270 135 270 H65 Q59 270 59 267 V256 Q59 249 65 249 Z"
-          fill={`url(#${id}-handle)`}
-        />
-        <path d="M66 251 H134" stroke="#ffffff" strokeOpacity="0.75" strokeWidth="0.9" />
-        <rect x="61" y="269" width="78" height="1.8" fill="#000" opacity="0.12" />
-
-        {/* 6 Surgical Stainless Steel Dispenser Teeth with Precision Rollerballs */}
-        {[73, 84, 95, 105, 116, 127].map((tx, i) => (
-          <g key={i}>
-            {/* Steel tooth shaft */}
-            <rect x={tx - 1.8} y="270" width="3.6" height="11.5" rx="1.2" fill={`url(#${id}-steel)`} />
-            {/* Rollerball spherical tip touching y = 286 */}
-            <circle cx={tx} cy="283.4" r="2.7" fill={`url(#${id}-ball)`} />
-            {/* Specular glare pin-point on ball */}
-            <circle cx={tx - 0.7} cy="282.5" r="0.7" fill="#ffffff" opacity="0.9" />
-          </g>
-        ))}
-      </>
-    ),
+    cap: () => null,
   },
   curler: {
     body: rr(72, 70, 56, 212, 18),
     box: { x: 72, y: 70, w: 56, h: 212 },
     print: { x: 72, y: 140, w: 56, h: 68, paper: true },
-    cap: (id) => (
-      <>
-        {/* Top cushion seam */}
-        <path d="M78 82 Q100 88 122 82" stroke="#d59b9a" strokeWidth="1" strokeDasharray="2 1.5" fill="none" opacity="0.65" />
-        <path d="M82 72 Q100 70 118 72" stroke="#ffffff" strokeWidth="1.2" fill="none" opacity="0.6" />
-
-        {/* Upper ruched silk scrunchie cuff */}
-        <g>
-          <ellipse cx="100" cy="104" rx="34" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
-          {[-24, -15, -5, 5, 15, 24].map((dx, i) => (
-            <ellipse
-              key={`u-${i}`}
-              cx={100 + dx}
-              cy={104 + (i % 2 === 0 ? -1 : 1)}
-              rx="8.5"
-              ry="7.5"
-              fill={`url(#${id}-silk)`}
-              stroke="#dca4a7"
-              strokeWidth="0.6"
-            />
-          ))}
-          {[-20, -10, 0, 10, 20].map((dx, i) => (
-            <path
-              key={`up-${i}`}
-              d={`M${100 + dx} 98 Q${100 + dx + (i % 2 ? 2 : -2)} 104 ${100 + dx} 110`}
-              stroke="#ab6b6e"
-              strokeWidth="0.8"
-              fill="none"
-              opacity="0.55"
-            />
-          ))}
-        </g>
-
-        {/* Lower ruched silk scrunchie cuff */}
-        <g>
-          <ellipse cx="100" cy="256" rx="35" ry="12" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
-          {[-25, -15, -5, 5, 15, 25].map((dx, i) => (
-            <ellipse
-              key={`l-${i}`}
-              cx={100 + dx}
-              cy={256 + (i % 2 === 0 ? -1 : 1)}
-              rx="9"
-              ry="8"
-              fill={`url(#${id}-silk)`}
-              stroke="#dca4a7"
-              strokeWidth="0.6"
-            />
-          ))}
-          {[-21, -11, 0, 11, 21].map((dx, i) => (
-            <path
-              key={`lp-${i}`}
-              d={`M${100 + dx} 249 Q${100 + dx + (i % 2 ? 2.2 : -2.2)} 256 ${100 + dx} 263`}
-              stroke="#ab6b6e"
-              strokeWidth="0.85"
-              fill="none"
-              opacity="0.6"
-            />
-          ))}
-        </g>
-
-        {/* Bottom cushion hem resting on shelf */}
-        <path d="M78 274 Q100 278 122 274" stroke="#d59b9a" strokeWidth="1" strokeDasharray="2 1.5" fill="none" opacity="0.65" />
-      </>
-    ),
+    cap: () => null,
   },
   jar: {
     body: "M42 208 H158 Q162 208 162 214 V276 Q162 286 150 286 H50 Q38 286 38 276 V214 Q38 208 42 208 Z",
@@ -369,13 +253,11 @@ const SHAPES: Record<Kind, Shape> = {
     print: { x: 66, y: 104, w: 68, h: 110 },
     cap: (id) => (
       <>
-        {/* flat, crimped end with its sealing teeth */}
         <path d={`M62 40 H138 V58 H62 Z`} fill={`url(#${id}-body)`} />
         <path d={`M62 40 ${Array.from({ length: 19 }, (_, i) => `L${64 + i * 4} ${i % 2 ? 40 : 37.5}`).join(" ")} L138 40`} fill={`url(#${id}-body)`} />
         {Array.from({ length: 18 }, (_, i) => (
           <line key={i} x1={64 + i * 4.1} y1="42" x2={64 + i * 4.1} y2="56" stroke="#000" strokeOpacity="0.09" />
         ))}
-        <text x="132" y="53" fontSize="3.4" textAnchor="end" fill="#000" fillOpacity="0.35">L2611 EXP 06/28</text>
         <path d={rr(73, 248, 54, 38, 7)} fill={`url(#${id}-cap)`} />
         <g>{ridges(73, 256, 54, 28, 2.4)}</g>
         <path d={rr(73, 248, 54, 38, 7)} fill={`url(#${id}-capv)`} />
@@ -394,7 +276,6 @@ const SHAPES: Record<Kind, Shape> = {
         <rect x="95.5" y="60" width="9" height="32" fill={`url(#${id}-cap)`} />
         <path d="M82 50 H126 Q132 50 132 55 V64 H78 V55 Q78 50 82 50 Z" fill={`url(#${id}-cap)`} />
         <path d="M126 53 H153 Q157 53 157 56.5 V60 H126 Z" fill={`url(#${id}-cap)`} />
-        <path d="M80 51.5 H128" stroke="#fff" strokeOpacity="0.7" />
         <path d={rr(80, 88, 40, 22, 3)} fill={`url(#${id}-cap)`} />
         <g>{ridges(80, 88, 40, 22, 2.2)}</g>
         <path d={rr(80, 88, 40, 22, 3)} fill={`url(#${id}-capv)`} />
@@ -426,7 +307,6 @@ const SHAPES: Record<Kind, Shape> = {
         <rect x="88" y="150" width="24" height="18" fill={`url(#${id}-cap)`} />
         <path d={rr(70, 96, 60, 56, 4)} fill={`url(#${id}-cap)`} />
         <path d={rr(70, 96, 60, 56, 4)} fill={`url(#${id}-capv)`} />
-        <path d="M72 97.5 H128" stroke="#fff" strokeOpacity="0.8" />
       </>
     ),
   },
@@ -442,7 +322,6 @@ const SHAPES: Record<Kind, Shape> = {
         <g>{ridges(82, 110, 36, 22, 2.2)}</g>
         <path d={rr(86, 82, 28, 30, 6)} fill={`url(#${id}-cap)`} />
         <path d={rr(86, 82, 28, 30, 6)} fill={`url(#${id}-capv)`} />
-        <circle cx="111" cy="94" r="2.2" fill="#000" opacity="0.45" />
       </>
     ),
   },
@@ -455,8 +334,6 @@ const SHAPES: Record<Kind, Shape> = {
       <>
         <path d={rr(78, 50, 44, 34, 6)} fill={`url(#${id}-cap)`} />
         <path d={rr(78, 50, 44, 34, 6)} fill={`url(#${id}-capv)`} />
-        <path d="M80 63 H120" stroke="#000" strokeOpacity="0.45" />
-        <path d="M80 51.5 H120" stroke="#fff" strokeOpacity="0.4" />
       </>
     ),
   },
@@ -467,9 +344,6 @@ const SHAPES: Record<Kind, Shape> = {
     cap: (id) => (
       <>
         <path d={`M83 128 H117 V143 H83 Z`} fill={`url(#${id}-body)`} />
-        {Array.from({ length: 8 }, (_, i) => (
-          <line key={i} x1={85 + i * 4.2} y1="130" x2={85 + i * 4.2} y2="141" stroke="#000" strokeOpacity="0.08" />
-        ))}
         <path d={rr(86, 248, 28, 38, 5)} fill={`url(#${id}-cap)`} />
         <path d={rr(86, 248, 28, 38, 5)} fill={`url(#${id}-capv)`} />
       </>
@@ -483,16 +357,14 @@ const SHAPES: Record<Kind, Shape> = {
       <>
         <path d={rr(81, 168, 38, 58, 5)} fill={`url(#${id}-cap)`} />
         <path d={rr(81, 168, 38, 58, 5)} fill={`url(#${id}-capv)`} />
-        <rect x="81" y="222" width="38" height="2.5" fill="#000" opacity="0.3" />
       </>
     ),
   },
 };
 
-// How tall and wide each pack is (cap included), so small ones can be zoomed to fill the product page.
 const EXTENT: Record<Kind, { top: number; w: number }> = {
-  comb: { top: 46, w: 82 },
-  curler: { top: 70, w: 76 },
+  comb: { top: 30, w: 80 },
+  curler: { top: 40, w: 74 },
   jar: { top: 172, w: 128 },
   tube: { top: 37, w: 76 },
   pump: { top: 50, w: 101 },
@@ -505,9 +377,80 @@ const EXTENT: Record<Kind, { top: number; w: number }> = {
 };
 const pageZoom = (k: Kind) => Math.min(2.2, 262 / (290 - EXTENT[k].top), 190 / EXTENT[k].w);
 
-// ---------- the product drawing ----------
+// ---------- 3D Image-Based Product Display (Uses User's Original Graphics) ----------
+
+function ImageProductArt({
+  p,
+  spin,
+  className,
+}: {
+  p: Product;
+  spin?: MotionValue<number> | undefined;
+  className?: string | undefined;
+}) {
+  const fallback = useMotionValue(0);
+  const spinVal = spin ?? fallback;
+  const rotateY = useTransform(spinVal, (v) => v * 360);
+  const shadowScale = useTransform(spinVal, (v) => {
+    const cos = Math.abs(Math.cos(v * Math.PI * 2));
+    return 0.78 + cos * 0.22;
+  });
+  const shine = useTransform(spinVal, (v) => {
+    const progress = (((v % 1) + 1) % 1) * 100;
+    return `linear-gradient(${110 + (v % 1) * 20}deg, transparent ${progress - 22}%, rgba(255,255,255,0.32) ${progress}%, transparent ${progress + 22}%)`;
+  });
+
+  return (
+    <div
+      className={cn("relative flex size-full items-end justify-center select-none", className)}
+      style={{ perspective: 1200 }}
+    >
+      {/* Studio contact shadow resting on shelf */}
+      <div className="pointer-events-none absolute bottom-[2.5%] left-1/2 z-0 h-[8px] w-[62%] -translate-x-1/2">
+        <motion.div
+          style={{ scaleX: shadowScale }}
+          className="size-full rounded-full bg-black/25 blur-[5px]"
+        />
+        <motion.div
+          style={{ scaleX: shadowScale }}
+          className="mx-auto h-[2.5px] w-[70%] rounded-full bg-black/45 blur-[1px]"
+        />
+      </div>
+
+      {/* Product container with interactive 3D rotation */}
+      <motion.div
+        className="relative z-10 flex h-[92%] w-full items-end justify-center pb-[2%]"
+        style={{
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <div className="relative flex h-full items-end justify-center">
+          <img
+            src={p.image}
+            alt={p.name}
+            draggable={false}
+            className="pointer-events-none block max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.1)]"
+          />
+          {/* Dynamic studio sheen sweep as it rotates */}
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-lg mix-blend-overlay"
+            style={{ background: shine }}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// ---------- Vector SVG ProductArt for Teasers / Coming Soon ----------
 
 function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<number>; className?: string }) {
+  if (p.image) {
+    return <ImageProductArt p={p} spin={spin} className={className} />;
+  }
+
   const id = "ps" + useId().replace(/[^a-zA-Z0-9]/g, "");
   const s = SHAPES[p.kind];
   const c = hexRgb(p.color);
@@ -516,7 +459,7 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
   const a = p.glass ? (lum(c) > 200 ? 0.28 : 0.8) : 1;
   const liq = hexRgb(p.liquid ?? p.color);
   const { print: P, box: B } = s;
-  const period = P.w * 2.6; // the print covers the front, then the back of the pack goes by
+  const period = P.w * 2.6;
   const fallback = useMotionValue(0);
   const x = useTransform(spin ?? fallback, (v) => -((((v * period) % period) + period) % period));
   const nameSize = Math.min(10.5, P.w * 0.12, (P.w * 1.12) / p.short.length);
@@ -533,41 +476,6 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
   return (
     <svg viewBox="0 0 200 300" className={className} aria-hidden overflow="visible">
       <defs>
-        {/* Custom studio material gradients */}
-        <linearGradient id={`${id}-metal`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#cf967b" />
-          <stop offset="25%" stopColor="#f7e1d5" />
-          <stop offset="50%" stopColor="#d89f84" />
-          <stop offset="75%" stopColor="#fcece5" />
-          <stop offset="100%" stopColor="#b3765c" />
-        </linearGradient>
-        <linearGradient id={`${id}-steel`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#9da3a8" />
-          <stop offset="35%" stopColor="#ffffff" />
-          <stop offset="65%" stopColor="#bcc1c7" />
-          <stop offset="100%" stopColor="#767c82" />
-        </linearGradient>
-        <radialGradient id={`${id}-ball`} cx="35%" cy="30%" r="65%">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="45%" stopColor="#c5c9ce" />
-          <stop offset="85%" stopColor="#676e75" />
-          <stop offset="100%" stopColor="#3d4349" />
-        </radialGradient>
-        <linearGradient id={`${id}-handle`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#ede6dd" />
-          <stop offset="25%" stopColor="#ffffff" />
-          <stop offset="70%" stopColor="#f5efe6" />
-          <stop offset="100%" stopColor="#ddd4c7" />
-        </linearGradient>
-        <linearGradient id={`${id}-silk`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#e2abb0" />
-          <stop offset="20%" stopColor="#fdeeed" />
-          <stop offset="50%" stopColor="#f3c8c7" />
-          <stop offset="80%" stopColor="#f9e2e1" />
-          <stop offset="100%" stopColor="#c8898e" />
-        </linearGradient>
-
-        {/* Studio cylinder lighting: soft key on left, bright rim, deep bounce on right */}
         <linearGradient id={`${id}-body`} x1="0" x2="1">
           <stop offset="0" stopColor={css(mixRgb(c, WHITE, 0.08), 0.72, a)} />
           <stop offset="0.08" stopColor={css(mixRgb(c, WHITE, 0.4), 1.06, a)} />
@@ -625,7 +533,6 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
         </radialGradient>
       </defs>
 
-      {/* contact shadow: a tight dark line where it touches, a soft spread around it */}
       <ellipse cx="100" cy="287" rx={B.w * 0.7} ry="6" fill={`url(#${id}-floor)`} />
       <ellipse cx="100" cy="286.3" rx={B.w * 0.47} ry="1.4" fill="#000" opacity="0.35" />
 
@@ -636,7 +543,6 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
             <rect x={B.x + 3} y={s.fill} width={B.w - 6} height={286 - s.fill - 9} fill={`url(#${id}-liquid)`} opacity="0.82" />
             <rect x={B.x + 3} y={s.fill} width={B.w - 6} height="1.6" fill="#fff" opacity="0.45" />
             {s.tube && <rect x="98.6" y={B.y - 4} width="2.8" height={286 - B.y - 4} fill="#fff" opacity="0.45" />}
-            {/* thick glass base */}
             <rect x={B.x} y="274" width={B.w} height="12" fill={css(c, 0.5, 0.55)} />
             <path d={`M${B.x + 6} 275 H${B.x + B.w - 6}`} stroke="#fff" strokeOpacity="0.5" strokeWidth="0.8" />
           </>
@@ -645,10 +551,8 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
           {printArt(0)}
           {printArt(period)}
         </motion.g>
-        {/* the print fades into shadow as it curves round the sides */}
         <rect x={B.x} y={P.y - 2} width={B.w} height={P.h + 4} fill={`url(#${id}-wrap)`} opacity="0.5" />
         <rect x={B.x} y={B.y} width={B.w} height={B.h} fill={`url(#${id}-shade)`} />
-        {/* softbox reflections: one broad and soft, one crisp, a faint kicker on the right */}
         <rect x={B.x + B.w * 0.07} y={B.y + 4} width={B.w * 0.11} height={B.h - 8} rx="3" fill="#fff" opacity={lum(c) > 200 ? 0.45 : 0.3} filter={`url(#${id}-soft)`} />
         <rect x={B.x + B.w * 0.11} y={B.y + 6} width={B.w * 0.028} height={B.h - 12} rx="1" fill="#fff" opacity="0.85" />
         <rect x={B.x + B.w * 0.86} y={B.y + 8} width={B.w * 0.025} height={B.h - 16} rx="1" fill="#fff" opacity="0.3" />
@@ -710,7 +614,6 @@ export function ProductShelf({
     <div
       className={cn("relative min-h-dvh w-full overflow-x-hidden bg-[#f3f1ed] font-sans text-[#111] antialiased", className)}
     >
-      {/* wordmark top left, bag top right; both float above the product page too */}
       {!hideFloatingNav && (
         <>
           <div className="pointer-events-none fixed top-4 left-5 z-30 flex h-11 items-center text-[15px] font-semibold tracking-[0.18em]">
@@ -827,7 +730,6 @@ function ProductPage({
   useEffect(() => {
     closeRef.current?.focus({ preventScroll: true });
     if (reduce) return;
-    // one turn as it arrives, the print wrapping right round
     const c = animate(spin, 1, { duration: 1.1, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 });
     return () => c.stop();
   }, [spin, reduce]);
@@ -843,7 +745,6 @@ function ProductPage({
     setTimeout(() => setAdded(false), 1800);
   };
 
-  // drag to turn: 1:1 while held, then keep the release speed and settle facing front
   const onDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
     spin.stop();
@@ -863,9 +764,9 @@ function ProductPage({
     const first = d.samples[0];
     const last = d.samples[d.samples.length - 1];
     if (!first || !last) return;
-    const vx = last.t > first.t ? ((last.x - first.x) / (last.t - first.t)) * 1000 : 0; // px/s
-    const velocity = -vx / 380; // turns/s
-    const projected = spin.get() + ((velocity / 1000) * 0.998) / (1 - 0.998); // Apple's momentum projection
+    const vx = last.t > first.t ? ((last.x - first.x) / (last.t - first.t)) * 1000 : 0;
+    const velocity = -vx / 380;
+    const projected = spin.get() + ((velocity / 1000) * 0.998) / (1 - 0.998);
     animate(spin, Math.round(projected), { type: "spring", bounce: 0, duration: 0.9, velocity });
   };
 
@@ -890,12 +791,11 @@ function ProductPage({
             onPointerUp={onUp}
             onPointerCancel={onUp}
           >
-            {/* packs zoom up from where they stand to fill the frame */}
             <motion.div
               className="pointer-events-none size-full"
               style={{ transformOrigin: "50% 96.7%" }}
               initial={{ scale: 1 }}
-              animate={{ scale: pageZoom(p.kind) }}
+              animate={{ scale: p.image ? 1.05 : pageZoom(p.kind) }}
               exit={{ scale: 1 }}
               transition={SPRING}
             >
