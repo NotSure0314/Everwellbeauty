@@ -279,26 +279,37 @@ export function ProductCard({ slug }: { slug: string }) {
   const p = getProduct(slug)!;
   const { add, setOpen } = useCart();
   return (
-    <div className="group">
+    <div className="group flex flex-col h-full">
       <Link to="/products/$slug" params={{ slug }} className={`block overflow-hidden rounded-2xl ${p.tone === "peach" ? "bg-peach" : "bg-pink"}`}>
-        <img src={p.images[0]} alt={p.name} width={1024} height={1024} loading="lazy" className="img-zoom aspect-square w-full object-cover group-hover:scale-105" />
+        <img
+          src={p.images[0]}
+          alt={p.name}
+          width={1024}
+          height={1024}
+          loading="lazy"
+          className="img-zoom aspect-[4/3] sm:aspect-[16/11] max-h-[280px] sm:max-h-[340px] md:max-h-[360px] w-full object-cover group-hover:scale-105"
+        />
       </Link>
-      <div className="mt-5 flex items-start justify-between gap-4">
+      <div className="mt-4 flex flex-1 flex-col justify-between">
         <div>
-          <Link to="/products/$slug" params={{ slug }} className="font-serif text-2xl leading-tight">{p.name}</Link>
-          <p className="mt-1 text-sm text-muted-foreground">{p.tagline}</p>
+          <div className="flex items-start justify-between gap-3">
+            <Link to="/products/$slug" params={{ slug }} className="font-serif text-xl sm:text-2xl leading-tight">
+              {p.name}
+            </Link>
+            <p className="text-base sm:text-lg font-medium shrink-0">{formatPrice(p.price)}</p>
+          </div>
+          <p className="mt-1 text-xs sm:text-sm text-muted-foreground">{p.tagline}</p>
         </div>
-        <p className="text-lg">{formatPrice(p.price)}</p>
+        <button
+          className="btn-outline mt-4 w-full py-2.5 sm:py-3 text-xs sm:text-sm"
+          onClick={() => {
+            add(slug);
+            setOpen(true);
+          }}
+        >
+          Add to bag
+        </button>
       </div>
-      <button
-        className="btn-outline mt-5 w-full"
-        onClick={() => {
-          add(slug);
-          setOpen(true);
-        }}
-      >
-        Add to bag
-      </button>
     </div>
   );
 }

@@ -53,12 +53,12 @@ function Home() {
         <TrustBar />
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-20">
+      <section className="mx-auto max-w-5xl px-5 py-16 md:py-20">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="eyebrow">The collection</p>
-          <h2 className="mt-4 text-4xl md:text-5xl">Two small rituals, one beautiful feeling</h2>
+          <h2 className="mt-3 text-3xl md:text-4xl">Two small rituals, one beautiful feeling</h2>
         </Reveal>
-        <div className="mt-14 grid gap-12 md:grid-cols-2">
+        <div className="mt-10 grid gap-6 sm:gap-8 md:grid-cols-2 max-w-md md:max-w-4xl mx-auto">
           {products.map((p, i) => (
             <Reveal key={p.slug} delay={i * 150}>
               <ProductCard slug={p.slug} />

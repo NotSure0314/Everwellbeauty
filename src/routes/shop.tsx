@@ -22,7 +22,7 @@ function Shop() {
         <h1 className="mt-4 text-5xl md:text-6xl">Everything your ritual needs</h1>
         <p className="mx-auto mt-4 max-w-md text-muted-foreground">Thoughtfully made tools that turn everyday hair care into a moment of calm.</p>
       </section>
-      <section className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-2">
+      <section className="mx-auto grid max-w-md md:max-w-4xl gap-6 sm:gap-8 px-5 py-14 md:py-20 md:grid-cols-2">
         {products.map((p, i) => (
           <Reveal key={p.slug} delay={i * 120}>
             <ProductCard slug={p.slug} />
