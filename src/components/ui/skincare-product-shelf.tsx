@@ -896,6 +896,19 @@ function ProductPage({
   const closeRef = useRef(null as HTMLButtonElement | null);
   const drag = useRef(null as { x: number; v: number; samples: { x: number; t: number }[] } | null);
 
+  const handleClose = () => {
+    setSelectedMedia("3d");
+    onClose();
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   useEffect(() => {
     closeRef.current?.focus({ preventScroll: true });
     if (reduce) return;
@@ -946,14 +959,41 @@ function ProductPage({
   ];
 
   return (
-    <motion.div role="dialog" aria-modal="true" aria-label={p.name} className="fixed inset-0 z-50 overflow-y-auto">
-      <motion.div className="fixed inset-0 bg-[#f3f1ed]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} />
+    <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-label={p.name}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-50 overflow-y-auto"
+    >
+      <motion.div
+        className="fixed inset-0 bg-[#f3f1ed]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        onClick={handleClose}
+      />
       <div className="relative mx-auto grid min-h-full max-w-[1080px] grid-cols-1 items-center gap-8 px-5 pt-20 pb-12 md:grid-cols-[1.05fr_1fr] md:gap-14">
         {/* The 3D product or photo gallery, moved over from the shelf, standing on a white surface */}
-        <div className="relative flex flex-col items-center justify-center md:min-h-[calc(100dvh-7rem)]">
-          <div className="relative flex w-full flex-col items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="relative flex flex-col items-center justify-center md:min-h-[calc(100dvh-7rem)]"
+        >
+          <div className="relative flex w-full flex-col items-center justify-center min-h-[38vh] sm:min-h-[42vh] md:min-h-[50vh]">
             {/* 3D 360 interactive model */}
-            <div className={cn("relative flex w-full flex-col items-center justify-center", selectedMedia !== "3d" && "hidden")}>
+            <div
+              className={cn(
+                "flex w-full flex-col items-center justify-center transition-opacity duration-200",
+                selectedMedia === "3d" ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"
+              )}
+            >
               <motion.div
                 layoutId={`product-${p.id}`}
                 transition={SPRING}
@@ -993,7 +1033,7 @@ function ProductPage({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.2 }}
-                className="relative flex w-full flex-col items-center justify-center"
+                className="relative z-10 flex w-full flex-col items-center justify-center"
               >
                 <div className="relative aspect-square w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] overflow-hidden rounded-[2rem] bg-white p-2.5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.12)] border border-[#e8e4de]">
                   <img
@@ -1042,7 +1082,13 @@ function ProductPage({
 
           {/* Gallery switcher below product */}
           {p.images && p.images.length > 0 && (
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.2 }}
+              className="mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
+            >
               {/* 360 interactive button */}
               <button
                 type="button"
@@ -1090,9 +1136,9 @@ function ProductPage({
                   </button>
                 );
               })}
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, x: 24 }}
@@ -1104,7 +1150,7 @@ function ProductPage({
           <button
             ref={closeRef}
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className="-ml-1.5 mb-6 inline-flex items-center gap-0.5 rounded-md px-1.5 py-1 text-[15px] text-[#111111] underline-offset-4 transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-[#111111]"
           >
             <ChevronLeft className="size-4" strokeWidth={2.2} /> Shelf
