@@ -2,9 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import hero from "@/assets/hero.jpg";
 import curls from "@/assets/curls-lifestyle.jpg";
 import { products } from "@/lib/products";
-import { Newsletter, ProductCard, Reveal, TrustBar } from "@/components/site";
+import { useCart } from "@/lib/cart";
+import { Newsletter, Reveal, TrustBar } from "@/components/site";
 import StickerSwapHeadline, { type StickerWord } from "@/components/ui/sticker-swap-headline";
 import { words as demoWords } from "@/components/ui/demo";
+import { ProductShelf } from "@/components/ui/skincare-product-shelf";
 
 const heroWords: StickerWord[] = [
   ...demoWords,
@@ -35,6 +37,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { add, setOpen } = useCart();
   return (
     <>
       <StickerSwapHeadline
@@ -53,18 +56,22 @@ function Home() {
         <TrustBar />
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-16 md:py-20">
-        <Reveal className="mx-auto max-w-2xl text-center">
+      <section className="py-16 md:py-20">
+        <Reveal className="mx-auto max-w-2xl px-5 text-center mb-10">
           <p className="eyebrow">The collection</p>
-          <h2 className="mt-3 text-3xl md:text-4xl">Two small rituals, one beautiful feeling</h2>
+          <h2 className="mt-3 text-3xl md:text-4xl">The Everwell Shelf</h2>
+          <p className="mt-3 text-muted-foreground text-sm sm:text-base">
+            Click any formula or ritual to inspect up close, spin 360°, and add to your bag.
+          </p>
         </Reveal>
-        <div className="mt-12 grid gap-8 sm:gap-10 md:grid-cols-2 max-w-md md:max-w-4xl lg:max-w-5xl mx-auto">
-          {products.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 150}>
-              <ProductCard slug={p.slug} />
-            </Reveal>
-          ))}
-        </div>
+        <ProductShelf
+          hideFloatingNav={true}
+          className="min-h-0 bg-transparent pt-0 pb-6"
+          onAddToCart={(_item, qty) => {
+            add("rollerball-scalp-oil-comb", qty);
+            setOpen(true);
+          }}
+        />
       </section>
 
       <section className="bg-blush">
