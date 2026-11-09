@@ -67,8 +67,9 @@ function Home() {
         <ProductShelf
           hideFloatingNav={true}
           className="min-h-0 bg-transparent pt-0 pb-6"
-          onAddToCart={(_item, qty) => {
-            add("rollerball-scalp-oil-comb", qty);
+          onAddToCart={(item, qty) => {
+            const slug = item.id === "heatless-curler" ? "silk-heatless-curler" : "rollerball-scalp-oil-comb";
+            add(slug, qty);
             setOpen(true);
           }}
         />

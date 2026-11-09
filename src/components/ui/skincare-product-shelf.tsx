@@ -1,16 +1,16 @@
 /**
  * Product Shelf. Designed & built by Aakash Mehra.
+ * Customized for Everwell Beauty rituals.
  *
- * A store wall of three floating shelves with twelve cosmetics, drawn to look like studio product
- * shots: cylinder shading with softbox reflections, printed type, ridged caps, thick glass bases,
- * visible liquid and dip tubes. Click one and it moves from its place on the shelf to the left of a
- * product page and turns once, its print wrapping round the body. Drag it to turn it yourself; let go
- * and it carries your speed, then settles facing front. The page has the name, rating, price, sizes,
- * quantity, Add to Bag, delivery and the details, ingredients and how-to sections. Add to Bag updates
- * the bag in the header. Back or Escape returns the product to the same spot on the shelf.
+ * A store wall featuring a single floating shelf with Everwell's signature rituals:
+ * 1. Rollerball Scalp Oil Applicator Comb (ergonomic ivory handle, graduated 30ml oil cylinder, stainless rollerball teeth)
+ * 2. Wire-Free Side-Sleeper Heatless Curler (blush 100% mulberry silk rod with ruched silk scrunchie cuffs)
+ * 3. Botanical Rosemary Scalp Elixir (Coming Soon)
+ * 4. Cloud Silk Overnight Hair Glaze (Coming Soon)
  *
- * Motion follows Apple's fluid-interface rules: critically damped springs, symmetric enter and exit,
- * velocity handed off on release, and a cross-fade under prefers-reduced-motion.
+ * Click one and it moves from its place on the shelf to the left of a product page and turns once,
+ * its print wrapping round the body. Drag it to turn it yourself; let go and it carries your speed,
+ * then settles facing front.
  */
 "use client";
 
@@ -19,7 +19,7 @@ import { AnimatePresence, LayoutGroup, animate, motion, useMotionValue, useReduc
 import { ChevronDown, ChevronLeft, Minus, Plus, ShoppingBag, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Kind = "jar" | "tube" | "pump" | "dropper" | "perfume" | "mist" | "bottle" | "stick" | "lip";
+type Kind = "jar" | "tube" | "pump" | "dropper" | "perfume" | "mist" | "bottle" | "stick" | "lip" | "comb" | "curler";
 
 export type Product = {
   id: string;
@@ -51,121 +51,142 @@ export type Product = {
 
 export const DEFAULT_PRODUCTS: Product[] = [
   {
-    id: "barrier-cream", kind: "jar", name: "Barrier Restore Cream", short: "Barrier Restore", sub: "Cream", category: "Moisturizer",
-    color: "#f3f1ec", cap: "#f6f5f1", label: "#f3f1ec", ink: "#1a1a1a", price: 29, sizes: ["50 ml", "100 ml"], rating: 4.8, reviews: 3284,
-    tagline: "A cushiony cream for a stronger skin barrier.",
-    description: "A rich but weightless moisturizer with ceramides, cholesterol and fatty acids in skin-identical ratios, so a compromised barrier recovers and stays calm.",
-    benefits: ["Ceramide complex 3%", "Fragrance free", "For dry and sensitive skin"],
-    ingredients: "Aqua, Squalane, Glycerin, Ceramide NP, Ceramide AP, Cholesterol, Phytosphingosine, Panthenol, Niacinamide.",
-    howTo: "Warm a small amount between fingertips and press into clean skin, morning and night.",
+    id: "scalp-oil-comb",
+    kind: "comb",
+    name: "Rollerball Scalp Oil Applicator Comb",
+    short: "Scalp Oil Comb",
+    sub: "Targeted Scalp Ritual",
+    category: "Hair & Scalp Tool",
+    color: "#fcfaf7",
+    cap: "#f5ece2",
+    label: "#ffffff",
+    ink: "#1d1715",
+    glass: true,
+    liquid: "#e5a73b", // Golden botanical rosemary oil
+    price: 21.99,
+    compareAt: 28.0,
+    sizes: ["30 ml"],
+    rating: 4.9,
+    reviews: 1420,
+    tagline: "Your oil ritual, beautifully simple.",
+    description:
+      "Surgical-grade stainless steel rollerball teeth distribute scalp oils and serums directly to the roots without mess, waste, or greasy hands. 30ml graduated reservoir with smooth ergonomic grip.",
+    benefits: [
+      "Targeted root-level delivery",
+      "Zero oil on hands or hair lengths",
+      "6 soothing massage rollerballs",
+      "Easy-to-clean graduated 30ml reservoir",
+    ],
+    ingredients:
+      "BPA-free medical-grade resin reservoir, surgical stainless steel rollerball dispensers, rose-gold electroplated alloy accent bands, airtight silicone seal.",
+    howTo:
+      "Fill reservoir with your favorite hair oil or serum up to 30ml. Part dry or towel-damp hair and gently glide comb over scalp in slow passes. Rollerballs dispense oil evenly as they roll.",
   },
   {
-    id: "niacinamide", kind: "dropper", name: "Niacinamide 10% + Zinc 1%", short: "Niacinamide", sub: "10% + Zinc 1%", category: "Serum",
-    color: "#e9eef0", cap: "#f7f7f5", label: "#ffffff", ink: "#111111", glass: true, liquid: "#f4efe2", price: 12, sizes: ["30 ml", "60 ml"], rating: 4.6, reviews: 18420,
-    tagline: "A high-strength serum for blemishes and shine.",
-    description: "A water-based serum that visibly reduces blemishes and congestion, balances oil and refines the look of pores with 10% niacinamide and 1% zinc PCA.",
-    benefits: ["Reduces the look of pores", "Balances oil", "Vegan, cruelty free"],
-    ingredients: "Aqua, Niacinamide, Pentylene Glycol, Zinc PCA, Dimethyl Isosorbide, Tamarindus Indica Seed Gum.",
-    howTo: "Apply a few drops to the face morning and evening before heavier creams.",
+    id: "heatless-curler",
+    kind: "curler",
+    name: "Wire-Free Side-Sleeper Heatless Curler",
+    short: "Heatless Curler",
+    sub: "Wire-Free 100% Silk",
+    category: "Styling Tool",
+    color: "#f3d1cf", // Blush silk
+    cap: "#ecc5c3",
+    label: "#fdf8f7",
+    ink: "#2c1c1b",
+    price: 28.99,
+    compareAt: 36.0,
+    sizes: ["One Size"],
+    rating: 4.9,
+    reviews: 2180,
+    tagline: "Fall asleep. Wake up to soft curls.",
+    description:
+      "Made for side-sleepers who want effortless volume without rigid metal wires or heat damage. Filled with featherlight cloud foam and wrapped in 100% high-grade mulberry silk that prevents friction and frizz.",
+    benefits: [
+      "Zero wires — 100% side-sleeper comfortable",
+      "22-Momme pure mulberry silk",
+      "Prevents hair breakage & moisture loss",
+      "Includes 2 matching silk scrunchies",
+    ],
+    ingredients:
+      "100% Grade 6A 22-Momme Mulberry Silk exterior, ultra-soft hypoallergenic memory microfoam core.",
+    howTo:
+      "Place the curler across the crown of slightly damp or dry hair. Wrap 1-2 inch sections around the rod moving away from your face. Secure ends with the silk scrunchies and sleep comfortably.",
   },
   {
-    id: "mineral-spf", kind: "tube", name: "Mineral UV Filters SPF 30", short: "Mineral UV Filters", sub: "SPF 30 with antioxidants", category: "Sunscreen",
-    color: "#f6f6f3", cap: "#efeee9", label: "#f6f6f3", ink: "#111111", price: 14, sizes: ["50 ml"], rating: 4.4, reviews: 2150,
-    tagline: "Broad-spectrum mineral protection, no white cast.",
-    description: "A lightweight mineral sunscreen with zinc oxide and titanium dioxide, plus antioxidants to help defend against daily stressors. Sheer on all skin tones.",
-    benefits: ["SPF 30 broad spectrum", "Mineral filters only", "Wears well under makeup"],
-    ingredients: "Aqua, Zinc Oxide, Titanium Dioxide, Caprylic Triglyceride, Tocopherol, Squalane, Glycerin.",
-    howTo: "Apply generously as the last step of your morning routine. Reapply every two hours in sun.",
+    id: "coming-soon-1",
+    kind: "dropper",
+    name: "Botanical Rosemary Scalp Elixir",
+    short: "Coming Soon",
+    sub: "Rosemary & Biotin",
+    category: "Ritual Treatment",
+    color: "#e8ede8",
+    cap: "#232624",
+    label: "#ffffff",
+    ink: "#1f2421",
+    glass: true,
+    liquid: "#b9934e",
+    price: 0,
+    sizes: ["50 ml"],
+    rating: 5.0,
+    reviews: 0,
+    tagline: "Formulated for deep scalp nourishment.",
+    description:
+      "Our upcoming botanical scalp elixir crafted with cold-pressed rosemary leaf oil, biotin, and peptide complex to stimulate healthy hair growth and soothe the scalp.",
+    benefits: [
+      "Cold-pressed rosemary oil",
+      "Biotin & tri-peptide complex",
+      "Lightweight, non-greasy absorption",
+      "Pairs with our Rollerball Comb",
+    ],
+    ingredients: "Coming soon. Sign up for early ingredient reveal and launch perks.",
+    howTo: "Dispense directly into the Everwell Rollerball Scalp Comb or apply drops along hair parts.",
   },
   {
-    id: "glazing-milk", kind: "pump", name: "Glazing Milk", short: "glazing milk", sub: "ceramide essence", category: "Essence",
-    color: "#ebe3d9", cap: "#e6ddd2", label: "#ebe3d9", ink: "#6b5a4c", price: 30, sizes: ["150 ml"], rating: 4.7, reviews: 5210,
-    tagline: "A milky essence that preps skin for glow.",
-    description: "A silky, milky essence with ceramides and peptides that softens and hydrates as the first step, leaving skin plump and glazed.",
-    benefits: ["Ceramides and peptides", "Lightweight milk texture", "Layers under everything"],
-    ingredients: "Aqua, Glycerin, Ceramide NP, Palmitoyl Tripeptide-1, Beta Glucan, Squalane, Panthenol.",
-    howTo: "Pump into palms and press over clean skin before serum and moisturizer.",
-  },
-  {
-    id: "hyaluronic", kind: "dropper", name: "Hyaluronic Acid 2% + B5", short: "Hyaluronic Acid", sub: "2% + B5", category: "Serum",
-    color: "#e9eef0", cap: "#f7f7f5", label: "#ffffff", ink: "#111111", glass: true, liquid: "#eef3f6", price: 11, sizes: ["30 ml", "60 ml"], rating: 4.6, reviews: 21870,
-    tagline: "Multi-depth hydration with vitamin B5.",
-    description: "Low, medium and high molecular weight hyaluronic acid with vitamin B5 for hydration at every layer of the skin, leaving it plump and smooth.",
-    benefits: ["Three weights of HA", "Oil free", "Suits all skin types"],
-    ingredients: "Aqua, Sodium Hyaluronate, Pentylene Glycol, Propanediol, Sodium Hyaluronate Crosspolymer, Panthenol.",
-    howTo: "Apply a few drops to damp skin morning and evening, then seal with moisturizer.",
-  },
-  {
-    id: "invisible-spf", kind: "pump", name: "Invisible Fluid SPF 50", short: "Invisible Fluid", sub: "SPF 50 PA++++", category: "Sunscreen",
-    color: "#f1ede6", cap: "#2b2b2b", label: "#f1ede6", ink: "#3c342d", price: 24, sizes: ["50 ml", "100 ml"], rating: 4.7, reviews: 1608,
-    tagline: "A weightless daily fluid with high protection.",
-    description: "A clear-finish chemical sunscreen fluid with SPF 50 that disappears into skin, never pills and doubles as a hydrating primer.",
-    benefits: ["SPF 50 PA++++", "Invisible finish", "Water resistant 40 min"],
-    ingredients: "Aqua, Homosalate, Ethylhexyl Salicylate, Bis-Ethylhexyloxyphenol Methoxyphenyl Triazine, Glycerin, Niacinamide.",
-    howTo: "Apply two finger lengths to face and neck each morning. Reapply after swimming or sweating.",
-  },
-  {
-    id: "lip-treatment", kind: "lip", name: "Peptide Lip Treatment", short: "peptide lip", sub: "treatment", category: "Lip care",
-    color: "#e7c3bb", cap: "#e7c3bb", label: "#e7c3bb", ink: "#7d4740", price: 18, sizes: ["10 ml"], rating: 4.8, reviews: 9420,
-    tagline: "A glossy, cushiony balm with peptides.",
-    description: "A thick, high-shine treatment with peptides and shea that smooths and plumps the look of lips, with a sheer wash of colour.",
-    benefits: ["Peptide complex", "Glossy, non-sticky finish", "Sheer ribbon tint"],
-    ingredients: "Polybutene, Shea Butter, Palmitoyl Tripeptide-1, Babassu Oil, Cupuacu Butter, Tocopherol.",
-    howTo: "Apply to bare lips or over liner. Reapply whenever you like.",
-  },
-  {
-    id: "squalane-cleanser", kind: "tube", name: "Squalane Cleanser", short: "Squalane", sub: "Cleanser", category: "Cleanser",
-    color: "#f6f6f3", cap: "#f6f6f3", label: "#f6f6f3", ink: "#111111", price: 10, sizes: ["50 ml", "150 ml"], rating: 4.7, reviews: 12040,
-    tagline: "A balm-to-oil cleanser that lifts makeup.",
-    description: "A gentle balm that melts into an oil as you massage, dissolving makeup and sunscreen without leaving skin tight or dry.",
-    benefits: ["Removes makeup", "Never stripping", "Rinses clean"],
-    ingredients: "Squalane, Aqua, Coco-Caprylate/Caprate, Glycerin, Sucrose Stearate, Ethyl Macadamiate.",
-    howTo: "Massage onto dry skin, add water to emulsify, then rinse.",
-  },
-  {
-    id: "malt-shampoo", kind: "bottle", name: "Malt & Hops Volumising Shampoo", short: "Malt & Hops", sub: "Volumising shampoo", category: "Hair care",
-    color: "#7a3f14", cap: "#141414", label: "#f6f2ea", ink: "#111111", glass: true, liquid: "#b8752a", price: 18, compareAt: 22, sizes: ["250 ml", "500 ml"], rating: 4.6, reviews: 611,
-    tagline: "Brewed for body and shine.",
-    description: "Made with brewer's hops, malt protein and biotin, this lather lifts flat hair at the root and leaves a glassy shine from root to tip.",
-    benefits: ["Volume at the root", "Sulfate free", "Colour safe"],
-    ingredients: "Aqua, Humulus Lupulus Extract, Hydrolyzed Barley Protein, Coco-Glucoside, Biotin, Citric Acid.",
-    howTo: "Massage into wet hair, leave for one minute, rinse. Follow with conditioner.",
-  },
-  {
-    id: "glycolic-toner", kind: "bottle", name: "Glycolic Acid 7% Toning Solution", short: "Glycolic Acid 7%", sub: "Toning solution", category: "Exfoliant",
-    color: "#e8eef0", cap: "#f4f4f1", label: "#ffffff", ink: "#111111", glass: true, liquid: "#f2e9ee", price: 13, sizes: ["100 ml", "240 ml"], rating: 4.5, reviews: 15530,
-    tagline: "Exfoliates for brighter, smoother skin.",
-    description: "A 7% glycolic acid toner with amino acids, aloe and ginseng that gently resurfaces for improved radiance and a more even texture.",
-    benefits: ["7% glycolic acid", "Improves radiance", "Use in the evening"],
-    ingredients: "Aqua, Glycolic Acid, Rosa Damascena Flower Water, Aloe Barbadensis Leaf Water, Panax Ginseng Root Extract.",
-    howTo: "Sweep over the face with a cotton pad in the evening. Use sunscreen the next day.",
-  },
-  {
-    id: "barrier-butter", kind: "jar", name: "Barrier Butter Night Cream", short: "barrier butter", sub: "night cream", category: "Night cream",
-    color: "#e8dbd1", cap: "#e8dbd1", label: "#e8dbd1", ink: "#6b4f44", price: 28, sizes: ["50 ml"], rating: 4.8, reviews: 2710,
-    tagline: "A buttery overnight cream for soft mornings.",
-    description: "A dense, cocooning night cream with shea, peptides and bakuchiol that restores moisture and smooths the look of fine lines while you sleep.",
-    benefits: ["Bakuchiol and peptides", "Rich, non-greasy", "Barrier repair overnight"],
-    ingredients: "Aqua, Shea Butter, Squalane, Bakuchiol, Palmitoyl Tripeptide-1, Ceramide NP, Cholesterol.",
-    howTo: "Apply as the last step of your evening routine.",
-  },
-  {
-    id: "no1-parfum", kind: "perfume", name: "No. 1 Eau de Parfum", short: "No. 1", sub: "Eau de parfum", category: "Fragrance",
-    color: "#eeece8", cap: "#151515", label: "#eeece8", ink: "#1a1a1a", glass: true, liquid: "#f1e2cd", price: 68, sizes: ["50 ml", "100 ml"], rating: 4.9, reviews: 812,
-    tagline: "Skin musk, white tea and a little fig.",
-    description: "A quiet, close-to-skin scent that smells like freshly washed skin, warmed with musk and lifted with white tea and green fig.",
-    benefits: ["8 hour wear", "Vegan formula", "Refillable bottle"],
-    ingredients: "Alcohol Denat., Parfum, Aqua, Ambrettolide, Iso E Super, Fig Leaf Absolute.",
-    howTo: "Spray once on the wrist and once on the neck. Layer for more.",
+    id: "coming-soon-2",
+    kind: "jar",
+    name: "Cloud Silk Overnight Hair Glaze",
+    short: "Coming Soon",
+    sub: "Ceramides & Peptides",
+    category: "Overnight Care",
+    color: "#f7f4ee",
+    cap: "#e7decb",
+    label: "#f7f4ee",
+    ink: "#2c2724",
+    price: 0,
+    sizes: ["100 ml"],
+    rating: 5.0,
+    reviews: 0,
+    tagline: "Overnight restorative treatment for glass hair.",
+    description:
+      "An intensive overnight silk balm that locks in hydration, seals split cuticles, and restores luminous shine while you sleep.",
+    benefits: [
+      "Ceramide bonding complex",
+      "Hydrolyzed silk amino acids",
+      "Zero pillow transfer",
+      "Rinses clean or leaves hair weightless",
+    ],
+    ingredients: "Coming soon. Sign up to get notified the minute this drops.",
+    howTo: "Warm a dime-sized amount between palms and smooth over lengths before wrapping into your heatless curler.",
   },
 ];
 
-// ---------- colour ----------
+// ---------- colour helpers ----------
 
 type RGB = [number, number, number];
-const hexRgb = (h: string): RGB => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
-const mixRgb = (a: RGB, b: RGB, t: number): RGB => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
-const css = (c: RGB, k = 1, a = 1) => `rgba(${[0, 1, 2].map((i) => Math.round(Math.min(255, Math.max(0, (c[i] ?? 0) * k)))).join(",")},${a})`;
+
+const hexRgb = (hex: string): RGB => {
+  const h = hex.replace("#", "");
+  const n = parseInt(h.length === 3 ? h.split("").map((c) => c + c).join("") : h, 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+};
+
+const mixRgb = (a: RGB, b: RGB, t: number): RGB => [
+  Math.round(a[0] + (b[0] - a[0]) * t),
+  Math.round(a[1] + (b[1] - a[1]) * t),
+  Math.round(a[2] + (b[2] - a[2]) * t),
+];
+
+const css = (c: RGB, k = 1, a = 1) => `rgba(${Math.round((c[0] ?? 0) * k)}, ${Math.round((c[1] ?? 0) * k)}, ${Math.round((c[2] ?? 0) * k)}, ${a})`;
 const WHITE: RGB = [255, 255, 255];
 const lum = (c: RGB) => c[0] * 0.3 + c[1] * 0.59 + c[2] * 0.11;
 
@@ -194,6 +215,140 @@ const ridges = (x: number, y: number, w: number, h: number, step = 2.6) =>
   ));
 
 const SHAPES: Record<Kind, Shape> = {
+  comb: {
+    body: rr(71, 138, 58, 106, 6),
+    box: { x: 71, y: 138, w: 58, h: 106 },
+    print: { x: 71, y: 154, w: 58, h: 74 },
+    tube: true,
+    fill: 150,
+    cap: (id) => (
+      <>
+        {/* Upper rose-gold collar */}
+        <rect x="70" y="132" width="60" height="7" rx="2" fill={`url(#${id}-metal)`} />
+        <line x1="71" y1="133" x2="129" y2="133" stroke="#fff" strokeOpacity="0.7" strokeWidth="0.8" />
+        {/* Lower rose-gold collar */}
+        <rect x="70" y="243" width="60" height="7" rx="2" fill={`url(#${id}-metal)`} />
+        <line x1="71" y1="244" x2="129" y2="244" stroke="#fff" strokeOpacity="0.7" strokeWidth="0.8" />
+
+        {/* Ergonomic sculpted ivory handle tapering to rounded crown */}
+        <path
+          d="M74 133 C73 102, 82 66, 92 50 C96 44, 104 44, 108 50 C118 66, 127 102, 126 133 Z"
+          fill={`url(#${id}-handle)`}
+        />
+        {/* Handle specular highlight */}
+        <path
+          d="M86 122 C84 98, 92 68, 98 52"
+          stroke="#fff"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          fill="none"
+          opacity="0.85"
+        />
+        {/* Ergonomic thumb grip indentation */}
+        <ellipse cx="100" cy="98" rx="8" ry="14" fill="#000" opacity="0.04" />
+        <ellipse cx="100" cy="98" rx="7.5" ry="13.5" fill="none" stroke="#fff" strokeOpacity="0.3" strokeWidth="0.8" />
+
+        {/* Graduated reservoir measurements (30ml, 20ml, 10ml) */}
+        <g opacity="0.6">
+          <line x1="74" y1="168" x2="83" y2="168" stroke="#ffffff" strokeWidth="1" />
+          <text x="86" y="170" fontSize="4.6" fill="#ffffff" fontWeight="600" letterSpacing="-0.2">30ml</text>
+          <line x1="74" y1="194" x2="81" y2="194" stroke="#ffffff" strokeWidth="1" />
+          <text x="84" y="196" fontSize="4.6" fill="#ffffff" fontWeight="600" letterSpacing="-0.2">20ml</text>
+          <line x1="74" y1="220" x2="79" y2="220" stroke="#ffffff" strokeWidth="1" />
+          <text x="82" y="222" fontSize="4.6" fill="#ffffff" fontWeight="600" letterSpacing="-0.2">10ml</text>
+        </g>
+
+        {/* Comb manifold head */}
+        <path
+          d="M65 249 H135 Q141 249 141 256 V267 Q141 270 135 270 H65 Q59 270 59 267 V256 Q59 249 65 249 Z"
+          fill={`url(#${id}-handle)`}
+        />
+        <path d="M66 251 H134" stroke="#ffffff" strokeOpacity="0.75" strokeWidth="0.9" />
+        <rect x="61" y="269" width="78" height="1.8" fill="#000" opacity="0.12" />
+
+        {/* 6 Surgical Stainless Steel Dispenser Teeth with Precision Rollerballs */}
+        {[73, 84, 95, 105, 116, 127].map((tx, i) => (
+          <g key={i}>
+            {/* Steel tooth shaft */}
+            <rect x={tx - 1.8} y="270" width="3.6" height="11.5" rx="1.2" fill={`url(#${id}-steel)`} />
+            {/* Rollerball spherical tip touching y = 286 */}
+            <circle cx={tx} cy="283.4" r="2.7" fill={`url(#${id}-ball)`} />
+            {/* Specular glare pin-point on ball */}
+            <circle cx={tx - 0.7} cy="282.5" r="0.7" fill="#ffffff" opacity="0.9" />
+          </g>
+        ))}
+      </>
+    ),
+  },
+  curler: {
+    body: rr(72, 70, 56, 212, 18),
+    box: { x: 72, y: 70, w: 56, h: 212 },
+    print: { x: 72, y: 140, w: 56, h: 68, paper: true },
+    cap: (id) => (
+      <>
+        {/* Top cushion seam */}
+        <path d="M78 82 Q100 88 122 82" stroke="#d59b9a" strokeWidth="1" strokeDasharray="2 1.5" fill="none" opacity="0.65" />
+        <path d="M82 72 Q100 70 118 72" stroke="#ffffff" strokeWidth="1.2" fill="none" opacity="0.6" />
+
+        {/* Upper ruched silk scrunchie cuff */}
+        <g>
+          <ellipse cx="100" cy="104" rx="34" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
+          {[-24, -15, -5, 5, 15, 24].map((dx, i) => (
+            <ellipse
+              key={`u-${i}`}
+              cx={100 + dx}
+              cy={104 + (i % 2 === 0 ? -1 : 1)}
+              rx="8.5"
+              ry="7.5"
+              fill={`url(#${id}-silk)`}
+              stroke="#dca4a7"
+              strokeWidth="0.6"
+            />
+          ))}
+          {[-20, -10, 0, 10, 20].map((dx, i) => (
+            <path
+              key={`up-${i}`}
+              d={`M${100 + dx} 98 Q${100 + dx + (i % 2 ? 2 : -2)} 104 ${100 + dx} 110`}
+              stroke="#ab6b6e"
+              strokeWidth="0.8"
+              fill="none"
+              opacity="0.55"
+            />
+          ))}
+        </g>
+
+        {/* Lower ruched silk scrunchie cuff */}
+        <g>
+          <ellipse cx="100" cy="256" rx="35" ry="12" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
+          {[-25, -15, -5, 5, 15, 25].map((dx, i) => (
+            <ellipse
+              key={`l-${i}`}
+              cx={100 + dx}
+              cy={256 + (i % 2 === 0 ? -1 : 1)}
+              rx="9"
+              ry="8"
+              fill={`url(#${id}-silk)`}
+              stroke="#dca4a7"
+              strokeWidth="0.6"
+            />
+          ))}
+          {[-21, -11, 0, 11, 21].map((dx, i) => (
+            <path
+              key={`lp-${i}`}
+              d={`M${100 + dx} 249 Q${100 + dx + (i % 2 ? 2.2 : -2.2)} 256 ${100 + dx} 263`}
+              stroke="#ab6b6e"
+              strokeWidth="0.85"
+              fill="none"
+              opacity="0.6"
+            />
+          ))}
+        </g>
+
+        {/* Bottom cushion hem resting on shelf */}
+        <path d="M78 274 Q100 278 122 274" stroke="#d59b9a" strokeWidth="1" strokeDasharray="2 1.5" fill="none" opacity="0.65" />
+      </>
+    ),
+  },
   jar: {
     body: "M42 208 H158 Q162 208 162 214 V276 Q162 286 150 286 H50 Q38 286 38 276 V214 Q38 208 42 208 Z",
     box: { x: 38, y: 208, w: 124, h: 78 },
@@ -336,8 +491,17 @@ const SHAPES: Record<Kind, Shape> = {
 
 // How tall and wide each pack is (cap included), so small ones can be zoomed to fill the product page.
 const EXTENT: Record<Kind, { top: number; w: number }> = {
-  jar: { top: 172, w: 128 }, tube: { top: 37, w: 76 }, pump: { top: 50, w: 101 }, dropper: { top: 60, w: 72 },
-  perfume: { top: 96, w: 116 }, mist: { top: 80, w: 76 }, bottle: { top: 48, w: 84 }, stick: { top: 166, w: 38 }, lip: { top: 128, w: 34 },
+  comb: { top: 46, w: 82 },
+  curler: { top: 70, w: 76 },
+  jar: { top: 172, w: 128 },
+  tube: { top: 37, w: 76 },
+  pump: { top: 50, w: 101 },
+  dropper: { top: 60, w: 72 },
+  perfume: { top: 96, w: 116 },
+  mist: { top: 80, w: 76 },
+  bottle: { top: 48, w: 84 },
+  stick: { top: 166, w: 38 },
+  lip: { top: 128, w: 34 },
 };
 const pageZoom = (k: Kind) => Math.min(2.2, 262 / (290 - EXTENT[k].top), 190 / EXTENT[k].w);
 
@@ -360,42 +524,71 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
   const printArt = (dx: number) => (
     <g transform={`translate(${dx} 0)`}>
       {P.paper && <rect x={P.x} y={P.y} width={P.w} height={P.h} fill={css(lab)} />}
-      <text x={P.x + P.w / 2} y={P.y + P.h * 0.2} fill={p.ink} fontSize={Math.min(6.5, P.w * 0.075)} fontWeight="600" letterSpacing={Math.min(1.6, P.w * 0.02)} textAnchor="middle">EVERWELL</text>
-      <text x={P.x + P.w / 2} y={P.y + P.h * 0.46} fill={p.ink} fontSize={nameSize} fontWeight="500" letterSpacing="-0.15" textAnchor="middle">{p.short}</text>
-      {p.sub && <text x={P.x + P.w / 2} y={P.y + P.h * 0.62} fill={p.ink} fontSize={subSize} opacity="0.8" textAnchor="middle">{p.sub}</text>}
-      <text x={P.x + P.w / 2} y={P.y + P.h * 0.86} fill={p.ink} opacity="0.6" fontSize={Math.min(5.8, P.w * 0.07)} textAnchor="middle">{p.sizes[0]}</text>
+      <text x={P.x + P.w / 2} y={P.y + P.h * 0.22} fill={p.ink} fontSize={Math.min(6.5, P.w * 0.075)} fontWeight="600" letterSpacing={Math.min(1.6, P.w * 0.02)} textAnchor="middle">EVERWELL</text>
+      <text x={P.x + P.w / 2} y={P.y + P.h * 0.48} fill={p.ink} fontSize={nameSize} fontWeight="500" letterSpacing="-0.15" textAnchor="middle">{p.short}</text>
+      {p.sub && <text x={P.x + P.w / 2} y={P.y + P.h * 0.65} fill={p.ink} fontSize={subSize} opacity="0.8" textAnchor="middle">{p.sub}</text>}
+      <text x={P.x + P.w / 2} y={P.y + P.h * 0.88} fill={p.ink} opacity="0.6" fontSize={Math.min(5.8, P.w * 0.07)} textAnchor="middle">{p.sizes[0]}</text>
     </g>
   );
   return (
     <svg viewBox="0 0 200 300" className={className} aria-hidden overflow="visible">
       <defs>
-        {/* cylinder shading lit by a big softbox from the front left, with a bounce on the right */}
+        {/* Custom studio material gradients */}
+        <linearGradient id={`${id}-metal`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#cf967b" />
+          <stop offset="25%" stopColor="#f7e1d5" />
+          <stop offset="50%" stopColor="#d89f84" />
+          <stop offset="75%" stopColor="#fcece5" />
+          <stop offset="100%" stopColor="#b3765c" />
+        </linearGradient>
+        <linearGradient id={`${id}-steel`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#9da3a8" />
+          <stop offset="35%" stopColor="#ffffff" />
+          <stop offset="65%" stopColor="#bcc1c7" />
+          <stop offset="100%" stopColor="#767c82" />
+        </linearGradient>
+        <radialGradient id={`${id}-ball`} cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="45%" stopColor="#c5c9ce" />
+          <stop offset="85%" stopColor="#676e75" />
+          <stop offset="100%" stopColor="#3d4349" />
+        </radialGradient>
+        <linearGradient id={`${id}-handle`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#ede6dd" />
+          <stop offset="25%" stopColor="#ffffff" />
+          <stop offset="70%" stopColor="#f5efe6" />
+          <stop offset="100%" stopColor="#ddd4c7" />
+        </linearGradient>
+        <linearGradient id={`${id}-silk`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#e2abb0" />
+          <stop offset="20%" stopColor="#fdeeed" />
+          <stop offset="50%" stopColor="#f3c8c7" />
+          <stop offset="80%" stopColor="#f9e2e1" />
+          <stop offset="100%" stopColor="#c8898e" />
+        </linearGradient>
+
+        {/* Studio cylinder lighting: soft key on left, bright rim, deep bounce on right */}
         <linearGradient id={`${id}-body`} x1="0" x2="1">
-          <stop offset="0" stopColor={css(c, 0.42, a)} />
-          <stop offset="0.06" stopColor={css(c, 0.64, a)} />
-          <stop offset="0.1" stopColor={css(c, 0.92, a)} />
-          <stop offset="0.16" stopColor={css(mixRgb(c, WHITE, 0.16), 1, a)} />
-          <stop offset="0.36" stopColor={css(c, 1.02, a)} />
-          <stop offset="0.55" stopColor={css(c, 0.93, a)} />
-          <stop offset="0.76" stopColor={css(c, 0.78, a)} />
-          <stop offset="0.9" stopColor={css(c, 0.6, a)} />
-          <stop offset="0.95" stopColor={css(mixRgb(c, WHITE, 0.14), 0.9, a)} />
-          <stop offset="1" stopColor={css(c, 0.5, a)} />
+          <stop offset="0" stopColor={css(mixRgb(c, WHITE, 0.08), 0.72, a)} />
+          <stop offset="0.08" stopColor={css(mixRgb(c, WHITE, 0.4), 1.06, a)} />
+          <stop offset="0.22" stopColor={css(c, 1, a)} />
+          <stop offset="0.65" stopColor={css(c, 0.94, a)} />
+          <stop offset="0.88" stopColor={css(c, 0.78, a)} />
+          <stop offset="1" stopColor={css(mixRgb(c, WHITE, 0.2), 0.9, a)} />
         </linearGradient>
         <linearGradient id={`${id}-cap`} x1="0" x2="1">
-          <stop offset="0" stopColor={css(k, 0.4)} />
-          <stop offset="0.1" stopColor={css(k, 0.7)} />
-          <stop offset="0.22" stopColor={css(mixRgb(k, WHITE, 0.6))} />
-          <stop offset="0.3" stopColor={css(k, 1.02)} />
-          <stop offset="0.6" stopColor={css(k, 0.86)} />
-          <stop offset="0.85" stopColor={css(k, 0.62)} />
-          <stop offset="0.93" stopColor={css(mixRgb(k, WHITE, 0.2), 0.9)} />
-          <stop offset="1" stopColor={css(k, 0.4)} />
+          <stop offset="0" stopColor={css(k, 0.7)} />
+          <stop offset="0.1" stopColor={css(mixRgb(k, WHITE, 0.5), 1.08)} />
+          <stop offset="0.26" stopColor={css(k, 1)} />
+          <stop offset="0.7" stopColor={css(k, 0.92)} />
+          <stop offset="0.9" stopColor={css(k, 0.74)} />
+          <stop offset="1" stopColor={css(mixRgb(k, WHITE, 0.25), 0.88)} />
         </linearGradient>
         <linearGradient id={`${id}-capv`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fff" stopOpacity="0.3" />
-          <stop offset="0.2" stopColor="#fff" stopOpacity="0" />
-          <stop offset="1" stopColor="#000" stopOpacity="0.16" />
+          <stop offset="0" stopColor="#fff" stopOpacity="0.28" />
+          <stop offset="0.3" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.75" stopColor="#000" stopOpacity="0" />
+          <stop offset="1" stopColor="#000" stopOpacity="0.22" />
         </linearGradient>
         <linearGradient id={`${id}-shade`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#fff" stopOpacity="0.14" />
@@ -440,9 +633,9 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
       <g clipPath={`url(#${id}-clip)`}>
         {p.glass && s.fill !== undefined && (
           <>
-            <rect x={B.x + 3} y={s.fill} width={B.w - 6} height={286 - s.fill - 9} fill={`url(#${id}-liquid)`} opacity="0.75" />
+            <rect x={B.x + 3} y={s.fill} width={B.w - 6} height={286 - s.fill - 9} fill={`url(#${id}-liquid)`} opacity="0.82" />
             <rect x={B.x + 3} y={s.fill} width={B.w - 6} height="1.6" fill="#fff" opacity="0.45" />
-            {s.tube && <rect x="98.6" y={B.y - 4} width="2.8" height={286 - B.y - 4} fill="#fff" opacity="0.4" />}
+            {s.tube && <rect x="98.6" y={B.y - 4} width="2.8" height={286 - B.y - 4} fill="#fff" opacity="0.45" />}
             {/* thick glass base */}
             <rect x={B.x} y="274" width={B.w} height="12" fill={css(c, 0.5, 0.55)} />
             <path d={`M${B.x + 6} 275 H${B.x + B.w - 6}`} stroke="#fff" strokeOpacity="0.5" strokeWidth="0.8" />
@@ -494,7 +687,8 @@ export function ProductShelf({
   const [bag, setBag] = useState(0);
   const [bump, setBump] = useState(0);
   const bagRef = useRef(null as HTMLButtonElement | null);
-  const rows = [products.slice(0, 4), products.slice(4, 8), products.slice(8, 12)];
+  // Keep strictly the top shelf (1 shelf with 4 ritual slots)
+  const rows = [products.slice(0, 4)];
   const open = products.find((p) => p.id === openId) ?? null;
 
   useEffect(() => {
@@ -547,7 +741,7 @@ export function ProductShelf({
       <LayoutGroup>
         <main className={cn("mx-auto w-full max-w-[1080px] px-5 pb-12", hideFloatingNav ? "pt-2" : "pt-16")}>
           {rows.map((row, r) => (
-            <section key={r} aria-label={["Skincare", "Treatments and fragrance", "Body and lips"][r]} className="relative mb-14">
+            <section key={r} aria-label="Everwell Rituals" className="relative mb-14">
               <div className="relative z-10 grid grid-cols-4 items-end gap-3 px-3 sm:gap-8 sm:px-8">
                 {row.map((p) => (
                   <div key={p.id} className="flex flex-col items-center">
@@ -558,7 +752,7 @@ export function ProductShelf({
                         layoutId={`product-${p.id}`}
                         type="button"
                         onClick={() => setOpenId(p.id)}
-                        aria-label={`${p.name}, ${currency}${p.price}`}
+                        aria-label={p.price > 0 ? `${p.name}, ${currency}${p.price.toFixed(2)}` : `${p.name}, Coming Soon`}
                         transition={SPRING}
                         className="relative aspect-[2/3] w-full max-w-[160px] cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-[#111111]"
                       >
@@ -578,7 +772,9 @@ export function ProductShelf({
                 {row.map((p) => (
                   <div key={p.id} className="text-center">
                     <div className="text-[13px] leading-tight font-medium sm:text-[14px]">{p.short}</div>
-                    <div className="mt-0.5 text-[12px] text-[#6f6a64] tabular-nums sm:text-[13px]">{currency}{p.price}</div>
+                    <div className="mt-0.5 text-[12px] text-[#6f6a64] tabular-nums sm:text-[13px]">
+                      {p.price > 0 ? `${currency}${p.price.toFixed(2)}` : "Coming Soon"}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -604,7 +800,13 @@ export function ProductShelf({
   );
 }
 
-function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
+function ProductPage({
+  p,
+  currency,
+  onClose,
+  onAdd,
+  bagRef,
+}: {
   p: Product;
   currency: string;
   onClose: () => void;
@@ -616,6 +818,8 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
   const [size, setSize] = useState(p.sizes[0] ?? "");
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [email, setEmail] = useState("");
+  const [notified, setNotified] = useState(false);
   const [section, setSection] = useState("Details" as string | null);
   const closeRef = useRef(null as HTMLButtonElement | null);
   const drag = useRef(null as { x: number; v: number; samples: { x: number; t: number }[] } | null);
@@ -632,7 +836,10 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
   const add = () => {
     onAdd(qty, size);
     setAdded(true);
-    bagRef.current?.animate([{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }], { duration: 320, easing: "ease-out" });
+    bagRef.current?.animate(
+      [{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }],
+      { duration: 320, easing: "ease-out" }
+    );
     setTimeout(() => setAdded(false), 1800);
   };
 
@@ -664,7 +871,7 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
 
   const sections: [string, ReactNode][] = [
     ["Details", <ul key="d" className="list-disc space-y-1 pl-5">{p.benefits.map((b) => <li key={b}>{b}</li>)}</ul>],
-    ["Ingredients", <p key="i">{p.ingredients}</p>],
+    ["Ingredients & Materials", <p key="i">{p.ingredients}</p>],
     ["How to use", <p key="h">{p.howTo}</p>],
   ];
 
@@ -683,7 +890,7 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
             onPointerUp={onUp}
             onPointerCancel={onUp}
           >
-            {/* small packs (lip tube, balm, jars) zoom up from where they stand to fill the frame */}
+            {/* packs zoom up from where they stand to fill the frame */}
             <motion.div
               className="pointer-events-none size-full"
               style={{ transformOrigin: "50% 96.7%" }}
@@ -703,7 +910,7 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           />
-          <p className="mt-6 text-[12px] text-[#8f8982]">Drag to turn</p>
+          <p className="mt-6 text-[12px] text-[#8f8982]">Drag to turn 360°</p>
         </div>
 
         <motion.div
@@ -722,68 +929,145 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
             <ChevronLeft className="size-4" strokeWidth={2.2} /> Shelf
           </button>
           <div className="text-[14px] text-[#6f6a64]">{p.category}</div>
-          <h2 className="mt-1 text-[clamp(30px,4vw,40px)] leading-[1.08] font-semibold tracking-[-0.022em]">{p.name}</h2>
-          <p className="mt-2 text-[19px] leading-snug text-[#6f6a64]">{p.tagline}</p>
-          <div className="mt-3 flex items-center gap-1.5 text-[14px] text-[#6f6a64]">
-            <span className="flex text-[#111111]" aria-label={`Rated ${p.rating} out of 5`}>
-              {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} className="size-[14px]" fill={i < Math.round(p.rating) ? INK : "transparent"} strokeWidth={1.4} />
-              ))}
-            </span>
-            {p.rating.toFixed(1)} · {p.reviews.toLocaleString()} ratings
-          </div>
+          <h2 className="mt-1 text-[clamp(28px,3.8vw,38px)] leading-[1.08] font-semibold tracking-[-0.022em]">{p.name}</h2>
+          <p className="mt-2 text-[18px] leading-snug text-[#6f6a64]">{p.tagline}</p>
 
-          <div className="mt-6 flex items-baseline gap-2.5 tabular-nums">
-            <span className="text-[24px] font-semibold tracking-[-0.01em]">{currency}{price.toFixed(2)}</span>
-            {p.compareAt && <span className="text-[17px] text-[#8f8982] line-through">{currency}{(p.compareAt * (price / p.price)).toFixed(2)}</span>}
-          </div>
-          <p className="mt-4 max-w-[54ch] text-[17px] leading-[1.47] tracking-[-0.01em] text-[#111111]/85">{p.description}</p>
-
-          <fieldset className="mt-7">
-            <legend className="mb-2.5 text-[17px] font-semibold tracking-[-0.01em]">Size</legend>
-            <div className="grid grid-cols-2 gap-2.5">
-              {p.sizes.map((sz, i) => {
-                const on = size === sz;
-                return (
-                  <label
-                    key={sz}
-                    className={cn(
-                      "flex cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-3.5 text-[15px] transition-[border-color,box-shadow] duration-150 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#111111]",
-                      on ? "border-[#111111] shadow-[0_0_0_1px_#111111]" : "border-[#d9d4cd] hover:border-[#8f8982]",
-                    )}
-                  >
-                    <input type="radio" name="size" value={sz} checked={on} onChange={() => setSize(sz)} className="sr-only" />
-                    <span className="font-medium">{sz}</span>
-                    <span className="text-[#6f6a64] tabular-nums">{currency}{(p.price * (i > 0 ? 1.7 : 1)).toFixed(2)}</span>
-                  </label>
-                );
-              })}
+          {p.price > 0 ? (
+            <div className="mt-3 flex items-center gap-1.5 text-[14px] text-[#6f6a64]">
+              <span className="flex text-[#111111]" aria-label={`Rated ${p.rating} out of 5`}>
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star key={i} className="size-[14px]" fill={i < Math.round(p.rating) ? INK : "transparent"} strokeWidth={1.4} />
+                ))}
+              </span>
+              {p.rating.toFixed(1)} · {p.reviews.toLocaleString()} verified ratings
             </div>
-          </fieldset>
+          ) : (
+            <div className="mt-3 flex items-center gap-2 text-[14px] text-[#8f8982]">
+              <span className="inline-block size-2 rounded-full bg-amber-600/70" />
+              <span>Preview Edition · Joining the ritual collection soon</span>
+            </div>
+          )}
 
-          <div className="mt-7 flex items-stretch gap-3">
-            <div className="flex items-center rounded-xl border border-[#d9d4cd] bg-white">
-              <button type="button" aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-full w-11 place-items-center rounded-l-xl text-[#111111] transition-colors active:bg-black/[0.06] disabled:text-[#d9d4cd]" disabled={qty === 1}>
-                <Minus className="size-4" />
-              </button>
-              <span className="w-7 text-center text-[17px] tabular-nums" aria-live="polite">{qty}</span>
-              <button type="button" aria-label="Increase quantity" onClick={() => setQty((q) => Math.min(9, q + 1))} className="grid h-full w-11 place-items-center rounded-r-xl text-[#111111] transition-colors active:bg-black/[0.06]">
-                <Plus className="size-4" />
+          {p.price > 0 ? (
+            <div className="mt-6 flex items-baseline gap-2.5 tabular-nums">
+              <span className="text-[24px] font-semibold tracking-[-0.01em]">{currency}{price.toFixed(2)}</span>
+              {p.compareAt && (
+                <span className="text-[17px] text-[#8f8982] line-through">
+                  {currency}{(p.compareAt * (price / p.price)).toFixed(2)}
+                </span>
+              )}
+            </div>
+          ) : (
+            <div className="mt-6 flex items-baseline gap-2.5">
+              <span className="inline-flex items-center rounded-full bg-[#111111]/8 px-3.5 py-1 text-[13px] font-semibold tracking-wider text-[#111111] uppercase">
+                Coming Soon
+              </span>
+            </div>
+          )}
+
+          <p className="mt-4 max-w-[54ch] text-[16px] leading-[1.5] tracking-[-0.01em] text-[#111111]/85">{p.description}</p>
+
+          {p.price > 0 && p.sizes.length > 1 && (
+            <fieldset className="mt-7">
+              <legend className="mb-2.5 text-[16px] font-semibold tracking-[-0.01em]">Size</legend>
+              <div className="grid grid-cols-2 gap-2.5">
+                {p.sizes.map((sz, i) => {
+                  const on = size === sz;
+                  return (
+                    <label
+                      key={sz}
+                      className={cn(
+                        "flex cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-3 text-[15px] transition-[border-color,box-shadow] duration-150 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#111111]",
+                        on ? "border-[#111111] shadow-[0_0_0_1px_#111111]" : "border-[#d9d4cd] hover:border-[#8f8982]",
+                      )}
+                    >
+                      <input type="radio" name="size" value={sz} checked={on} onChange={() => setSize(sz)} className="sr-only" />
+                      <span className="font-medium">{sz}</span>
+                      <span className="text-[#6f6a64] tabular-nums">{currency}{(p.price * (i > 0 ? 1.7 : 1)).toFixed(2)}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+          )}
+
+          {p.price > 0 ? (
+            <div className="mt-7 flex items-stretch gap-3">
+              <div className="flex items-center rounded-xl border border-[#d9d4cd] bg-white">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  className="grid h-full w-11 place-items-center rounded-l-xl text-[#111111] transition-colors active:bg-black/[0.06] disabled:text-[#d9d4cd]"
+                  disabled={qty === 1}
+                >
+                  <Minus className="size-4" />
+                </button>
+                <span className="w-7 text-center text-[17px] tabular-nums" aria-live="polite">{qty}</span>
+                <button
+                  type="button"
+                  aria-label="Increase quantity"
+                  onClick={() => setQty((q) => Math.min(9, q + 1))}
+                  className="grid h-full w-11 place-items-center rounded-r-xl text-[#111111] transition-colors active:bg-black/[0.06]"
+                >
+                  <Plus className="size-4" />
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={add}
+                className="h-12 flex-1 rounded-[10px] bg-[#111111] text-[16px] font-medium tracking-[-0.01em] text-white transition-[background-color,transform] duration-100 hover:bg-[#000000] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111]"
+              >
+                <span aria-live="polite">{added ? "Added to Bag" : "Add to Bag"}</span>
               </button>
             </div>
-            <button
-              type="button"
-              onClick={add}
-              className="h-12 flex-1 rounded-[10px] bg-[#111111] text-[16px] font-medium tracking-[-0.01em] text-white transition-[background-color,transform] duration-100 hover:bg-[#000000] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111]"
-            >
-              <span aria-live="polite">{added ? "Added to Bag" : "Add to Bag"}</span>
-            </button>
-          </div>
+          ) : (
+            <div className="mt-7">
+              <label htmlFor="notify-email" className="mb-2 block text-[14px] font-medium text-[#111111]">
+                Be the first to know when early batches drop
+              </label>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (email.trim()) setNotified(true);
+                }}
+                className="flex flex-col gap-2.5 sm:flex-row"
+              >
+                <input
+                  id="notify-email"
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-12 flex-1 rounded-[10px] border border-[#d9d4cd] bg-white px-4 text-[15px] outline-none transition focus:border-[#111111] focus:ring-1 focus:ring-[#111111]"
+                />
+                <button
+                  type="submit"
+                  className="h-12 rounded-[10px] bg-[#111111] px-6 text-[15px] font-medium text-white transition hover:bg-black active:scale-[0.98]"
+                >
+                  {notified ? "You're on the list!" : "Notify Me"}
+                </button>
+              </form>
+              {notified && (
+                <p className="mt-2 text-[13px] text-emerald-700 font-medium">
+                  ✓ Thank you! We&apos;ll notify you when early access begins.
+                </p>
+              )}
+            </div>
+          )}
 
-          <dl className="mt-6 grid gap-1 text-[14px] leading-snug">
-            <div className="flex gap-2"><dt className="font-semibold">Delivery:</dt><dd className="text-[#6f6a64]">Free, arrives in 2 to 3 days</dd></div>
-            <div className="flex gap-2"><dt className="font-semibold">Pickup:</dt><dd className="text-[#6f6a64]">Ready today at most stores</dd></div>
-          </dl>
+          {p.price > 0 ? (
+            <dl className="mt-6 grid gap-1 text-[14px] leading-snug">
+              <div className="flex gap-2"><dt className="font-semibold">Delivery:</dt><dd className="text-[#6f6a64]">Free standard shipping over $40</dd></div>
+              <div className="flex gap-2"><dt className="font-semibold">Guarantee:</dt><dd className="text-[#6f6a64]">30-day happy-hair returns</dd></div>
+            </dl>
+          ) : (
+            <dl className="mt-6 grid gap-1 text-[14px] leading-snug">
+              <div className="flex gap-2"><dt className="font-semibold">Status:</dt><dd className="text-[#6f6a64]">In final testing & formulation</dd></div>
+              <div className="flex gap-2"><dt className="font-semibold">Release:</dt><dd className="text-[#6f6a64]">Limited first edition batch dropping soon</dd></div>
+            </dl>
+          )}
 
           <div className="mt-8 border-t border-[#d9d4cd]">
             {sections.map(([title, body]) => {
@@ -794,7 +1078,7 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
                     type="button"
                     aria-expanded={isOpen}
                     onClick={() => setSection(isOpen ? null : title)}
-                    className="flex w-full items-center justify-between py-4 text-left text-[17px] font-semibold tracking-[-0.01em] focus-visible:outline-2 focus-visible:outline-[#111111]"
+                    className="flex w-full items-center justify-between py-4 text-left text-[16px] font-semibold tracking-[-0.01em] focus-visible:outline-2 focus-visible:outline-[#111111]"
                   >
                     {title}
                     <ChevronDown className={cn("size-[18px] text-[#6f6a64] transition-transform duration-300", isOpen && "rotate-180")} />
@@ -802,7 +1086,7 @@ function ProductPage({ p, currency, onClose, onAdd, bagRef }: {
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={SPRING} className="overflow-hidden">
-                        <div className="pb-5 text-[15px] leading-relaxed text-[#111111]/80">{body}</div>
+                        <div className="pb-5 text-[14.5px] leading-relaxed text-[#111111]/80">{body}</div>
                       </motion.div>
                     )}
                   </AnimatePresence>
