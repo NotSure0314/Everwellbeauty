@@ -89,8 +89,8 @@ export const DEFAULT_PRODUCTS: Product[] = [
     short: "Heatless Curler",
     sub: "Includes Silk Rod & 2 Scrunchies",
     category: "Styling Tool",
-    color: "#f3d1cf", // Blush mulberry silk
-    cap: "#ecc5c3",
+    color: "#ffffff", // Pure white paper sleeve band
+    cap: "#f3d1cf", // Blush mulberry silk
     label: "#ffffff",
     ink: "#1d1615",
     price: 28.99,
@@ -202,6 +202,7 @@ type Shape = {
   fill?: number;
   /** Dip tube for see-through pumps and mists. */
   tube?: boolean;
+  behind?: (id: string) => ReactNode;
   cap: (id: string) => ReactNode;
 };
 
@@ -281,111 +282,94 @@ const SHAPES: Record<Kind, Shape> = {
     ),
   },
   curler: {
-    // Center white paper wrap band (y = 156 to 236, width = 74)
-    body: rr(63, 156, 74, 80, 4),
-    box: { x: 63, y: 156, w: 74, h: 80 },
-    print: { x: 63, y: 156, w: 74, h: 80, paper: true },
-    cap: (id) => (
+    // Center white paper wrap band (y = 144 to 228, width = 74)
+    body: rr(63, 144, 74, 84, 3),
+    box: { x: 63, y: 144, w: 74, h: 84 },
+    print: { x: 63, y: 144, w: 74, h: 84, paper: true },
+    behind: (id) => (
       <>
-        {/* Top blush silk rod arch loop */}
+        {/* 1. Top blush silk rod arch loop (y = 38 to 86, continuous) */}
         <path
-          d="M84 86 C84 48, 116 48, 116 86"
+          d="M85 86 C85 46, 115 46, 115 86"
           stroke={`url(#${id}-silk)`}
-          strokeWidth="14"
+          strokeWidth="15"
           strokeLinecap="round"
           fill="none"
         />
-        {/* Arch specular highlight */}
         <path
-          d="M87 84 C87 54, 113 54, 113 84"
+          d="M88 84 C88 52, 112 52, 112 84"
           stroke="#ffffff"
-          strokeWidth="2.2"
+          strokeWidth="2.4"
           strokeLinecap="round"
           fill="none"
-          opacity="0.65"
+          opacity="0.6"
         />
 
-        {/* Stacked Ruched Silk Scrunchie 1 (Upper) */}
-        <g>
-          <ellipse cx="100" cy="94" rx="35" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
-          {[-26, -16, -6, 4, 14, 24].map((dx, i) => (
-            <ellipse
-              key={`s1-${i}`}
-              cx={100 + dx}
-              cy={94 + (i % 2 === 0 ? -1.5 : 1.5)}
-              rx="9"
-              ry="8"
-              fill={`url(#${id}-silk)`}
-              stroke="#dca4a7"
-              strokeWidth="0.6"
-            />
-          ))}
-          {[-21, -11, -1, 9, 19].map((dx, i) => (
-            <path
-              key={`s1p-${i}`}
-              d={`M${100 + dx} 88 Q${100 + dx + (i % 2 ? 2.5 : -2.5)} 94 ${100 + dx} 100`}
-              stroke="#ab6b6e"
-              strokeWidth="0.85"
-              fill="none"
-              opacity="0.6"
-            />
-          ))}
-        </g>
+        {/* 2. Continuous silk rod legs (y = 80 to 252, connects into bottom loop) */}
+        <rect x="66" y="80" width="24" height="172" rx="12" fill={`url(#${id}-silk)`} />
+        <rect x="110" y="80" width="24" height="172" rx="12" fill={`url(#${id}-silk)`} />
+        {/* Specular silk highlights along legs */}
+        <line x1="72" y1="90" x2="72" y2="250" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+        <line x1="116" y1="90" x2="116" y2="250" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
 
-        {/* Stacked Ruched Silk Scrunchie 2 (Lower) */}
-        <g>
-          <ellipse cx="100" cy="124" rx="35" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
-          {[-26, -16, -6, 4, 14, 24].map((dx, i) => (
-            <ellipse
-              key={`s2-${i}`}
-              cx={100 + dx}
-              cy={124 + (i % 2 === 0 ? -1.5 : 1.5)}
-              rx="9"
-              ry="8"
-              fill={`url(#${id}-silk)`}
-              stroke="#dca4a7"
-              strokeWidth="0.6"
-            />
-          ))}
-          {[-21, -11, -1, 9, 19].map((dx, i) => (
-            <path
-              key={`s2p-${i}`}
-              d={`M${100 + dx} 118 Q${100 + dx + (i % 2 ? 2.5 : -2.5)} 124 ${100 + dx} 130`}
-              stroke="#ab6b6e"
-              strokeWidth="0.85"
-              fill="none"
-              opacity="0.6"
-            />
-          ))}
-        </g>
+        {/* 3. Inner tucked silk ends inside loop (y = 216 to 262) */}
+        <rect x="91" y="216" width="8.5" height="46" rx="4.2" fill={`url(#${id}-silk)`} />
+        <rect x="100.5" y="216" width="8.5" height="46" rx="4.2" fill={`url(#${id}-silk)`} />
+        <line x1="93" y1="220" x2="93" y2="258" stroke="#fff" strokeWidth="1" opacity="0.45" />
+        <line x1="102.5" y1="220" x2="102.5" y2="258" stroke="#fff" strokeWidth="1" opacity="0.45" />
 
-        {/* Left silk rod arm (y = 138 to 256) */}
-        <path d={rr(65, 138, 24, 118, 12)} fill={`url(#${id}-silk)`} />
-        {/* Right silk rod arm (y = 138 to 256) */}
-        <path d={rr(111, 138, 24, 118, 12)} fill={`url(#${id}-silk)`} />
-
-        {/* Inner tucked silk ends inside the loop */}
-        <path d={rr(92, 214, 8, 44, 4)} fill={`url(#${id}-silk)`} opacity="0.9" />
-        <path d={rr(100, 214, 8, 44, 4)} fill={`url(#${id}-silk)`} opacity="0.9" />
-
-        {/* Bottom U-turn continuous silk loop resting on shelf (touches y = 284) */}
+        {/* 4. Bottom continuous U-turn loop (y = 244 to 286, resting firmly on shelf at y = 286!) */}
         <path
-          d="M65 246 C65 292, 135 292, 135 246 C135 258, 111 268, 100 268 C89 268, 65 258, 65 246 Z"
+          d="M66 244 C66 298, 134 298, 134 244 C134 268, 110 274, 100 274 C90 274, 66 268, 66 244 Z"
           fill={`url(#${id}-silk)`}
         />
-        {/* Silk highlight across bottom curve */}
         <path
-          d="M71 254 C75 284, 125 284, 129 254"
+          d="M72 250 C76 286, 124 286, 128 250"
           stroke="#ffffff"
-          strokeWidth="1.8"
+          strokeWidth="2"
           strokeLinecap="round"
           fill="none"
-          opacity="0.55"
+          opacity="0.6"
         />
+      </>
+    ),
+    cap: (id) => (
+      <>
+        {/* Paper sleeve drop shadows onto silk */}
+        <rect x="64" y="142" width="72" height="2.5" fill="#000" opacity="0.12" />
+        <rect x="64" y="228" width="72" height="3" fill="#000" opacity="0.12" />
 
-        {/* Drop shadow where wrap paper band overlaps silk legs */}
-        <rect x="63" y="154" width="74" height="2.5" fill="#000" opacity="0.12" />
-        <rect x="63" y="235.5" width="74" height="2.5" fill="#000" opacity="0.12" />
+        {/* Stacked Ruched Silk Scrunchie 1 (Upper, y = 74 to 102) */}
+        <g>
+          <ellipse cx="100" cy="88" rx="35" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
+          <ellipse cx="74" cy="88" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="84" cy="89.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="94" cy="87.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="106" cy="89.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="116" cy="87.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="126" cy="88" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <path d="M79 82 Q81 88 79 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M89 82 Q87 88 89 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M100 82 Q102 88 100 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M111 82 Q109 88 111 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M121 82 Q123 88 121 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+        </g>
+
+        {/* Stacked Ruched Silk Scrunchie 2 (Lower, y = 98 to 126, directly overlapping with upper scrunchie and legs!) */}
+        <g>
+          <ellipse cx="100" cy="112" rx="35" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
+          <ellipse cx="74" cy="112" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="84" cy="113.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="94" cy="111.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="106" cy="113.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="116" cy="111.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <ellipse cx="126" cy="112" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
+          <path d="M79 106 Q81 112 79 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M89 106 Q87 112 89 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M100 106 Q102 112 100 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M111 106 Q109 112 111 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <path d="M121 106 Q123 112 121 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+        </g>
       </>
     ),
   },
@@ -530,7 +514,7 @@ const SHAPES: Record<Kind, Shape> = {
 
 const EXTENT: Record<Kind, { top: number; w: number }> = {
   comb: { top: 36, w: 76 },
-  curler: { top: 42, w: 74 },
+  curler: { top: 38, w: 74 },
   jar: { top: 172, w: 128 },
   tube: { top: 37, w: 76 },
   pump: { top: 50, w: 101 },
@@ -577,13 +561,13 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
     if (p.kind === "curler") {
       return (
         <g transform={`translate(${dx} 0)`}>
-          {P.paper && <rect x={P.x} y={P.y} width={P.w} height={P.h} fill="#ffffff" />}
-          <text x={P.x + P.w / 2} y={P.y + 14} fill="#1d1615" fontSize="5.4" fontWeight="700" letterSpacing="1.2" textAnchor="middle">EVERWELL</text>
+          {P.paper && <rect x={P.x} y={P.y} width={P.w} height={P.h} fill="#ffffff" stroke="#ece7de" strokeWidth="0.6" />}
+          <text x={P.x + P.w / 2} y={P.y + 14} fill="#1d1615" fontSize="5.2" fontWeight="700" letterSpacing="1.2" textAnchor="middle">EVERWELL</text>
           <text x={P.x + P.w / 2} y={P.y + 28} fill="#1d1615" fontSize="7.4" fontWeight="600" letterSpacing="-0.2" textAnchor="middle">Heatless</text>
           <text x={P.x + P.w / 2} y={P.y + 38} fill="#1d1615" fontSize="7.4" fontWeight="600" letterSpacing="-0.2" textAnchor="middle">Curler Set</text>
-          <text x={P.x + P.w / 2} y={P.y + 50} fill="#1d1615" fontSize="3.9" opacity="0.82" textAnchor="middle">Includes Silk Rod & 2 Scrunchies</text>
-          <text x={P.x + P.w / 2} y={P.y + 64} fill="#1d1615" fontSize="3.6" opacity="0.75" textAnchor="middle">1 Set</text>
-          <text x={P.x + P.w / 2} y={P.y + 72} fill="#1d1615" fontSize="3.6" opacity="0.75" textAnchor="middle">Material: Silk</text>
+          <text x={P.x + P.w / 2} y={P.y + 51} fill="#1d1615" fontSize="3.9" opacity="0.82" textAnchor="middle">Includes Silk Rod &amp; 2 Scrunchies</text>
+          <text x={P.x + P.w / 2} y={P.y + 65} fill="#1d1615" fontSize="3.6" opacity="0.75" textAnchor="middle">1 Set</text>
+          <text x={P.x + P.w / 2} y={P.y + 73} fill="#1d1615" fontSize="3.6" opacity="0.75" textAnchor="middle">Material: Silk</text>
         </g>
       );
     }
@@ -704,7 +688,10 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
       <ellipse cx="100" cy="287" rx={B.w * 0.75} ry="6" fill={`url(#${id}-floor)`} />
       <ellipse cx="100" cy="286.3" rx={B.w * 0.5} ry="1.4" fill="#000" opacity="0.35" />
 
-      {/* Main product vector body */}
+      {/* Elements rendered behind body (such as continuous silk rod legs and bottom loop) */}
+      {s.behind?.(id)}
+
+      {/* Main product vector body (such as white wrap band or glass cylinder) */}
       <path d={s.body} fill={`url(#${id}-body)`} />
       <g clipPath={`url(#${id}-clip)`}>
         {p.glass && s.fill !== undefined && (
