@@ -26,7 +26,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       const raw = localStorage.getItem(KEY);
       if (raw) setLines(JSON.parse(raw));
-    } catch {}
+    } catch {
+      // Ignore parsing errors for invalid cart data
+    }
     setLoaded(true);
   }, []);
   useEffect(() => {
@@ -41,14 +43,30 @@ export function CartProvider({ children }: { children: ReactNode }) {
         : [...ls, { slug, qty }];
     });
   const setQty = (slug: string, qty: number) =>
-    setLines((ls) => (qty <= 0 ? ls.filter((l) => l.slug !== slug) : ls.map((l) => (l.slug === slug ? { ...l, qty } : l))));
+    setLines((ls) =>
+      qty <= 0
+        ? ls.filter((l) => l.slug !== slug)
+        : ls.map((l) => (l.slug === slug ? { ...l, qty } : l)),
+    );
   const remove = (slug: string) => setLines((ls) => ls.filter((l) => l.slug !== slug));
 
   const count = lines.reduce((s, l) => s + l.qty, 0);
   const subtotal = lines.reduce((s, l) => s + (getProduct(l.slug)?.price ?? 0) * l.qty, 0);
 
   return (
-    <CartContext.Provider value={{ lines, count, subtotal, add, setQty, remove, clear: () => setLines([]), open, setOpen }}>
+    <CartContext.Provider
+      value={{
+        lines,
+        count,
+        subtotal,
+        add,
+        setQty,
+        remove,
+        clear: () => setLines([]),
+        open,
+        setOpen,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

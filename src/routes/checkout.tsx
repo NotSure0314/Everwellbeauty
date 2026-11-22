@@ -30,17 +30,33 @@ function Checkout() {
     return (
       <section className="px-5 py-32 text-center">
         <h1 className="text-5xl">Nothing to check out yet</h1>
-        <Link to="/shop" className="btn-primary mt-8">Shop the ritual</Link>
+        <Link to="/shop" className="btn-primary mt-8">
+          Shop the ritual
+        </Link>
       </section>
     );
 
   return (
     <section className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1fr_400px]">
-      <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); setNotice(true); }}>
-        <h1 className="flex items-center gap-3 text-5xl">Checkout <Lock className="h-6 w-6 text-primary" /></h1>
+      <form
+        className="space-y-8"
+        onSubmit={(e) => {
+          e.preventDefault();
+          setNotice(true);
+        }}
+      >
+        <h1 className="flex items-center gap-3 text-5xl">
+          Checkout <Lock className="h-6 w-6 text-primary" />
+        </h1>
         <fieldset className="space-y-3">
           <legend className="mb-3 font-serif text-2xl">Contact</legend>
-          <input className="field" type="email" required placeholder="Email address" aria-label="Email" />
+          <input
+            className="field"
+            type="email"
+            required
+            placeholder="Email address"
+            aria-label="Email"
+          />
         </fieldset>
         <fieldset className="space-y-3">
           <legend className="mb-3 font-serif text-2xl">Shipping address</legend>
@@ -58,12 +74,19 @@ function Checkout() {
         {notice ? (
           <div className="rounded-2xl bg-blush p-6 text-center">
             <p className="font-serif text-2xl">Almost there!</p>
-            <p className="mt-2 text-muted-foreground">Payments are being set up and will open very soon. Thank you for your patience, beautiful.</p>
+            <p className="mt-2 text-muted-foreground">
+              Payments are being set up and will open very soon. Thank you for your patience,
+              beautiful.
+            </p>
           </div>
         ) : (
-          <button className="btn-primary w-full"><Lock className="h-4 w-4" /> Continue to payment · {formatPrice(total)}</button>
+          <button className="btn-primary w-full">
+            <Lock className="h-4 w-4" /> Continue to payment · {formatPrice(total)}
+          </button>
         )}
-        <p className="text-center text-xs text-muted-foreground">Encrypted & secure · 30-day returns</p>
+        <p className="text-center text-xs text-muted-foreground">
+          Encrypted & secure · 30-day returns
+        </p>
       </form>
 
       <aside className="h-fit space-y-5 rounded-2xl bg-cream p-7">
@@ -74,23 +97,56 @@ function Checkout() {
             if (!p) return null;
             return (
               <li key={l.slug} className="flex items-center gap-4">
-                <img src={p.images[0]} alt={p.name} className="h-16 w-16 rounded-lg object-cover" loading="lazy" />
-                <span className="flex-1 text-sm">{p.short} × {l.qty}</span>
+                <img
+                  src={p.images[0]}
+                  alt={p.name}
+                  className="h-16 w-16 rounded-lg object-cover"
+                  loading="lazy"
+                />
+                <span className="flex-1 text-sm">
+                  {p.short} × {l.qty}
+                </span>
                 <span className="text-sm">{formatPrice(p.price * l.qty)}</span>
               </li>
             );
           })}
         </ul>
         <div className="flex gap-2">
-          <input className="field" placeholder="Discount code" value={code} onChange={(e) => setCode(e.target.value)} aria-label="Discount code" />
-          <button type="button" className="btn-outline px-5" onClick={() => setApplied(code.trim().toUpperCase() === "WELCOME10")}>Apply</button>
+          <input
+            className="field"
+            placeholder="Discount code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            aria-label="Discount code"
+          />
+          <button
+            type="button"
+            className="btn-outline px-5"
+            onClick={() => setApplied(code.trim().toUpperCase() === "WELCOME10")}
+          >
+            Apply
+          </button>
         </div>
         {applied && <p className="text-sm text-primary">WELCOME10 applied — 10% off ✨</p>}
         <div className="space-y-2 border-t pt-4 text-sm">
-          <div className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></div>
-          {applied && <div className="flex justify-between"><span>Discount</span><span>−{formatPrice(discount)}</span></div>}
-          <div className="flex justify-between"><span>Shipping</span><span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span></div>
-          <div className="flex justify-between pt-2 text-lg font-medium"><span>Total</span><span>{formatPrice(total)}</span></div>
+          <div className="flex justify-between">
+            <span>Subtotal</span>
+            <span>{formatPrice(subtotal)}</span>
+          </div>
+          {applied && (
+            <div className="flex justify-between">
+              <span>Discount</span>
+              <span>−{formatPrice(discount)}</span>
+            </div>
+          )}
+          <div className="flex justify-between">
+            <span>Shipping</span>
+            <span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span>
+          </div>
+          <div className="flex justify-between pt-2 text-lg font-medium">
+            <span>Total</span>
+            <span>{formatPrice(total)}</span>
+          </div>
         </div>
       </aside>
     </section>

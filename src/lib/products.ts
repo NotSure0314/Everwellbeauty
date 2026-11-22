@@ -44,9 +44,18 @@ export const products: Product[] = [
       { title: "Massage", body: "Finish with a slow fingertip massage and take a deep breath." },
     ],
     faqs: [
-      { q: "What oils can I use?", a: "Most hair oils and serums work well. Very thick oils may flow more slowly — warming the bottle in your hands helps." },
-      { q: "How do I clean it?", a: "Empty the tank, rinse with warm soapy water, and let it air dry before refilling." },
-      { q: "Will it leak in my bag?", a: "Keep the cap on and store it upright for travel to keep everything tidy." },
+      {
+        q: "What oils can I use?",
+        a: "Most hair oils and serums work well. Very thick oils may flow more slowly — warming the bottle in your hands helps.",
+      },
+      {
+        q: "How do I clean it?",
+        a: "Empty the tank, rinse with warm soapy water, and let it air dry before refilling.",
+      },
+      {
+        q: "Will it leak in my bag?",
+        a: "Keep the cap on and store it upright for travel to keep everything tidy.",
+      },
     ],
   },
   {
@@ -71,12 +80,21 @@ export const products: Product[] = [
       { title: "Prep", body: "Start with hair that's dry or just slightly damp." },
       { title: "Center", body: "Place the middle of the ribbon on top of your head." },
       { title: "Wrap", body: "Twist sections of hair around each side, working downward." },
-      { title: "Secure & sleep", body: "Tie the ends with the scrunchies, rest, and unwrap in the morning." },
+      {
+        title: "Secure & sleep",
+        body: "Tie the ends with the scrunchies, rest, and unwrap in the morning.",
+      },
     ],
     faqs: [
       { q: "Does it work on short hair?", a: "It works best on shoulder-length hair and longer." },
-      { q: "Can I really sleep on my side?", a: "Yes — the flat, wire-free ribbon was made for exactly that." },
-      { q: "How do I care for the silk?", a: "Hand wash gently in cool water with a mild detergent and lay flat to dry." },
+      {
+        q: "Can I really sleep on my side?",
+        a: "Yes — the flat, wire-free ribbon was made for exactly that.",
+      },
+      {
+        q: "How do I care for the silk?",
+        a: "Hand wash gently in cool water with a mild detergent and lay flat to dry.",
+      },
     ],
   },
 ];

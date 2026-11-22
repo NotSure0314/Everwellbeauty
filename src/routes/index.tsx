@@ -28,9 +28,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Everwell Beauty — Feel Beautiful, Every Day" },
-      { name: "description", content: "Calm, luxurious hair rituals: a rollerball scalp oil comb and a silk heatless curler for soft overnight curls." },
+      {
+        name: "description",
+        content:
+          "Calm, luxurious hair rituals: a rollerball scalp oil comb and a silk heatless curler for soft overnight curls.",
+      },
       { property: "og:title", content: "Everwell Beauty — Feel Beautiful, Every Day" },
-      { property: "og:description", content: "Calm, luxurious hair rituals for women who deserve a moment for themselves." },
+      {
+        property: "og:description",
+        content: "Calm, luxurious hair rituals for women who deserve a moment for themselves.",
+      },
     ],
   }),
   component: Home,
@@ -68,7 +75,8 @@ function Home() {
           hideFloatingNav={true}
           className="min-h-0 bg-transparent pt-0 pb-6"
           onAddToCart={(item, qty) => {
-            const slug = item.id === "heatless-curler" ? "silk-heatless-curler" : "rollerball-scalp-oil-comb";
+            const slug =
+              item.id === "heatless-curler" ? "silk-heatless-curler" : "rollerball-scalp-oil-comb";
             add(slug, qty);
             setOpen(true);
           }}
@@ -78,15 +86,29 @@ function Home() {
       <section className="bg-blush">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 md:grid-cols-2">
           <Reveal>
-            <img src={curls} alt="Woman smiling with soft heatless curls" width={1024} height={1024} loading="lazy" className="aspect-square w-full rounded-[2rem] object-cover" />
+            <img
+              src={curls}
+              alt="Woman smiling with soft heatless curls"
+              width={1024}
+              height={1024}
+              loading="lazy"
+              className="aspect-square w-full rounded-[2rem] object-cover"
+            />
           </Reveal>
           <Reveal delay={150}>
             <p className="eyebrow">Overnight, effortlessly</p>
             <h2 className="mt-4 text-4xl md:text-5xl">Wake up to curls that feel like you</h2>
             <p className="mt-5 text-lg text-muted-foreground">
-              Wrap, rest, and unwrap soft, bouncy curls — no heat, no wires, no fuss. Our silk curler stays comfy even when you sleep on your side.
+              Wrap, rest, and unwrap soft, bouncy curls — no heat, no wires, no fuss. Our silk
+              curler stays comfy even when you sleep on your side.
             </p>
-            <Link to="/products/$slug" params={{ slug: "silk-heatless-curler" }} className="btn-primary mt-8">Meet the curler</Link>
+            <Link
+              to="/products/$slug"
+              params={{ slug: "silk-heatless-curler" }}
+              className="btn-primary mt-8"
+            >
+              Meet the curler
+            </Link>
           </Reveal>
         </div>
       </section>
@@ -96,9 +118,12 @@ function Home() {
           <p className="eyebrow">Kind words</p>
           <h2 className="mt-4 text-4xl md:text-5xl">From our community</h2>
           <p className="mx-auto mt-6 max-w-lg text-muted-foreground">
-            We're a brand-new brand, and our first reviews are on their way. Tried a ritual? We'd love to hear how it made you feel.
+            We're a brand-new brand, and our first reviews are on their way. Tried a ritual? We'd
+            love to hear how it made you feel.
           </p>
-          <Link to="/contact" className="btn-outline mt-8">Share your story</Link>
+          <Link to="/contact" className="btn-outline mt-8">
+            Share your story
+          </Link>
         </Reveal>
       </section>
 

@@ -24,7 +24,9 @@ function CartPage() {
       <section className="px-5 py-32 text-center">
         <h1 className="text-5xl">Your bag is empty</h1>
         <p className="mt-4 text-muted-foreground">Something lovely is waiting for you.</p>
-        <Link to="/shop" className="btn-primary mt-8">Shop the ritual</Link>
+        <Link to="/shop" className="btn-primary mt-8">
+          Shop the ritual
+        </Link>
       </section>
     );
   return (
@@ -37,11 +39,24 @@ function CartPage() {
             if (!p) return null;
             return (
               <li key={l.slug} className="flex gap-5 py-6">
-                <img src={p.images[0]} alt={p.name} className="h-28 w-28 rounded-xl object-cover" loading="lazy" />
+                <img
+                  src={p.images[0]}
+                  alt={p.name}
+                  className="h-28 w-28 rounded-xl object-cover"
+                  loading="lazy"
+                />
                 <div className="flex flex-1 flex-col justify-between">
                   <div className="flex justify-between gap-3">
-                    <Link to="/products/$slug" params={{ slug: p.slug }} className="font-serif text-xl">{p.name}</Link>
-                    <button onClick={() => remove(p.slug)} aria-label="Remove"><X className="h-4 w-4" /></button>
+                    <Link
+                      to="/products/$slug"
+                      params={{ slug: p.slug }}
+                      className="font-serif text-xl"
+                    >
+                      {p.name}
+                    </Link>
+                    <button onClick={() => remove(p.slug)} aria-label="Remove">
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
                   <div className="flex items-center justify-between">
                     <QtyControl qty={l.qty} onChange={(n) => setQty(p.slug, n)} />
@@ -55,9 +70,16 @@ function CartPage() {
       </div>
       <aside className="h-fit space-y-5 rounded-2xl bg-cream p-7">
         <ShippingProgress subtotal={subtotal} />
-        <div className="flex justify-between text-lg"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></div>
-        <p className="text-sm text-muted-foreground">Shipping and discounts calculated at checkout.</p>
-        <Link to="/checkout" className="btn-primary w-full"><Lock className="h-4 w-4" /> Secure checkout</Link>
+        <div className="flex justify-between text-lg">
+          <span>Subtotal</span>
+          <span>{formatPrice(subtotal)}</span>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Shipping and discounts calculated at checkout.
+        </p>
+        <Link to="/checkout" className="btn-primary w-full">
+          <Lock className="h-4 w-4" /> Secure checkout
+        </Link>
       </aside>
     </section>
   );

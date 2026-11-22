@@ -7,14 +7,26 @@ import { formatPrice, getProduct, FREE_SHIPPING_THRESHOLD } from "@/lib/products
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <Link to="/" className={`flex flex-col items-center leading-none ${className}`} aria-label="Everwell Beauty home">
+    <Link
+      to="/"
+      className={`flex flex-col items-center leading-none ${className}`}
+      aria-label="Everwell Beauty home"
+    >
       <span className="font-serif text-2xl tracking-[0.18em] md:text-3xl">EVERWELL</span>
       <span className="mt-1 text-[0.6rem] tracking-[0.5em] text-primary">BEAUTY</span>
     </Link>
   );
 }
 
-export function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+export function Reveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -61,7 +73,12 @@ export function SiteHeader() {
             </button>
             <nav className="hidden gap-7 text-sm md:flex">
               {nav.slice(0, 2).map((n) => (
-                <Link key={n.to} to={n.to} className="link-underline" activeProps={{ className: "text-primary" }}>
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  className="link-underline"
+                  activeProps={{ className: "text-primary" }}
+                >
                   {n.label}
                 </Link>
               ))}
@@ -71,12 +88,21 @@ export function SiteHeader() {
           <div className="flex items-center justify-end gap-7 text-sm">
             <nav className="hidden gap-7 md:flex">
               {nav.slice(2).map((n) => (
-                <Link key={n.to} to={n.to} className="link-underline" activeProps={{ className: "text-primary" }}>
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  className="link-underline"
+                  activeProps={{ className: "text-primary" }}
+                >
                   {n.label}
                 </Link>
               ))}
             </nav>
-            <button onClick={() => setOpen(true)} className="relative" aria-label={`Open bag, ${count} items`}>
+            <button
+              onClick={() => setOpen(true)}
+              className="relative"
+              aria-label={`Open bag, ${count} items`}
+            >
               <ShoppingBag className="h-6 w-6" />
               {count > 0 && (
                 <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[0.65rem] text-primary-foreground">
@@ -95,7 +121,9 @@ export function SiteHeader() {
             </button>
           </div>
           <nav className="mt-12 flex flex-col items-center gap-8 font-serif text-4xl">
-            <Link to="/" onClick={() => setMenu(false)}>Home</Link>
+            <Link to="/" onClick={() => setMenu(false)}>
+              Home
+            </Link>
             {nav.map((n) => (
               <Link key={n.to} to={n.to} onClick={() => setMenu(false)}>
                 {n.label}
@@ -129,10 +157,20 @@ export function ShippingProgress({ subtotal }: { subtotal: number }) {
   return (
     <div>
       <p className="text-sm">
-        {left > 0 ? <>You're <strong className="font-medium">{formatPrice(left)}</strong> away from free shipping</> : "You've unlocked free shipping ✨"}
+        {left > 0 ? (
+          <>
+            You're <strong className="font-medium">{formatPrice(left)}</strong> away from free
+            shipping
+          </>
+        ) : (
+          "You've unlocked free shipping ✨"
+        )}
       </p>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-blush">
-        <div className="h-full rounded-full bg-primary transition-all duration-700" style={{ width: `${pct}%` }} />
+        <div
+          className="h-full rounded-full bg-primary transition-all duration-700"
+          style={{ width: `${pct}%` }}
+        />
       </div>
     </div>
   );
@@ -143,7 +181,10 @@ function CartDrawer() {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-espresso/30 animate-in fade-in" onClick={() => setOpen(false)} />
+      <div
+        className="absolute inset-0 bg-espresso/30 animate-in fade-in"
+        onClick={() => setOpen(false)}
+      />
       <aside className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-background shadow-soft animate-in slide-in-from-right duration-300">
         <div className="flex items-center justify-between border-b p-5">
           <h2 className="text-2xl">Your bag</h2>
@@ -154,18 +195,27 @@ function CartDrawer() {
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-5 p-8 text-center">
             <p className="font-serif text-2xl">Your bag is waiting for something lovely.</p>
-            <Link to="/shop" className="btn-primary" onClick={() => setOpen(false)}>Explore the ritual</Link>
+            <Link to="/shop" className="btn-primary" onClick={() => setOpen(false)}>
+              Explore the ritual
+            </Link>
           </div>
         ) : (
           <>
-            <div className="border-b bg-cream p-5"><ShippingProgress subtotal={subtotal} /></div>
+            <div className="border-b bg-cream p-5">
+              <ShippingProgress subtotal={subtotal} />
+            </div>
             <ul className="flex-1 space-y-5 overflow-y-auto p-5">
               {lines.map((l) => {
                 const p = getProduct(l.slug);
                 if (!p) return null;
                 return (
                   <li key={l.slug} className="flex gap-4">
-                    <img src={p.images[0]} alt={p.name} className="h-24 w-24 rounded-lg object-cover" loading="lazy" />
+                    <img
+                      src={p.images[0]}
+                      alt={p.name}
+                      className="h-24 w-24 rounded-lg object-cover"
+                      loading="lazy"
+                    />
                     <div className="flex flex-1 flex-col justify-between">
                       <div className="flex justify-between gap-2">
                         <p className="font-serif text-lg leading-tight">{p.name}</p>
@@ -185,7 +235,13 @@ function CartDrawer() {
               <Link to="/checkout" className="btn-primary w-full" onClick={() => setOpen(false)}>
                 <Lock className="h-4 w-4" /> Secure checkout
               </Link>
-              <Link to="/cart" className="block text-center text-sm underline" onClick={() => setOpen(false)}>View full bag</Link>
+              <Link
+                to="/cart"
+                className="block text-center text-sm underline"
+                onClick={() => setOpen(false)}
+              >
+                View full bag
+              </Link>
             </div>
           </>
         )}
@@ -225,9 +281,14 @@ export function Newsletter() {
       <Reveal className="mx-auto max-w-xl text-center">
         <p className="eyebrow">Join the ritual</p>
         <h2 className="mt-4 text-4xl md:text-5xl">A little gift, just for you</h2>
-        <p className="mt-4 text-muted-foreground">Sign up for gentle hair-care tips and early access — and enjoy 10% off your first order.</p>
+        <p className="mt-4 text-muted-foreground">
+          Sign up for gentle hair-care tips and early access — and enjoy 10% off your first order.
+        </p>
         {done ? (
-          <p className="mt-8 font-serif text-2xl">Welcome in, beautiful. Use code <strong className="text-primary">WELCOME10</strong> at checkout.</p>
+          <p className="mt-8 font-serif text-2xl">
+            Welcome in, beautiful. Use code <strong className="text-primary">WELCOME10</strong> at
+            checkout.
+          </p>
         ) : (
           <form
             className="mt-8 flex flex-col gap-3 sm:flex-row"
@@ -240,7 +301,15 @@ export function Newsletter() {
               setDone(true);
             }}
           >
-            <input className="field" type="email" required placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="Email address" />
+            <input
+              className="field"
+              type="email"
+              required
+              placeholder="Your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-label="Email address"
+            />
             <button className="btn-primary shrink-0">Get 10% off</button>
           </form>
         )}
@@ -255,22 +324,37 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-serif text-3xl tracking-[0.18em]">EVERWELL</p>
-          <p className="mt-3 max-w-sm text-sm opacity-80">Gentle hair rituals for women who deserve a moment of calm — and already know they're beautiful.</p>
+          <p className="mt-3 max-w-sm text-sm opacity-80">
+            Gentle hair rituals for women who deserve a moment of calm — and already know they're
+            beautiful.
+          </p>
         </div>
         <div className="space-y-2 text-sm">
           <p className="mb-3 text-xs tracking-[0.25em] opacity-70">SHOP</p>
-          <Link to="/shop" className="block link-underline w-fit">All products</Link>
-          <Link to="/about" className="block link-underline w-fit">Our story</Link>
-          <Link to="/help" className="block link-underline w-fit">Shipping & returns</Link>
+          <Link to="/shop" className="block link-underline w-fit">
+            All products
+          </Link>
+          <Link to="/about" className="block link-underline w-fit">
+            Our story
+          </Link>
+          <Link to="/help" className="block link-underline w-fit">
+            Shipping & returns
+          </Link>
         </div>
         <div className="space-y-2 text-sm">
           <p className="mb-3 text-xs tracking-[0.25em] opacity-70">SAY HELLO</p>
-          <a href="mailto:hello@everwellbeauty.com" className="block link-underline w-fit">hello@everwellbeauty.com</a>
+          <a href="mailto:hello@everwellbeauty.com" className="block link-underline w-fit">
+            hello@everwellbeauty.com
+          </a>
           <p className="opacity-80">Mon–Fri, 9am–5pm CT</p>
-          <Link to="/contact" className="block link-underline w-fit">Contact us</Link>
+          <Link to="/contact" className="block link-underline w-fit">
+            Contact us
+          </Link>
         </div>
       </div>
-      <p className="mx-auto mt-12 max-w-7xl border-t border-cream/20 pt-6 text-xs opacity-70">© {new Date().getFullYear()} Everwell Beauty. Made with love.</p>
+      <p className="mx-auto mt-12 max-w-7xl border-t border-cream/20 pt-6 text-xs opacity-70">
+        © {new Date().getFullYear()} Everwell Beauty. Made with love.
+      </p>
     </footer>
   );
 }
@@ -280,7 +364,11 @@ export function ProductCard({ slug }: { slug: string }) {
   const { add, setOpen } = useCart();
   return (
     <div className="group flex flex-col h-full">
-      <Link to="/products/$slug" params={{ slug }} className={`block overflow-hidden rounded-2xl ${p.tone === "peach" ? "bg-peach" : "bg-pink"}`}>
+      <Link
+        to="/products/$slug"
+        params={{ slug }}
+        className={`block overflow-hidden rounded-2xl ${p.tone === "peach" ? "bg-peach" : "bg-pink"}`}
+      >
         <img
           src={p.images[0]}
           alt={p.name}
@@ -293,7 +381,11 @@ export function ProductCard({ slug }: { slug: string }) {
       <div className="mt-5 flex flex-1 flex-col justify-between">
         <div>
           <div className="flex items-start justify-between gap-4">
-            <Link to="/products/$slug" params={{ slug }} className="font-serif text-2xl leading-tight">
+            <Link
+              to="/products/$slug"
+              params={{ slug }}
+              className="font-serif text-2xl leading-tight"
+            >
               {p.name}
             </Link>
             <p className="text-lg shrink-0">{formatPrice(p.price)}</p>

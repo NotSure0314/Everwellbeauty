@@ -14,9 +14,35 @@
  */
 "use client";
 
-import { useEffect, useId, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode, type RefObject } from "react";
-import { AnimatePresence, LayoutGroup, animate, motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { ChevronDown, ChevronLeft, ChevronRight, Minus, Plus, Rotate3d, ShoppingBag, Star } from "lucide-react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+  type RefObject,
+} from "react";
+import {
+  AnimatePresence,
+  LayoutGroup,
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Minus,
+  Plus,
+  Rotate3d,
+  ShoppingBag,
+  Star,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import combImg from "@/assets/comb.jpg";
 import curlerImg from "@/assets/curler.jpg";
@@ -25,7 +51,18 @@ import heroImg from "@/assets/hero.jpg";
 import curlerStudioImg from "@/assets/heatless-curler.png";
 import combStudioImg from "@/assets/scalp-oil-comb.png";
 
-type Kind = "jar" | "tube" | "pump" | "dropper" | "perfume" | "mist" | "bottle" | "stick" | "lip" | "comb" | "curler";
+type Kind =
+  | "jar"
+  | "tube"
+  | "pump"
+  | "dropper"
+  | "perfume"
+  | "mist"
+  | "bottle"
+  | "stick"
+  | "lip"
+  | "comb"
+  | "curler";
 
 export type Product = {
   id: string;
@@ -148,7 +185,8 @@ export const DEFAULT_PRODUCTS: Product[] = [
       "Pairs with our Rollerball Comb",
     ],
     ingredients: "Coming soon. Sign up for early ingredient reveal and launch perks.",
-    howTo: "Dispense directly into the Everwell Rollerball Scalp Comb or apply drops along hair parts.",
+    howTo:
+      "Dispense directly into the Everwell Rollerball Scalp Comb or apply drops along hair parts.",
   },
   {
     id: "coming-soon-2",
@@ -175,7 +213,8 @@ export const DEFAULT_PRODUCTS: Product[] = [
       "Rinses clean or leaves hair weightless",
     ],
     ingredients: "Coming soon. Sign up to get notified the minute this drops.",
-    howTo: "Warm a dime-sized amount between palms and smooth over lengths before wrapping into your heatless curler.",
+    howTo:
+      "Warm a dime-sized amount between palms and smooth over lengths before wrapping into your heatless curler.",
   },
 ];
 
@@ -185,7 +224,15 @@ type RGB = [number, number, number];
 
 const hexRgb = (hex: string): RGB => {
   const h = hex.replace("#", "");
-  const n = parseInt(h.length === 3 ? h.split("").map((c) => c + c).join("") : h, 16);
+  const n = parseInt(
+    h.length === 3
+      ? h
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : h,
+    16,
+  );
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 };
 
@@ -195,7 +242,8 @@ const mixRgb = (a: RGB, b: RGB, t: number): RGB => [
   Math.round(a[2] + (b[2] - a[2]) * t),
 ];
 
-const css = (c: RGB, k = 1, a = 1) => `rgba(${Math.round((c[0] ?? 0) * k)}, ${Math.round((c[1] ?? 0) * k)}, ${Math.round((c[2] ?? 0) * k)}, ${a})`;
+const css = (c: RGB, k = 1, a = 1) =>
+  `rgba(${Math.round((c[0] ?? 0) * k)}, ${Math.round((c[1] ?? 0) * k)}, ${Math.round((c[2] ?? 0) * k)}, ${a})`;
 const WHITE: RGB = [255, 255, 255];
 const lum = (c: RGB) => c[0] * 0.3 + c[1] * 0.59 + c[2] * 0.11;
 
@@ -220,7 +268,16 @@ const rr = (x: number, y: number, w: number, h: number, r: number) =>
 
 const ridges = (x: number, y: number, w: number, h: number, step = 2.6) =>
   Array.from({ length: Math.floor(w / step) }, (_, i) => (
-    <line key={i} x1={x + 1 + i * step} y1={y + 1.5} x2={x + 1 + i * step} y2={y + h - 1.5} stroke="#000" strokeOpacity={i % 2 ? 0.14 : 0.06} strokeWidth="1" />
+    <line
+      key={i}
+      x1={x + 1 + i * step}
+      y1={y + 1.5}
+      x2={x + 1 + i * step}
+      y2={y + h - 1.5}
+      stroke="#000"
+      strokeOpacity={i % 2 ? 0.14 : 0.06}
+      strokeWidth="1"
+    />
   ));
 
 const SHAPES: Record<Kind, Shape> = {
@@ -235,7 +292,15 @@ const SHAPES: Record<Kind, Shape> = {
       <>
         {/* Upper rose-gold collar */}
         <rect x="84" y="130" width="32" height="6" rx="1.5" fill={`url(#${id}-metal)`} />
-        <line x1="85" y1="131" x2="115" y2="131" stroke="#fff" strokeOpacity="0.8" strokeWidth="0.8" />
+        <line
+          x1="85"
+          y1="131"
+          x2="115"
+          y2="131"
+          stroke="#fff"
+          strokeOpacity="0.8"
+          strokeWidth="0.8"
+        />
 
         {/* Sculpted ivory ergonomic handle tapering up to rounded crown */}
         <path
@@ -253,7 +318,15 @@ const SHAPES: Record<Kind, Shape> = {
         />
         {/* Ergonomic handle button */}
         <circle cx="100" cy="114" r="5" fill="#ded5c8" />
-        <circle cx="100" cy="114" r="4.2" fill="none" stroke="#fff" strokeOpacity="0.65" strokeWidth="0.8" />
+        <circle
+          cx="100"
+          cy="114"
+          r="4.2"
+          fill="none"
+          stroke="#fff"
+          strokeOpacity="0.65"
+          strokeWidth="0.8"
+        />
         <circle cx="100" cy="114" r="3.2" fill="#ede5da" />
 
         {/* Lower knurled rose-gold collar */}
@@ -261,27 +334,64 @@ const SHAPES: Record<Kind, Shape> = {
         {/* Knurled cross-hatch diamond grip pattern */}
         <g opacity="0.32">
           {Array.from({ length: 9 }, (_, i) => (
-            <line key={`k1-${i}`} x1={84 + i * 3.8} y1="212" x2={84 + i * 3.8 + 8} y2="232" stroke="#000" strokeWidth="0.8" />
+            <line
+              key={`k1-${i}`}
+              x1={84 + i * 3.8}
+              y1="212"
+              x2={84 + i * 3.8 + 8}
+              y2="232"
+              stroke="#000"
+              strokeWidth="0.8"
+            />
           ))}
           {Array.from({ length: 9 }, (_, i) => (
-            <line key={`k2-${i}`} x1={84 + i * 3.8 + 8} y1="212" x2={84 + i * 3.8} y2="232" stroke="#000" strokeWidth="0.8" />
+            <line
+              key={`k2-${i}`}
+              x1={84 + i * 3.8 + 8}
+              y1="212"
+              x2={84 + i * 3.8}
+              y2="232"
+              stroke="#000"
+              strokeWidth="0.8"
+            />
           ))}
         </g>
-        <line x1="85" y1="213" x2="115" y2="213" stroke="#fff" strokeOpacity="0.8" strokeWidth="0.9" />
+        <line
+          x1="85"
+          y1="213"
+          x2="115"
+          y2="213"
+          stroke="#fff"
+          strokeOpacity="0.8"
+          strokeWidth="0.9"
+        />
 
         {/* Flared ivory comb manifold head */}
         <path
           d="M84 232 C82 244, 66 252, 63 260 V265 Q63 268 67 268 H133 Q137 268 137 265 V260 C134 252, 118 244, 116 232 Z"
           fill={`url(#${id}-handle)`}
         />
-        <path d="M65 261 Q100 256 135 261" stroke="#fff" strokeOpacity="0.85" strokeWidth="1" fill="none" />
+        <path
+          d="M65 261 Q100 256 135 261"
+          stroke="#fff"
+          strokeOpacity="0.85"
+          strokeWidth="1"
+          fill="none"
+        />
         <rect x="63" y="267" width="74" height="2" fill="#000" opacity="0.16" />
 
         {/* Exactly 9 Surgical Stainless Steel Dispenser Teeth with Precision Rollerballs */}
         {[69, 77, 85, 92, 100, 108, 115, 123, 131].map((tx, i) => (
           <g key={i}>
             {/* Stainless steel tooth pin */}
-            <rect x={tx - 1.8} y="268" width="3.6" height="12.5" rx="1.2" fill={`url(#${id}-steel)`} />
+            <rect
+              x={tx - 1.8}
+              y="268"
+              width="3.6"
+              height="12.5"
+              rx="1.2"
+              fill={`url(#${id}-steel)`}
+            />
             {/* Rollerball spherical tip touching y = 286 */}
             <circle cx={tx} cy="283.4" r="2.6" fill={`url(#${id}-ball)`} />
             <circle cx={tx - 0.6} cy="282.6" r="0.7" fill="#ffffff" opacity="0.9" />
@@ -318,14 +428,40 @@ const SHAPES: Record<Kind, Shape> = {
         <rect x="66" y="80" width="24" height="172" rx="12" fill={`url(#${id}-silk)`} />
         <rect x="110" y="80" width="24" height="172" rx="12" fill={`url(#${id}-silk)`} />
         {/* Specular silk highlights along legs */}
-        <line x1="72" y1="90" x2="72" y2="250" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-        <line x1="116" y1="90" x2="116" y2="250" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+        <line
+          x1="72"
+          y1="90"
+          x2="72"
+          y2="250"
+          stroke="#fff"
+          strokeWidth="2"
+          strokeLinecap="round"
+          opacity="0.5"
+        />
+        <line
+          x1="116"
+          y1="90"
+          x2="116"
+          y2="250"
+          stroke="#fff"
+          strokeWidth="2"
+          strokeLinecap="round"
+          opacity="0.5"
+        />
 
         {/* 3. Inner tucked silk ends inside loop (y = 216 to 262) */}
         <rect x="91" y="216" width="8.5" height="46" rx="4.2" fill={`url(#${id}-silk)`} />
         <rect x="100.5" y="216" width="8.5" height="46" rx="4.2" fill={`url(#${id}-silk)`} />
         <line x1="93" y1="220" x2="93" y2="258" stroke="#fff" strokeWidth="1" opacity="0.45" />
-        <line x1="102.5" y1="220" x2="102.5" y2="258" stroke="#fff" strokeWidth="1" opacity="0.45" />
+        <line
+          x1="102.5"
+          y1="220"
+          x2="102.5"
+          y2="258"
+          stroke="#fff"
+          strokeWidth="1"
+          opacity="0.45"
+        />
 
         {/* 4. Bottom continuous U-turn loop (y = 244 to 286, resting firmly on shelf at y = 286!) */}
         <path
@@ -350,34 +486,206 @@ const SHAPES: Record<Kind, Shape> = {
 
         {/* Stacked Ruched Silk Scrunchie 1 (Upper, y = 74 to 102) */}
         <g>
-          <ellipse cx="100" cy="88" rx="35" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
-          <ellipse cx="74" cy="88" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="84" cy="89.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="94" cy="87.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="106" cy="89.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="116" cy="87.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="126" cy="88" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <path d="M79 82 Q81 88 79 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M89 82 Q87 88 89 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M100 82 Q102 88 100 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M111 82 Q109 88 111 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M121 82 Q123 88 121 94" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <ellipse
+            cx="100"
+            cy="88"
+            rx="35"
+            ry="11"
+            fill="#c88b8e"
+            opacity="0.25"
+            filter={`url(#${id}-soft)`}
+          />
+          <ellipse
+            cx="74"
+            cy="88"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="84"
+            cy="89.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="94"
+            cy="87.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="106"
+            cy="89.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="116"
+            cy="87.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="126"
+            cy="88"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <path
+            d="M79 82 Q81 88 79 94"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M89 82 Q87 88 89 94"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M100 82 Q102 88 100 94"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M111 82 Q109 88 111 94"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M121 82 Q123 88 121 94"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
         </g>
 
         {/* Stacked Ruched Silk Scrunchie 2 (Lower, y = 98 to 126, directly overlapping with upper scrunchie and legs!) */}
         <g>
-          <ellipse cx="100" cy="112" rx="35" ry="11" fill="#c88b8e" opacity="0.25" filter={`url(#${id}-soft)`} />
-          <ellipse cx="74" cy="112" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="84" cy="113.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="94" cy="111.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="106" cy="113.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="116" cy="111.5" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <ellipse cx="126" cy="112" rx="9" ry="8" fill={`url(#${id}-silk)`} stroke="#dca4a7" strokeWidth="0.6" />
-          <path d="M79 106 Q81 112 79 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M89 106 Q87 112 89 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M100 106 Q102 112 100 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M111 106 Q109 112 111 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
-          <path d="M121 106 Q123 112 121 118" stroke="#ab6b6e" strokeWidth="0.8" fill="none" opacity="0.6" />
+          <ellipse
+            cx="100"
+            cy="112"
+            rx="35"
+            ry="11"
+            fill="#c88b8e"
+            opacity="0.25"
+            filter={`url(#${id}-soft)`}
+          />
+          <ellipse
+            cx="74"
+            cy="112"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="84"
+            cy="113.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="94"
+            cy="111.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="106"
+            cy="113.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="116"
+            cy="111.5"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <ellipse
+            cx="126"
+            cy="112"
+            rx="9"
+            ry="8"
+            fill={`url(#${id}-silk)`}
+            stroke="#dca4a7"
+            strokeWidth="0.6"
+          />
+          <path
+            d="M79 106 Q81 112 79 118"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M89 106 Q87 112 89 118"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M100 106 Q102 112 100 118"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M111 106 Q109 112 111 118"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
+          <path
+            d="M121 106 Q123 112 121 118"
+            stroke="#ab6b6e"
+            strokeWidth="0.8"
+            fill="none"
+            opacity="0.6"
+          />
         </g>
       </>
     ),
@@ -403,11 +711,24 @@ const SHAPES: Record<Kind, Shape> = {
     cap: (id) => (
       <>
         <path d={`M62 40 H138 V58 H62 Z`} fill={`url(#${id}-body)`} />
-        <path d={`M62 40 ${Array.from({ length: 19 }, (_, i) => `L${64 + i * 4} ${i % 2 ? 40 : 37.5}`).join(" ")} L138 40`} fill={`url(#${id}-body)`} />
+        <path
+          d={`M62 40 ${Array.from({ length: 19 }, (_, i) => `L${64 + i * 4} ${i % 2 ? 40 : 37.5}`).join(" ")} L138 40`}
+          fill={`url(#${id}-body)`}
+        />
         {Array.from({ length: 18 }, (_, i) => (
-          <line key={i} x1={64 + i * 4.1} y1="42" x2={64 + i * 4.1} y2="56" stroke="#000" strokeOpacity="0.09" />
+          <line
+            key={i}
+            x1={64 + i * 4.1}
+            y1="42"
+            x2={64 + i * 4.1}
+            y2="56"
+            stroke="#000"
+            strokeOpacity="0.09"
+          />
         ))}
-        <text x="132" y="53" fontSize="3.4" textAnchor="end" fill="#000" fillOpacity="0.35">L2611 EXP 06/28</text>
+        <text x="132" y="53" fontSize="3.4" textAnchor="end" fill="#000" fillOpacity="0.35">
+          L2611 EXP 06/28
+        </text>
         <path d={rr(73, 248, 54, 38, 7)} fill={`url(#${id}-cap)`} />
         <g>{ridges(73, 256, 54, 28, 2.4)}</g>
         <path d={rr(73, 248, 54, 38, 7)} fill={`url(#${id}-capv)`} />
@@ -441,7 +762,14 @@ const SHAPES: Record<Kind, Shape> = {
     cap: (id) => (
       <>
         <path d="M86 118 V86 Q86 62 100 62 Q114 62 114 86 V118 Z" fill={`url(#${id}-bulb)`} />
-        <path d="M91 74 Q93 66 100 65" stroke="#fff" strokeOpacity="0.4" strokeWidth="2" fill="none" strokeLinecap="round" />
+        <path
+          d="M91 74 Q93 66 100 65"
+          stroke="#fff"
+          strokeOpacity="0.4"
+          strokeWidth="2"
+          fill="none"
+          strokeLinecap="round"
+        />
         <path d={rr(80, 114, 40, 28, 3)} fill={`url(#${id}-cap)`} />
         <g>{ridges(80, 114, 40, 28, 2)}</g>
         <path d={rr(80, 114, 40, 28, 3)} fill={`url(#${id}-capv)`} />
@@ -500,7 +828,15 @@ const SHAPES: Record<Kind, Shape> = {
       <>
         <path d={`M83 128 H117 V143 H83 Z`} fill={`url(#${id}-body)`} />
         {Array.from({ length: 8 }, (_, i) => (
-          <line key={i} x1={85 + i * 4.2} y1="130" x2={85 + i * 4.2} y2="141" stroke="#000" strokeOpacity="0.08" />
+          <line
+            key={i}
+            x1={85 + i * 4.2}
+            y1="130"
+            x2={85 + i * 4.2}
+            y2="141"
+            stroke="#000"
+            strokeOpacity="0.08"
+          />
         ))}
         <path d={rr(86, 248, 28, 38, 5)} fill={`url(#${id}-cap)`} />
         <path d={rr(86, 248, 28, 38, 5)} fill={`url(#${id}-capv)`} />
@@ -538,7 +874,15 @@ const pageZoom = (k: Kind) => Math.min(2.2, 262 / (290 - EXTENT[k].top), 190 / E
 
 // ---------- 3D Studio Product Art with Wrap-Around Label Animation ----------
 
-function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<number> | undefined; className?: string | undefined }) {
+function ProductArt({
+  p,
+  spin,
+  className,
+}: {
+  p: Product;
+  spin?: MotionValue<number> | undefined;
+  className?: string | undefined;
+}) {
   const id = "ps" + useId().replace(/[^a-zA-Z0-9]/g, "");
   const s = SHAPES[p.kind];
   const c = hexRgb(p.color);
@@ -557,12 +901,58 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
         <g transform={`translate(${dx} 0)`}>
           {/* Top white brand bar */}
           <rect x={P.x} y={P.y} width={P.w} height="12" fill="#ffffff" />
-          <text x={P.x + P.w / 2} y={P.y + 8} fill="#1a1614" fontSize="4.6" fontWeight="700" letterSpacing="0.8" textAnchor="middle">EVERWELL</text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 8}
+            fill="#1a1614"
+            fontSize="4.6"
+            fontWeight="700"
+            letterSpacing="0.8"
+            textAnchor="middle"
+          >
+            EVERWELL
+          </text>
           {/* Printed formula info */}
-          <text x={P.x + P.w / 2} y={P.y + 24} fill="#1a1614" fontSize="5.6" fontWeight="600" textAnchor="middle">Scalp</text>
-          <text x={P.x + P.w / 2} y={P.y + 33} fill="#1a1614" fontSize="5.6" fontWeight="600" textAnchor="middle">Treatment</text>
-          <text x={P.x + P.w / 2} y={P.y + 44} fill="#1a1614" fontSize="4.1" opacity="0.85" textAnchor="middle">Oil Infuser</text>
-          <text x={P.x + P.w / 2} y={P.y + 58} fill="#1a1614" fontSize="4.0" opacity="0.75" textAnchor="middle">50 ml</text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 24}
+            fill="#1a1614"
+            fontSize="5.6"
+            fontWeight="600"
+            textAnchor="middle"
+          >
+            Scalp
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 33}
+            fill="#1a1614"
+            fontSize="5.6"
+            fontWeight="600"
+            textAnchor="middle"
+          >
+            Treatment
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 44}
+            fill="#1a1614"
+            fontSize="4.1"
+            opacity="0.85"
+            textAnchor="middle"
+          >
+            Oil Infuser
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 58}
+            fill="#1a1614"
+            fontSize="4.0"
+            opacity="0.75"
+            textAnchor="middle"
+          >
+            50 ml
+          </text>
         </g>
       );
     }
@@ -570,13 +960,80 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
     if (p.kind === "curler") {
       return (
         <g transform={`translate(${dx} 0)`}>
-          {P.paper && <rect x={P.x} y={P.y} width={P.w} height={P.h} fill="#ffffff" stroke="#ece7de" strokeWidth="0.6" />}
-          <text x={P.x + P.w / 2} y={P.y + 14} fill="#1d1615" fontSize="5.2" fontWeight="700" letterSpacing="1.2" textAnchor="middle">EVERWELL</text>
-          <text x={P.x + P.w / 2} y={P.y + 28} fill="#1d1615" fontSize="7.4" fontWeight="600" letterSpacing="-0.2" textAnchor="middle">Heatless</text>
-          <text x={P.x + P.w / 2} y={P.y + 38} fill="#1d1615" fontSize="7.4" fontWeight="600" letterSpacing="-0.2" textAnchor="middle">Curler Set</text>
-          <text x={P.x + P.w / 2} y={P.y + 51} fill="#1d1615" fontSize="3.9" opacity="0.82" textAnchor="middle">Includes Silk Rod &amp; 2 Scrunchies</text>
-          <text x={P.x + P.w / 2} y={P.y + 65} fill="#1d1615" fontSize="3.6" opacity="0.75" textAnchor="middle">1 Set</text>
-          <text x={P.x + P.w / 2} y={P.y + 73} fill="#1d1615" fontSize="3.6" opacity="0.75" textAnchor="middle">Material: Silk</text>
+          {P.paper && (
+            <rect
+              x={P.x}
+              y={P.y}
+              width={P.w}
+              height={P.h}
+              fill="#ffffff"
+              stroke="#ece7de"
+              strokeWidth="0.6"
+            />
+          )}
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 14}
+            fill="#1d1615"
+            fontSize="5.2"
+            fontWeight="700"
+            letterSpacing="1.2"
+            textAnchor="middle"
+          >
+            EVERWELL
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 28}
+            fill="#1d1615"
+            fontSize="7.4"
+            fontWeight="600"
+            letterSpacing="-0.2"
+            textAnchor="middle"
+          >
+            Heatless
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 38}
+            fill="#1d1615"
+            fontSize="7.4"
+            fontWeight="600"
+            letterSpacing="-0.2"
+            textAnchor="middle"
+          >
+            Curler Set
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 51}
+            fill="#1d1615"
+            fontSize="3.9"
+            opacity="0.82"
+            textAnchor="middle"
+          >
+            Includes Silk Rod &amp; 2 Scrunchies
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 65}
+            fill="#1d1615"
+            fontSize="3.6"
+            opacity="0.75"
+            textAnchor="middle"
+          >
+            1 Set
+          </text>
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + 73}
+            fill="#1d1615"
+            fontSize="3.6"
+            opacity="0.75"
+            textAnchor="middle"
+          >
+            Material: Silk
+          </text>
         </g>
       );
     }
@@ -586,10 +1043,50 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
     return (
       <g transform={`translate(${dx} 0)`}>
         {P.paper && <rect x={P.x} y={P.y} width={P.w} height={P.h} fill={css(lab)} />}
-        <text x={P.x + P.w / 2} y={P.y + P.h * 0.22} fill={p.ink} fontSize={Math.min(6.5, P.w * 0.075)} fontWeight="600" letterSpacing={Math.min(1.6, P.w * 0.02)} textAnchor="middle">EVERWELL</text>
-        <text x={P.x + P.w / 2} y={P.y + P.h * 0.48} fill={p.ink} fontSize={nameSize} fontWeight="500" letterSpacing="-0.15" textAnchor="middle">{p.short}</text>
-        {p.sub && <text x={P.x + P.w / 2} y={P.y + P.h * 0.65} fill={p.ink} fontSize={subSize} opacity="0.8" textAnchor="middle">{p.sub}</text>}
-        <text x={P.x + P.w / 2} y={P.y + P.h * 0.88} fill={p.ink} opacity="0.6" fontSize={Math.min(5.8, P.w * 0.07)} textAnchor="middle">{p.sizes[0]}</text>
+        <text
+          x={P.x + P.w / 2}
+          y={P.y + P.h * 0.22}
+          fill={p.ink}
+          fontSize={Math.min(6.5, P.w * 0.075)}
+          fontWeight="600"
+          letterSpacing={Math.min(1.6, P.w * 0.02)}
+          textAnchor="middle"
+        >
+          EVERWELL
+        </text>
+        <text
+          x={P.x + P.w / 2}
+          y={P.y + P.h * 0.48}
+          fill={p.ink}
+          fontSize={nameSize}
+          fontWeight="500"
+          letterSpacing="-0.15"
+          textAnchor="middle"
+        >
+          {p.short}
+        </text>
+        {p.sub && (
+          <text
+            x={P.x + P.w / 2}
+            y={P.y + P.h * 0.65}
+            fill={p.ink}
+            fontSize={subSize}
+            opacity="0.8"
+            textAnchor="middle"
+          >
+            {p.sub}
+          </text>
+        )}
+        <text
+          x={P.x + P.w / 2}
+          y={P.y + P.h * 0.88}
+          fill={p.ink}
+          opacity="0.6"
+          fontSize={Math.min(5.8, P.w * 0.07)}
+          textAnchor="middle"
+        >
+          {p.sizes[0]}
+        </text>
       </g>
     );
   };
@@ -705,11 +1202,32 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
       <g clipPath={`url(#${id}-clip)`}>
         {p.glass && s.fill !== undefined && (
           <>
-            <rect x={B.x + 2} y={s.fill} width={B.w - 4} height={286 - s.fill - 8} fill={`url(#${id}-liquid)`} opacity="0.85" />
+            <rect
+              x={B.x + 2}
+              y={s.fill}
+              width={B.w - 4}
+              height={286 - s.fill - 8}
+              fill={`url(#${id}-liquid)`}
+              opacity="0.85"
+            />
             <rect x={B.x + 2} y={s.fill} width={B.w - 4} height="1.6" fill="#fff" opacity="0.45" />
-            {s.tube && <rect x="98.6" y={B.y - 4} width="2.8" height={286 - B.y - 4} fill="#fff" opacity="0.45" />}
+            {s.tube && (
+              <rect
+                x="98.6"
+                y={B.y - 4}
+                width="2.8"
+                height={286 - B.y - 4}
+                fill="#fff"
+                opacity="0.45"
+              />
+            )}
             <rect x={B.x} y={B.y + B.h - 8} width={B.w} height="8" fill={css(c, 0.5, 0.55)} />
-            <path d={`M${B.x + 4} ${B.y + B.h - 7} H${B.x + B.w - 4}`} stroke="#fff" strokeOpacity="0.5" strokeWidth="0.8" />
+            <path
+              d={`M${B.x + 4} ${B.y + B.h - 7} H${B.x + B.w - 4}`}
+              stroke="#fff"
+              strokeOpacity="0.5"
+              strokeWidth="0.8"
+            />
           </>
         )}
         {/* Wrapping label that turns around the 3D cylinder */}
@@ -717,12 +1235,44 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
           {printArt(0)}
           {printArt(period)}
         </motion.g>
-        <rect x={B.x} y={P.y - 2} width={B.w} height={P.h + 4} fill={`url(#${id}-wrap)`} opacity="0.48" />
+        <rect
+          x={B.x}
+          y={P.y - 2}
+          width={B.w}
+          height={P.h + 4}
+          fill={`url(#${id}-wrap)`}
+          opacity="0.48"
+        />
         <rect x={B.x} y={B.y} width={B.w} height={B.h} fill={`url(#${id}-shade)`} />
         {/* Studio softbox reflections */}
-        <rect x={B.x + B.w * 0.07} y={B.y + 4} width={B.w * 0.11} height={B.h - 8} rx="3" fill="#fff" opacity={lum(c) > 200 ? 0.45 : 0.3} filter={`url(#${id}-soft)`} />
-        <rect x={B.x + B.w * 0.11} y={B.y + 6} width={B.w * 0.028} height={B.h - 12} rx="1" fill="#fff" opacity="0.85" />
-        <rect x={B.x + B.w * 0.86} y={B.y + 8} width={B.w * 0.025} height={B.h - 16} rx="1" fill="#fff" opacity="0.3" />
+        <rect
+          x={B.x + B.w * 0.07}
+          y={B.y + 4}
+          width={B.w * 0.11}
+          height={B.h - 8}
+          rx="3"
+          fill="#fff"
+          opacity={lum(c) > 200 ? 0.45 : 0.3}
+          filter={`url(#${id}-soft)`}
+        />
+        <rect
+          x={B.x + B.w * 0.11}
+          y={B.y + 6}
+          width={B.w * 0.028}
+          height={B.h - 12}
+          rx="1"
+          fill="#fff"
+          opacity="0.85"
+        />
+        <rect
+          x={B.x + B.w * 0.86}
+          y={B.y + 8}
+          width={B.w * 0.025}
+          height={B.h - 16}
+          rx="1"
+          fill="#fff"
+          opacity="0.3"
+        />
       </g>
       <path d={s.body} fill="none" stroke={css(c, 0.45, 0.45)} strokeWidth="0.7" />
       {/* Product cap, collars, teeth, and accents */}
@@ -780,7 +1330,10 @@ export function ProductShelf({
 
   return (
     <div
-      className={cn("relative min-h-dvh w-full overflow-x-hidden bg-[#f3f1ed] font-sans text-[#111] antialiased", className)}
+      className={cn(
+        "relative min-h-dvh w-full overflow-x-hidden bg-[#f3f1ed] font-sans text-[#111] antialiased",
+        className,
+      )}
     >
       {!hideFloatingNav && (
         <>
@@ -810,7 +1363,12 @@ export function ProductShelf({
       )}
 
       <LayoutGroup>
-        <main className={cn("mx-auto w-full max-w-[1080px] px-5 pb-12", hideFloatingNav ? "pt-2" : "pt-16")}>
+        <main
+          className={cn(
+            "mx-auto w-full max-w-[1080px] px-5 pb-12",
+            hideFloatingNav ? "pt-2" : "pt-16",
+          )}
+        >
           {rows.map((row, r) => (
             <section key={r} aria-label="Everwell Rituals" className="relative mb-14">
               <div className="relative z-10 grid grid-cols-4 items-end gap-3 px-3 sm:gap-8 sm:px-8">
@@ -823,7 +1381,11 @@ export function ProductShelf({
                         layoutId={`product-${p.id}`}
                         type="button"
                         onClick={() => setOpenId(p.id)}
-                        aria-label={p.price > 0 ? `${p.name}, ${currency}${p.price.toFixed(2)}` : `${p.name}, Coming Soon`}
+                        aria-label={
+                          p.price > 0
+                            ? `${p.name}, ${currency}${p.price.toFixed(2)}`
+                            : `${p.name}, Coming Soon`
+                        }
                         transition={SPRING}
                         className="relative aspect-[2/3] w-full max-w-[160px] cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-[#111111]"
                       >
@@ -842,7 +1404,9 @@ export function ProductShelf({
               <div className="mt-5 grid grid-cols-4 gap-3 px-3 sm:gap-8 sm:px-8">
                 {row.map((p) => (
                   <div key={p.id} className="text-center">
-                    <div className="text-[13px] leading-tight font-medium sm:text-[14px]">{p.short}</div>
+                    <div className="text-[13px] leading-tight font-medium sm:text-[14px]">
+                      {p.short}
+                    </div>
                     <div className="mt-0.5 text-[12px] text-[#6f6a64] tabular-nums sm:text-[13px]">
                       {p.price > 0 ? `${currency}${p.price.toFixed(2)}` : "Coming Soon"}
                     </div>
@@ -922,7 +1486,7 @@ function ProductPage({
     setAdded(true);
     bagRef.current?.animate(
       [{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }],
-      { duration: 320, easing: "ease-out" }
+      { duration: 320, easing: "ease-out" },
     );
     setTimeout(() => setAdded(false), 1800);
   };
@@ -953,7 +1517,14 @@ function ProductPage({
   };
 
   const sections: [string, ReactNode][] = [
-    ["Details", <ul key="d" className="list-disc space-y-1 pl-5">{p.benefits.map((b) => <li key={b}>{b}</li>)}</ul>],
+    [
+      "Details",
+      <ul key="d" className="list-disc space-y-1 pl-5">
+        {p.benefits.map((b) => (
+          <li key={b}>{b}</li>
+        ))}
+      </ul>,
+    ],
     ["Ingredients & Materials", <p key="i">{p.ingredients}</p>],
     ["How to use", <p key="h">{p.howTo}</p>],
   ];
@@ -991,7 +1562,9 @@ function ProductPage({
             <div
               className={cn(
                 "flex w-full flex-col items-center justify-center transition-opacity duration-200",
-                selectedMedia === "3d" ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"
+                selectedMedia === "3d"
+                  ? "relative opacity-100"
+                  : "absolute inset-0 opacity-0 pointer-events-none",
               )}
             >
               <motion.div
@@ -1022,7 +1595,9 @@ function ProductPage({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               />
-              <p className="mt-4 text-[12px] font-medium tracking-wide text-[#8f8982]">Drag to turn 360°</p>
+              <p className="mt-4 text-[12px] font-medium tracking-wide text-[#8f8982]">
+                Drag to turn 360°
+              </p>
             </div>
 
             {/* Photo display */}
@@ -1049,7 +1624,11 @@ function ProductPage({
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedMedia((prev) =>
-                            typeof prev === "number" ? (prev > 0 ? prev - 1 : p.images!.length - 1) : 0
+                            typeof prev === "number"
+                              ? prev > 0
+                                ? prev - 1
+                                : p.images!.length - 1
+                              : 0,
                           );
                         }}
                         aria-label="Previous photo"
@@ -1062,7 +1641,11 @@ function ProductPage({
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedMedia((prev) =>
-                            typeof prev === "number" ? (prev < p.images!.length - 1 ? prev + 1 : 0) : 0
+                            typeof prev === "number"
+                              ? prev < p.images!.length - 1
+                                ? prev + 1
+                                : 0
+                              : 0,
                           );
                         }}
                         aria-label="Next photo"
@@ -1098,11 +1681,13 @@ function ProductPage({
                   "group relative flex size-14 sm:size-16 flex-col items-center justify-center overflow-hidden rounded-2xl border-2 bg-white transition-all duration-200",
                   selectedMedia === "3d"
                     ? "border-[#111111] shadow-md ring-2 ring-[#111111]/20 scale-105"
-                    : "border-[#e5e0d8] opacity-75 hover:opacity-100 hover:border-[#b8b0a5]"
+                    : "border-[#e5e0d8] opacity-75 hover:opacity-100 hover:border-[#b8b0a5]",
                 )}
               >
                 <Rotate3d className="size-5 text-[#111111] transition-transform duration-300 group-hover:rotate-180" />
-                <span className="mt-1 text-[10px] font-bold tracking-wider text-[#111111] uppercase">360°</span>
+                <span className="mt-1 text-[10px] font-bold tracking-wider text-[#111111] uppercase">
+                  360°
+                </span>
                 {selectedMedia === "3d" && (
                   <span className="absolute bottom-0 inset-x-0 h-1 bg-[#111111]" />
                 )}
@@ -1121,7 +1706,7 @@ function ProductPage({
                       "group relative size-14 sm:size-16 overflow-hidden rounded-2xl border-2 bg-white transition-all duration-200",
                       isSelected
                         ? "border-[#111111] shadow-md ring-2 ring-[#111111]/20 scale-105"
-                        : "border-[#e5e0d8] opacity-75 hover:opacity-100 hover:border-[#b8b0a5]"
+                        : "border-[#e5e0d8] opacity-75 hover:opacity-100 hover:border-[#b8b0a5]",
                     )}
                   >
                     <img
@@ -1156,14 +1741,21 @@ function ProductPage({
             <ChevronLeft className="size-4" strokeWidth={2.2} /> Shelf
           </button>
           <div className="text-[14px] text-[#6f6a64]">{p.category}</div>
-          <h2 className="mt-1 text-[clamp(28px,3.8vw,38px)] leading-[1.08] font-semibold tracking-[-0.022em]">{p.name}</h2>
+          <h2 className="mt-1 text-[clamp(28px,3.8vw,38px)] leading-[1.08] font-semibold tracking-[-0.022em]">
+            {p.name}
+          </h2>
           <p className="mt-2 text-[18px] leading-snug text-[#6f6a64]">{p.tagline}</p>
 
           {p.price > 0 ? (
             <div className="mt-3 flex items-center gap-1.5 text-[14px] text-[#6f6a64]">
               <span className="flex text-[#111111]" aria-label={`Rated ${p.rating} out of 5`}>
                 {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} className="size-[14px]" fill={i < Math.round(p.rating) ? INK : "transparent"} strokeWidth={1.4} />
+                  <Star
+                    key={i}
+                    className="size-[14px]"
+                    fill={i < Math.round(p.rating) ? INK : "transparent"}
+                    strokeWidth={1.4}
+                  />
                 ))}
               </span>
               {p.rating.toFixed(1)} · {p.reviews.toLocaleString()} verified ratings
@@ -1177,10 +1769,14 @@ function ProductPage({
 
           {p.price > 0 ? (
             <div className="mt-6 flex items-baseline gap-2.5 tabular-nums">
-              <span className="text-[24px] font-semibold tracking-[-0.01em]">{currency}{price.toFixed(2)}</span>
+              <span className="text-[24px] font-semibold tracking-[-0.01em]">
+                {currency}
+                {price.toFixed(2)}
+              </span>
               {p.compareAt && (
                 <span className="text-[17px] text-[#8f8982] line-through">
-                  {currency}{(p.compareAt * (price / p.price)).toFixed(2)}
+                  {currency}
+                  {(p.compareAt * (price / p.price)).toFixed(2)}
                 </span>
               )}
             </div>
@@ -1192,7 +1788,9 @@ function ProductPage({
             </div>
           )}
 
-          <p className="mt-4 max-w-[54ch] text-[16px] leading-[1.5] tracking-[-0.01em] text-[#111111]/85">{p.description}</p>
+          <p className="mt-4 max-w-[54ch] text-[16px] leading-[1.5] tracking-[-0.01em] text-[#111111]/85">
+            {p.description}
+          </p>
 
           {p.price > 0 && p.sizes.length > 1 && (
             <fieldset className="mt-7">
@@ -1205,12 +1803,24 @@ function ProductPage({
                       key={sz}
                       className={cn(
                         "flex cursor-pointer items-center justify-between rounded-xl border bg-white px-4 py-3 text-[15px] transition-[border-color,box-shadow] duration-150 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#111111]",
-                        on ? "border-[#111111] shadow-[0_0_0_1px_#111111]" : "border-[#d9d4cd] hover:border-[#8f8982]",
+                        on
+                          ? "border-[#111111] shadow-[0_0_0_1px_#111111]"
+                          : "border-[#d9d4cd] hover:border-[#8f8982]",
                       )}
                     >
-                      <input type="radio" name="size" value={sz} checked={on} onChange={() => setSize(sz)} className="sr-only" />
+                      <input
+                        type="radio"
+                        name="size"
+                        value={sz}
+                        checked={on}
+                        onChange={() => setSize(sz)}
+                        className="sr-only"
+                      />
                       <span className="font-medium">{sz}</span>
-                      <span className="text-[#6f6a64] tabular-nums">{currency}{(p.price * (i > 0 ? 1.7 : 1)).toFixed(2)}</span>
+                      <span className="text-[#6f6a64] tabular-nums">
+                        {currency}
+                        {(p.price * (i > 0 ? 1.7 : 1)).toFixed(2)}
+                      </span>
                     </label>
                   );
                 })}
@@ -1230,7 +1840,9 @@ function ProductPage({
                 >
                   <Minus className="size-4" />
                 </button>
-                <span className="w-7 text-center text-[17px] tabular-nums" aria-live="polite">{qty}</span>
+                <span className="w-7 text-center text-[17px] tabular-nums" aria-live="polite">
+                  {qty}
+                </span>
                 <button
                   type="button"
                   aria-label="Increase quantity"
@@ -1250,7 +1862,10 @@ function ProductPage({
             </div>
           ) : (
             <div className="mt-7">
-              <label htmlFor="notify-email" className="mb-2 block text-[14px] font-medium text-[#111111]">
+              <label
+                htmlFor="notify-email"
+                className="mb-2 block text-[14px] font-medium text-[#111111]"
+              >
                 Be the first to know when early batches drop
               </label>
               <form
@@ -1286,13 +1901,25 @@ function ProductPage({
 
           {p.price > 0 ? (
             <dl className="mt-6 grid gap-1 text-[14px] leading-snug">
-              <div className="flex gap-2"><dt className="font-semibold">Delivery:</dt><dd className="text-[#6f6a64]">Free standard shipping over $40</dd></div>
-              <div className="flex gap-2"><dt className="font-semibold">Guarantee:</dt><dd className="text-[#6f6a64]">30-day happy-hair returns</dd></div>
+              <div className="flex gap-2">
+                <dt className="font-semibold">Delivery:</dt>
+                <dd className="text-[#6f6a64]">Free standard shipping over $40</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="font-semibold">Guarantee:</dt>
+                <dd className="text-[#6f6a64]">30-day happy-hair returns</dd>
+              </div>
             </dl>
           ) : (
             <dl className="mt-6 grid gap-1 text-[14px] leading-snug">
-              <div className="flex gap-2"><dt className="font-semibold">Status:</dt><dd className="text-[#6f6a64]">In final testing & formulation</dd></div>
-              <div className="flex gap-2"><dt className="font-semibold">Release:</dt><dd className="text-[#6f6a64]">Limited first edition batch dropping soon</dd></div>
+              <div className="flex gap-2">
+                <dt className="font-semibold">Status:</dt>
+                <dd className="text-[#6f6a64]">In final testing & formulation</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="font-semibold">Release:</dt>
+                <dd className="text-[#6f6a64]">Limited first edition batch dropping soon</dd>
+              </div>
             </dl>
           )}
 
@@ -1308,12 +1935,25 @@ function ProductPage({
                     className="flex w-full items-center justify-between py-4 text-left text-[16px] font-semibold tracking-[-0.01em] focus-visible:outline-2 focus-visible:outline-[#111111]"
                   >
                     {title}
-                    <ChevronDown className={cn("size-[18px] text-[#6f6a64] transition-transform duration-300", isOpen && "rotate-180")} />
+                    <ChevronDown
+                      className={cn(
+                        "size-[18px] text-[#6f6a64] transition-transform duration-300",
+                        isOpen && "rotate-180",
+                      )}
+                    />
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
-                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={SPRING} className="overflow-hidden">
-                        <div className="pb-5 text-[14.5px] leading-relaxed text-[#111111]/80">{body}</div>
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={SPRING}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-5 text-[14.5px] leading-relaxed text-[#111111]/80">
+                          {body}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

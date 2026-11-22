@@ -25,7 +25,9 @@ export const Route = createFileRoute("/products/$slug")({
   notFoundComponent: () => (
     <div className="px-5 py-32 text-center">
       <h1 className="text-4xl">We couldn't find that product</h1>
-      <Link to="/shop" className="btn-primary mt-8">Back to shop</Link>
+      <Link to="/shop" className="btn-primary mt-8">
+        Back to shop
+      </Link>
     </div>
   ),
   component: ProductPage,
@@ -43,12 +45,26 @@ function ProductPage() {
     <>
       <section className="mx-auto grid max-w-7xl gap-10 px-5 py-10 md:grid-cols-2 md:py-16">
         <div>
-          <div className={`overflow-hidden rounded-[2rem] ${p.tone === "peach" ? "bg-peach" : "bg-pink"}`}>
-            <img key={img} src={p.images[img]} alt={p.name} width={1024} height={1024} className="aspect-square w-full object-cover animate-in fade-in duration-500" />
+          <div
+            className={`overflow-hidden rounded-[2rem] ${p.tone === "peach" ? "bg-peach" : "bg-pink"}`}
+          >
+            <img
+              key={img}
+              src={p.images[img]}
+              alt={p.name}
+              width={1024}
+              height={1024}
+              className="aspect-square w-full object-cover animate-in fade-in duration-500"
+            />
           </div>
           <div className="mt-4 flex gap-3">
             {p.images.map((src, i) => (
-              <button key={src} onClick={() => setImg(i)} aria-label={`View image ${i + 1}`} className={`overflow-hidden rounded-xl border-2 transition ${i === img ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"}`}>
+              <button
+                key={src}
+                onClick={() => setImg(i)}
+                aria-label={`View image ${i + 1}`}
+                className={`overflow-hidden rounded-xl border-2 transition ${i === img ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"}`}
+              >
                 <img src={src} alt="" className="h-20 w-20 object-cover" loading="lazy" />
               </button>
             ))}
@@ -60,7 +76,9 @@ function ProductPage() {
           <p className="mt-3 font-serif text-xl italic text-primary">{p.tagline}</p>
           <p className="mt-5 text-2xl">{formatPrice(p.price)}</p>
           <div className="mt-6 space-y-4 text-muted-foreground">
-            {p.description.map((d) => <p key={d}>{d}</p>)}
+            {p.description.map((d) => (
+              <p key={d}>{d}</p>
+            ))}
           </div>
           <ul className="mt-6 space-y-2">
             {p.details.map((d) => (
@@ -71,12 +89,19 @@ function ProductPage() {
           </ul>
           <div className="mt-8 flex items-center gap-4">
             <QtyControl qty={qty} onChange={(n) => setQty(Math.max(1, n))} />
-            <button className="btn-primary flex-1" onClick={() => { add(p.slug, qty); setOpen(true); }}>
+            <button
+              className="btn-primary flex-1"
+              onClick={() => {
+                add(p.slug, qty);
+                setOpen(true);
+              }}
+            >
               Add to bag · {formatPrice(p.price * qty)}
             </button>
           </div>
           <p className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-            <Lock className="h-3.5 w-3.5" /> Secure checkout · Free shipping over $40 · 30-day returns
+            <Lock className="h-3.5 w-3.5" /> Secure checkout · Free shipping over $40 · 30-day
+            returns
           </p>
         </div>
       </section>
@@ -117,21 +142,31 @@ function ProductPage() {
       <section className="bg-blush">
         <div className="mx-auto max-w-3xl px-5 py-20 text-center">
           <div className="flex justify-center gap-1 text-primary">
-            {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5" />)}
+            {[0, 1, 2, 3, 4].map((i) => (
+              <Star key={i} className="h-5 w-5" />
+            ))}
           </div>
           <h2 className="mt-4 text-4xl">Customer reviews</h2>
-          <p className="mt-4 text-muted-foreground">No reviews yet — you could be the very first. We'd love to hear how your ritual feels.</p>
-          <Link to="/contact" className="btn-outline mt-8">Write a review</Link>
+          <p className="mt-4 text-muted-foreground">
+            No reviews yet — you could be the very first. We'd love to hear how your ritual feels.
+          </p>
+          <Link to="/contact" className="btn-outline mt-8">
+            Write a review
+          </Link>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-16"><TrustBar /></section>
+      <section className="mx-auto max-w-7xl px-5 py-16">
+        <TrustBar />
+      </section>
 
       {others.length > 0 && (
         <section className="mx-auto max-w-7xl px-5 pb-24">
           <h2 className="text-center text-4xl">Complete your ritual</h2>
           <div className="mx-auto mt-10 grid max-w-xl gap-12">
-            {others.map((o) => <ProductCard key={o.slug} slug={o.slug} />)}
+            {others.map((o) => (
+              <ProductCard key={o.slug} slug={o.slug} />
+            ))}
           </div>
         </section>
       )}

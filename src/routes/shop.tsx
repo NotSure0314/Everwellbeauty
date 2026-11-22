@@ -6,9 +6,16 @@ export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
       { title: "Shop — Everwell Beauty" },
-      { name: "description", content: "Shop the Everwell collection: rollerball scalp oil comb and silk heatless curler." },
+      {
+        name: "description",
+        content:
+          "Shop the Everwell collection: rollerball scalp oil comb and silk heatless curler.",
+      },
       { property: "og:title", content: "Shop — Everwell Beauty" },
-      { property: "og:description", content: "Gentle haircare tools for a calm, luxurious ritual." },
+      {
+        property: "og:description",
+        content: "Gentle haircare tools for a calm, luxurious ritual.",
+      },
     ],
   }),
   component: Shop,
@@ -20,7 +27,9 @@ function Shop() {
       <section className="bg-gradient-peach px-5 py-20 text-center">
         <p className="eyebrow">The collection</p>
         <h1 className="mt-4 text-5xl md:text-6xl">Everything your ritual needs</h1>
-        <p className="mx-auto mt-4 max-w-md text-muted-foreground">Thoughtfully made tools that turn everyday hair care into a moment of calm.</p>
+        <p className="mx-auto mt-4 max-w-md text-muted-foreground">
+          Thoughtfully made tools that turn everyday hair care into a moment of calm.
+        </p>
       </section>
       <section className="mx-auto grid max-w-md md:max-w-4xl lg:max-w-5xl gap-8 sm:gap-10 px-5 py-14 md:py-20 md:grid-cols-2">
         {products.map((p, i) => (
@@ -29,7 +38,9 @@ function Shop() {
           </Reveal>
         ))}
       </section>
-      <section className="mx-auto max-w-7xl px-5 pb-20"><TrustBar /></section>
+      <section className="mx-auto max-w-7xl px-5 pb-20">
+        <TrustBar />
+      </section>
     </>
   );
 }

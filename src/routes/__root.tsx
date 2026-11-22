@@ -86,7 +86,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Everwell Beauty — Gentle Hair Rituals" },
-      { name: "description", content: "Luxurious, gentle haircare tools for women: scalp oil comb and silk heatless curler." },
+      {
+        name: "description",
+        content:
+          "Luxurious, gentle haircare tools for women: scalp oil comb and silk heatless curler.",
+      },
       { property: "og:title", content: "Everwell Beauty — Gentle Hair Rituals" },
       { property: "og:description", content: "Luxurious, gentle haircare tools for women." },
       { property: "og:type", content: "website" },

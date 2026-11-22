@@ -4,7 +4,10 @@ export const Route = createFileRoute("/help")({
   head: () => ({
     meta: [
       { title: "Shipping, Returns & FAQ — Everwell Beauty" },
-      { name: "description", content: "Free shipping over $40, 30-day returns, and answers to common questions." },
+      {
+        name: "description",
+        content: "Free shipping over $40, 30-day returns, and answers to common questions.",
+      },
       { property: "og:title", content: "Shipping, Returns & FAQ — Everwell Beauty" },
       { property: "og:description", content: "Everything you need to know before you order." },
     ],
@@ -13,11 +16,23 @@ export const Route = createFileRoute("/help")({
 });
 
 const faqs = [
-  ["How long does shipping take?", "Orders ship within 1–2 business days. Standard delivery usually arrives in 3–7 business days within the US."],
-  ["How much is shipping?", "Shipping is free on orders over $40. Below that, standard shipping is a flat $4.95."],
-  ["What is your return policy?", "If you're not happy, return unused items within 30 days of delivery for a full refund."],
+  [
+    "How long does shipping take?",
+    "Orders ship within 1–2 business days. Standard delivery usually arrives in 3–7 business days within the US.",
+  ],
+  [
+    "How much is shipping?",
+    "Shipping is free on orders over $40. Below that, standard shipping is a flat $4.95.",
+  ],
+  [
+    "What is your return policy?",
+    "If you're not happy, return unused items within 30 days of delivery for a full refund.",
+  ],
   ["Is checkout secure?", "Yes. Payments are encrypted and we never store your card details."],
-  ["Do you ship internationally?", "We currently ship within the US, with more countries coming soon."],
+  [
+    "Do you ship internationally?",
+    "We currently ship within the US, with more countries coming soon.",
+  ],
 ];
 
 function Help() {
