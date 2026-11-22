@@ -124,58 +124,46 @@ export const DEFAULT_PRODUCTS: Product[] = [
   {
     id: "coming-soon-1",
     kind: "dropper",
-    name: "Botanical Rosemary Scalp Elixir",
+    name: "Coming Soon",
     short: "Coming Soon",
-    sub: "Rosemary & Biotin",
+    sub: "",
     category: "Ritual Treatment",
-    color: "#e8ede8",
-    cap: "#232624",
-    label: "#ffffff",
-    ink: "#1f2421",
-    glass: true,
-    liquid: "#b9934e",
+    color: "#dedad4",
+    cap: "#aba59c",
+    label: "#dedad4",
+    ink: "transparent",
+    glass: false,
     price: 0,
-    sizes: ["50 ml"],
+    sizes: [],
     rating: 5.0,
     reviews: 0,
-    tagline: "Formulated for deep scalp nourishment.",
-    description:
-      "Our upcoming botanical scalp elixir crafted with cold-pressed rosemary leaf oil, biotin, and peptide complex to stimulate healthy hair growth and soothe the scalp.",
-    benefits: [
-      "Cold-pressed rosemary oil",
-      "Biotin & tri-peptide complex",
-      "Lightweight, non-greasy absorption",
-      "Pairs with our Rollerball Comb",
-    ],
-    ingredients: "Coming soon. Sign up for early ingredient reveal and launch perks.",
-    howTo: "Dispense directly into the Everwell Rollerball Scalp Comb or apply drops along hair parts.",
+    tagline: "",
+    description: "",
+    benefits: [],
+    ingredients: "",
+    howTo: "",
   },
   {
     id: "coming-soon-2",
     kind: "jar",
-    name: "Cloud Silk Overnight Hair Glaze",
+    name: "Coming Soon",
     short: "Coming Soon",
-    sub: "Ceramides & Peptides",
+    sub: "",
     category: "Overnight Care",
-    color: "#f7f4ee",
-    cap: "#e7decb",
-    label: "#f7f4ee",
-    ink: "#2c2724",
+    color: "#dedad4",
+    cap: "#bab3a9",
+    label: "#dedad4",
+    ink: "transparent",
+    glass: false,
     price: 0,
-    sizes: ["100 ml"],
+    sizes: [],
     rating: 5.0,
     reviews: 0,
-    tagline: "Overnight restorative treatment for glass hair.",
-    description:
-      "An intensive overnight silk balm that locks in hydration, seals split cuticles, and restores luminous shine while you sleep.",
-    benefits: [
-      "Ceramide bonding complex",
-      "Hydrolyzed silk amino acids",
-      "Zero pillow transfer",
-      "Rinses clean or leaves hair weightless",
-    ],
-    ingredients: "Coming soon. Sign up to get notified the minute this drops.",
-    howTo: "Warm a dime-sized amount between palms and smooth over lengths before wrapping into your heatless curler.",
+    tagline: "",
+    description: "",
+    benefits: [],
+    ingredients: "",
+    howTo: "",
   },
 ];
 
@@ -388,7 +376,7 @@ const SHAPES: Record<Kind, Shape> = {
     print: { x: 38, y: 226, w: 124, h: 46 },
     cap: (id) => (
       <>
-        <path d={rr(36, 172, 128, 38, 6)} fill={`url(#${id}-cap)`} />
+        <path d={rr(36, 172, 128, 38, 6)} fill={`url(#${id}-cap)`} stroke="#8a837b" strokeWidth="1" strokeOpacity="0.7" />
         <g>{ridges(36, 178, 128, 30, 2.2)}</g>
         <path d={rr(36, 172, 128, 38, 6)} fill={`url(#${id}-capv)`} />
         <path d="M42 173.2 H158" stroke="#fff" strokeOpacity="0.7" strokeWidth="1.2" />
@@ -440,9 +428,9 @@ const SHAPES: Record<Kind, Shape> = {
     fill: 168,
     cap: (id) => (
       <>
-        <path d="M86 118 V86 Q86 62 100 62 Q114 62 114 86 V118 Z" fill={`url(#${id}-bulb)`} />
+        <path d="M86 118 V86 Q86 62 100 62 Q114 62 114 86 V118 Z" fill={`url(#${id}-bulb)`} stroke="#8a837b" strokeWidth="1" strokeOpacity="0.7" />
         <path d="M91 74 Q93 66 100 65" stroke="#fff" strokeOpacity="0.4" strokeWidth="2" fill="none" strokeLinecap="round" />
-        <path d={rr(80, 114, 40, 28, 3)} fill={`url(#${id}-cap)`} />
+        <path d={rr(80, 114, 40, 28, 3)} fill={`url(#${id}-cap)`} stroke="#8a837b" strokeWidth="1" strokeOpacity="0.7" />
         <g>{ridges(80, 114, 40, 28, 2)}</g>
         <path d={rr(80, 114, 40, 28, 3)} fill={`url(#${id}-capv)`} />
       </>
@@ -540,6 +528,7 @@ const pageZoom = (k: Kind) => Math.min(2.2, 262 / (290 - EXTENT[k].top), 190 / E
 
 function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<number> | undefined; className?: string | undefined }) {
   const id = "ps" + useId().replace(/[^a-zA-Z0-9]/g, "");
+  const isComingSoon = p.price === 0 || p.id.startsWith("coming-soon");
   const s = SHAPES[p.kind];
   const c = hexRgb(p.color);
   const k = hexRgb(p.cap);
@@ -579,6 +568,10 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
           <text x={P.x + P.w / 2} y={P.y + 73} fill="#1d1615" fontSize="3.6" opacity="0.75" textAnchor="middle">Material: Silk</text>
         </g>
       );
+    }
+
+    if (p.price === 0 || p.id.startsWith("coming-soon")) {
+      return null;
     }
 
     const nameSize = Math.min(10.5, P.w * 0.12, (P.w * 1.12) / p.short.length);
@@ -694,8 +687,8 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
       </defs>
 
       {/* Shelf contact shadow */}
-      <ellipse cx="100" cy="287" rx={B.w * 0.75} ry="6" fill={`url(#${id}-floor)`} />
-      <ellipse cx="100" cy="286.3" rx={B.w * 0.5} ry="1.4" fill="#000" opacity="0.35" />
+      <ellipse cx="100" cy="287" rx={B.w * 0.75} ry="6" fill={`url(#${id}-floor)`} opacity={isComingSoon ? 0.35 : 1} />
+      <ellipse cx="100" cy="286.3" rx={B.w * 0.5} ry="1.4" fill="#000" opacity={isComingSoon ? 0.15 : 0.35} />
 
       {/* Elements rendered behind body (such as continuous silk rod legs and bottom loop) */}
       {s.behind?.(id)}
@@ -703,7 +696,7 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
       {/* Main product vector body (such as white wrap band or glass cylinder) */}
       <path d={s.body} fill={`url(#${id}-body)`} />
       <g clipPath={`url(#${id}-clip)`}>
-        {p.glass && s.fill !== undefined && (
+        {p.glass && s.fill !== undefined && !isComingSoon && (
           <>
             <rect x={B.x + 2} y={s.fill} width={B.w - 4} height={286 - s.fill - 8} fill={`url(#${id}-liquid)`} opacity="0.85" />
             <rect x={B.x + 2} y={s.fill} width={B.w - 4} height="1.6" fill="#fff" opacity="0.45" />
@@ -713,18 +706,26 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
           </>
         )}
         {/* Wrapping label that turns around the 3D cylinder */}
-        <motion.g style={{ x }}>
-          {printArt(0)}
-          {printArt(period)}
-        </motion.g>
-        <rect x={B.x} y={P.y - 2} width={B.w} height={P.h + 4} fill={`url(#${id}-wrap)`} opacity="0.48" />
+        {!isComingSoon && (
+          <motion.g style={{ x }}>
+            {printArt(0)}
+            {printArt(period)}
+          </motion.g>
+        )}
+        <rect x={B.x} y={P.y - 2} width={B.w} height={P.h + 4} fill={`url(#${id}-wrap)`} opacity={isComingSoon ? 0 : 0.48} />
         <rect x={B.x} y={B.y} width={B.w} height={B.h} fill={`url(#${id}-shade)`} />
         {/* Studio softbox reflections */}
-        <rect x={B.x + B.w * 0.07} y={B.y + 4} width={B.w * 0.11} height={B.h - 8} rx="3" fill="#fff" opacity={lum(c) > 200 ? 0.45 : 0.3} filter={`url(#${id}-soft)`} />
-        <rect x={B.x + B.w * 0.11} y={B.y + 6} width={B.w * 0.028} height={B.h - 12} rx="1" fill="#fff" opacity="0.85" />
-        <rect x={B.x + B.w * 0.86} y={B.y + 8} width={B.w * 0.025} height={B.h - 16} rx="1" fill="#fff" opacity="0.3" />
+        <rect x={B.x + B.w * 0.07} y={B.y + 4} width={B.w * 0.11} height={B.h - 8} rx="3" fill="#fff" opacity={isComingSoon ? 0.2 : lum(c) > 200 ? 0.45 : 0.3} filter={`url(#${id}-soft)`} />
+        <rect x={B.x + B.w * 0.11} y={B.y + 6} width={B.w * 0.028} height={B.h - 12} rx="1" fill="#fff" opacity={isComingSoon ? 0.35 : 0.85} />
+        <rect x={B.x + B.w * 0.86} y={B.y + 8} width={B.w * 0.025} height={B.h - 16} rx="1" fill="#fff" opacity={isComingSoon ? 0.15 : 0.3} />
       </g>
-      <path d={s.body} fill="none" stroke={css(c, 0.45, 0.45)} strokeWidth="0.7" />
+      <path
+        d={s.body}
+        fill="none"
+        stroke={isComingSoon ? "#79716b" : css(c, 0.45, 0.45)}
+        strokeWidth={isComingSoon ? 1.5 : 0.7}
+        strokeOpacity={isComingSoon ? 0.8 : 1}
+      />
       {/* Product cap, collars, teeth, and accents */}
       {s.cap(id)}
     </svg>
@@ -814,24 +815,34 @@ export function ProductShelf({
           {rows.map((row, r) => (
             <section key={r} aria-label="Everwell Rituals" className="relative mb-14">
               <div className="relative z-10 grid grid-cols-4 items-end gap-3 px-3 sm:gap-8 sm:px-8">
-                {row.map((p) => (
-                  <div key={p.id} className="flex flex-col items-center">
-                    {openId === p.id ? (
-                      <div className="aspect-[2/3] w-full max-w-[160px]" />
-                    ) : (
-                      <motion.button
-                        layoutId={`product-${p.id}`}
-                        type="button"
-                        onClick={() => setOpenId(p.id)}
-                        aria-label={p.price > 0 ? `${p.name}, ${currency}${p.price.toFixed(2)}` : `${p.name}, Coming Soon`}
-                        transition={SPRING}
-                        className="relative aspect-[2/3] w-full max-w-[160px] cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-[#111111]"
-                      >
-                        <ProductArt p={p} className="size-full" />
-                      </motion.button>
-                    )}
-                  </div>
-                ))}
+                {row.map((p) => {
+                  const isComingSoon = p.price === 0 || p.id.startsWith("coming-soon");
+                  return (
+                    <div key={p.id} className="flex flex-col items-center">
+                      {isComingSoon ? (
+                        <div
+                          aria-label="Coming Soon"
+                          className="relative aspect-[2/3] w-full max-w-[160px] cursor-default select-none pointer-events-none opacity-35 grayscale contrast-125 [filter:drop-shadow(0_0_1.5px_rgba(110,105,100,0.7))]"
+                        >
+                          <ProductArt p={p} className="size-full" />
+                        </div>
+                      ) : openId === p.id ? (
+                        <div className="aspect-[2/3] w-full max-w-[160px]" />
+                      ) : (
+                        <motion.button
+                          layoutId={`product-${p.id}`}
+                          type="button"
+                          onClick={() => setOpenId(p.id)}
+                          aria-label={p.price > 0 ? `${p.name}, ${currency}${p.price.toFixed(2)}` : `${p.name}, Coming Soon`}
+                          transition={SPRING}
+                          className="relative aspect-[2/3] w-full max-w-[160px] cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-[#111111]"
+                        >
+                          <ProductArt p={p} className="size-full" />
+                        </motion.button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
               {/* Floating white shelf: lit top, crisp front edge, soft shadow on the wall */}
               <div aria-hidden className="relative -mt-[6px] h-[16px]">
@@ -840,14 +851,19 @@ export function ProductShelf({
                 <div className="absolute inset-x-[2%] top-[16px] h-[34px] bg-[radial-gradient(50%_100%_at_50%_0%,rgba(0,0,0,0.13),transparent)]" />
               </div>
               <div className="mt-5 grid grid-cols-4 gap-3 px-3 sm:gap-8 sm:px-8">
-                {row.map((p) => (
-                  <div key={p.id} className="text-center">
-                    <div className="text-[13px] leading-tight font-medium sm:text-[14px]">{p.short}</div>
-                    <div className="mt-0.5 text-[12px] text-[#6f6a64] tabular-nums sm:text-[13px]">
-                      {p.price > 0 ? `${currency}${p.price.toFixed(2)}` : "Coming Soon"}
+                {row.map((p) => {
+                  const isComingSoon = p.price === 0 || p.id.startsWith("coming-soon");
+                  return (
+                    <div key={p.id} className={cn("text-center", isComingSoon && "opacity-40 select-none")}>
+                      <div className="text-[13px] leading-tight font-medium sm:text-[14px]">
+                        {isComingSoon ? "Coming Soon" : p.short}
+                      </div>
+                      <div className="mt-0.5 text-[12px] text-[#6f6a64] tabular-nums sm:text-[13px]">
+                        {p.price > 0 ? `${currency}${p.price.toFixed(2)}` : "Coming Soon"}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </section>
           ))}
