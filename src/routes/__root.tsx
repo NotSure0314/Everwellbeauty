@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/react";
 import { CartProvider } from "@/lib/cart";
 import { SiteHeader, SiteFooter } from "@/components/site";
 
@@ -139,6 +140,7 @@ function RootComponent() {
         </main>
         <SiteFooter />
         <Toaster position="top-center" />
+        <Analytics />
       </CartProvider>
     </QueryClientProvider>
   );
