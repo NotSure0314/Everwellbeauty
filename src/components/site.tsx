@@ -224,10 +224,10 @@ export function Newsletter() {
     <section className="bg-gradient-soft px-5 py-24">
       <Reveal className="mx-auto max-w-xl text-center">
         <p className="eyebrow">Join the ritual</p>
-        <h2 className="mt-4 text-4xl md:text-5xl">A little gift, just for you</h2>
-        <p className="mt-4 text-muted-foreground">Sign up for gentle hair-care tips and early access — and enjoy 10% off your first order.</p>
+        <h2 className="mt-4 text-4xl md:text-5xl">Stay in the loop</h2>
+        <p className="mt-4 text-muted-foreground">Sign up for gentle hair-care tips and early access to new rituals.</p>
         {done ? (
-          <p className="mt-8 font-serif text-2xl">Welcome in, beautiful. Use code <strong className="text-primary">WELCOME10</strong> at checkout.</p>
+          <p className="mt-8 font-serif text-2xl">Welcome in, beautiful. We'll be in touch soon.</p>
         ) : (
           <form
             className="mt-8 flex flex-col gap-3 sm:flex-row"
@@ -241,7 +241,7 @@ export function Newsletter() {
             }}
           >
             <input className="field" type="email" required placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="Email address" />
-            <button className="btn-primary shrink-0">Get 10% off</button>
+            <button className="btn-primary shrink-0">Sign me up</button>
           </form>
         )}
       </Reveal>
