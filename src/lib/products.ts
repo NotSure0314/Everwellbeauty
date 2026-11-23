@@ -6,6 +6,7 @@ import curls from "@/assets/curls-lifestyle.jpg";
 // Add new products to this list — every page reads from it.
 export type Product = {
   slug: string;
+  handle: string; // Shopify product handle
   name: string;
   short: string;
   tagline: string;
@@ -21,6 +22,7 @@ export type Product = {
 export const products: Product[] = [
   {
     slug: "rollerball-scalp-oil-comb",
+    handle: "rollerball-scalp-oil-applicator-comb",
     name: "Rollerball Scalp Oil Applicator Comb",
     short: "Scalp Oil Comb",
     tagline: "Your oil ritual, beautifully simple.",
@@ -51,6 +53,7 @@ export const products: Product[] = [
   },
   {
     slug: "silk-heatless-curler",
+    handle: "wire-free-side-sleeper-heatless-curler",
     name: "Wire-Free Side-Sleeper Heatless Curler",
     short: "Silk Heatless Curler",
     tagline: "Fall asleep. Wake up to soft curls.",
