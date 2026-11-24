@@ -1,9 +1,7 @@
 import combMain from "@/assets/comb-main.jpg";
-import combDetail from "@/assets/comb-transparent-detail.jpg";
 import combHero from "@/assets/comb-transparent-hero.jpg";
 import curlerMain from "@/assets/curler-main.jpg";
 import curlerSet from "@/assets/curler-silk-set.jpg";
-import curler from "@/assets/curler.jpg";
 import curls from "@/assets/curls-lifestyle.jpg";
 import hero from "@/assets/hero.jpg";
 
@@ -31,7 +29,7 @@ export const products: Product[] = [
     short: "Scalp Oil Comb",
     tagline: "Your oil ritual, beautifully simple.",
     price: 21.99,
-    images: [combMain, combDetail, combHero, hero],
+    images: [combMain, combHero, hero],
     tone: "peach",
     description: [
       "Crafted from crystal-clear acrylic with an extended wide-mouth reservoir, this liquid applicator comb lets you pour hair oils and serums with zero funnels or mess. Stainless steel rollerball teeth gently part hair and distribute liquid directly to your scalp roots.",
@@ -62,7 +60,7 @@ export const products: Product[] = [
     short: "Silk Heatless Curler",
     tagline: "Fall asleep. Wake up to soft curls.",
     price: 28.99,
-    images: [curlerMain, curlerSet, curler, curls],
+    images: [curlerMain, curlerSet, curls],
     tone: "pink",
     description: [
       "A cloud-soft ribbon wrapped in 22-momme pure mulberry silk with a featherlight memory foam core. Wrap your hair before bed and wake up to bouncy, salon-level curls without heat damage.",

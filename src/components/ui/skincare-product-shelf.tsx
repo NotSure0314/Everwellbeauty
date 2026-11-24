@@ -20,10 +20,8 @@ import { ChevronDown, ChevronLeft, ChevronRight, Minus, Plus, Rotate3d, Shopping
 import { cn } from "@/lib/utils";
 import combMain from "@/assets/comb-main.jpg";
 import combTransparentHero from "@/assets/comb-transparent-hero.jpg";
-import combTransparentDetail from "@/assets/comb-transparent-detail.jpg";
 import curlerMain from "@/assets/curler-main.jpg";
 import curlerSilkSet from "@/assets/curler-silk-set.jpg";
-import curlerImg from "@/assets/curler.jpg";
 import curlsLifestyleImg from "@/assets/curls-lifestyle.jpg";
 import heroImg from "@/assets/hero.jpg";
 
@@ -90,7 +88,7 @@ export const DEFAULT_PRODUCTS: Product[] = [
       "High-clarity crystal-clear medical acrylic body, surgical stainless steel rollerball teeth, airtight leakproof seal.",
     howTo:
       "Fill the wide opening directly with your favorite hair oil or elixir. Glide gently across scalp sections — rollerballs dispense smoothly with light pressure.",
-    images: [combMain, combTransparentDetail, combTransparentHero, heroImg],
+    images: [combMain, combTransparentHero, heroImg],
   },
   {
     id: "heatless-curler",
@@ -121,7 +119,7 @@ export const DEFAULT_PRODUCTS: Product[] = [
       "100% Grade 6A 22-Momme Mulberry Silk exterior, ultra-soft hypoallergenic memory microfoam core.",
     howTo:
       "Place the curler across the crown of slightly damp or dry hair. Wrap 1-2 inch sections around the rod moving away from your face. Secure ends with the silk scrunchies and sleep comfortably.",
-    images: [curlerMain, curlerSilkSet, curlerImg, curlsLifestyleImg],
+    images: [curlerMain, curlerSilkSet, curlsLifestyleImg],
   },
   {
     id: "coming-soon-1",

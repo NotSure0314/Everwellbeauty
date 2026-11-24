@@ -31,12 +31,14 @@ describe("Product Shelf Customization with 3D Studio Packaging", () => {
     expect(item4?.price).toBe(0);
   });
 
-  it("provides multiple product gallery images for both active products", () => {
+  it("provides multiple product gallery images for both active products without duplicates", () => {
     const comb = DEFAULT_PRODUCTS[0];
     const curler = DEFAULT_PRODUCTS[1];
     expect(comb?.images).toBeDefined();
     expect(comb?.images?.length).toBeGreaterThanOrEqual(3);
+    expect(new Set(comb?.images).size).toBe(comb?.images?.length);
     expect(curler?.images).toBeDefined();
     expect(curler?.images?.length).toBeGreaterThanOrEqual(3);
+    expect(new Set(curler?.images).size).toBe(curler?.images?.length);
   });
 });
