@@ -7,6 +7,8 @@ import { Newsletter, Reveal, TrustBar } from "@/components/site";
 import StickerSwapHeadline, { type StickerWord } from "@/components/ui/sticker-swap-headline";
 import { words as demoWords } from "@/components/ui/demo";
 import { ProductShelf } from "@/components/ui/skincare-product-shelf";
+import { MarqueeTestimonials } from "@/components/ui/marquee-card";
+import { Star } from "lucide-react";
 
 const heroWords: StickerWord[] = [
   ...demoWords,
@@ -91,15 +93,30 @@ function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-5 py-24">
-        <Reveal className="text-center">
-          <p className="eyebrow">Kind words</p>
-          <h2 className="mt-4 text-4xl md:text-5xl">From our community</h2>
-          <p className="mx-auto mt-6 max-w-lg text-muted-foreground">
-            We're a brand-new brand, and our first reviews are on their way. Tried a ritual? We'd love to hear how it made you feel.
-          </p>
-          <Link to="/contact" className="btn-outline mt-8">Share your story</Link>
-        </Reveal>
+      <section className="py-24 overflow-hidden bg-[#faf7f2]/60">
+        <div className="mx-auto max-w-5xl px-5 text-center mb-8">
+          <Reveal>
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1 text-xs font-medium text-primary shadow-sm border border-[#ede5db] mb-3">
+              <div className="flex text-[#d4974f]">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-current" />
+                ))}
+              </div>
+              <span>4.9 / 5 from 3,600+ verified rituals</span>
+            </div>
+            <p className="eyebrow">Real experiences</p>
+            <h2 className="mt-3 text-4xl md:text-5xl">Loved by real morning rituals</h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground text-sm sm:text-base">
+              Verified experiences and real results from people using our hair tools every morning and night.
+            </p>
+          </Reveal>
+        </div>
+
+        <MarqueeTestimonials speed="normal" />
+
+        <div className="text-center mt-8">
+          <Link to="/shop" className="btn-outline">Shop all customer favorites</Link>
+        </div>
       </section>
 
       <Newsletter />

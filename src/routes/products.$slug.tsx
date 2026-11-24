@@ -4,6 +4,7 @@ import { Check, Lock, Star } from "lucide-react";
 import { formatPrice, getProduct, products } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { ProductCard, QtyControl, Reveal, TrustBar } from "@/components/site";
+import { MarqueeTestimonials, testimonials } from "@/components/ui/marquee-card";
 
 export const Route = createFileRoute("/products/$slug")({
   loader: ({ params }) => {
@@ -114,14 +115,24 @@ function ProductPage() {
         </div>
       </section>
 
-      <section className="bg-blush">
-        <div className="mx-auto max-w-3xl px-5 py-20 text-center">
-          <div className="flex justify-center gap-1 text-primary">
-            {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5" />)}
+      <section className="bg-blush/40 py-20 overflow-hidden">
+        <div className="mx-auto max-w-3xl px-5 text-center mb-8">
+          <div className="flex justify-center gap-1 text-[#d4974f]">
+            {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5 fill-current" />)}
           </div>
           <h2 className="mt-4 text-4xl">Customer reviews</h2>
-          <p className="mt-4 text-muted-foreground">No reviews yet — you could be the very first. We'd love to hear how your ritual feels.</p>
-          <Link to="/contact" className="btn-outline mt-8">Write a review</Link>
+          <p className="mt-3 text-muted-foreground text-sm sm:text-base">Real experiences from verified buyers who incorporated this into their ritual.</p>
+        </div>
+        <MarqueeTestimonials
+          items={testimonials.filter((t) =>
+            slug.includes("curler")
+              ? t.role.includes("Curler") || t.role.includes("Styling")
+              : t.role.includes("Scalp") || t.role.includes("Ritual")
+          )}
+          speed="normal"
+        />
+        <div className="text-center mt-6">
+          <Link to="/contact" className="btn-outline">Share your ritual review</Link>
         </div>
       </section>
 
