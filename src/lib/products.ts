@@ -1,7 +1,9 @@
-import comb from "@/assets/comb.jpg";
+import combHero from "@/assets/comb-transparent-hero.jpg";
+import combDetail from "@/assets/comb-transparent-detail.jpg";
+import curlerSet from "@/assets/curler-silk-set.jpg";
 import curler from "@/assets/curler.jpg";
-import hero from "@/assets/hero.jpg";
 import curls from "@/assets/curls-lifestyle.jpg";
+import hero from "@/assets/hero.jpg";
 
 // Add new products to this list — every page reads from it.
 export type Product = {
@@ -27,28 +29,28 @@ export const products: Product[] = [
     short: "Scalp Oil Comb",
     tagline: "Your oil ritual, beautifully simple.",
     price: 21.99,
-    images: [comb, hero],
+    images: [combHero, combDetail, hero],
     tone: "peach",
     description: [
-      "Fill the 30ml tank with your favorite oil or serum — rosemary, argan, whatever your hair loves — and let the stainless steel rollerball teeth glide it straight to your scalp.",
-      "No drips down your neck, no oily fingertips, no wasted drops. Just a calm, cooling moment that feels like a little spa visit at home.",
+      "Crafted from crystal-clear acrylic with an extended wide-mouth reservoir, this liquid applicator comb lets you pour hair oils and serums with zero funnels or mess. Stainless steel rollerball teeth gently part hair and distribute liquid directly to your scalp roots.",
+      "No drips down your neck, no oily fingertips, and no wasted drops. Just a soothing, cooling scalp massage that transforms your daily ritual into pure luxury.",
     ],
     details: [
-      "30ml refillable tank",
-      "Stainless steel rollerball teeth",
-      "Works with oils and serums",
-      "Easy to rinse and refill",
+      "Crystal-clear wide-mouth liquid reservoir",
+      "Surgical stainless steel rollerball dispenser teeth",
+      "Smooth rounded teeth protect sensitive scalps",
+      "Refill directly without funnels or droppers",
     ],
     steps: [
-      { title: "Fill", body: "Unscrew the tank and fill it with your chosen oil or serum." },
-      { title: "Part", body: "Section your hair to reveal the scalp where you'd like to apply." },
-      { title: "Glide", body: "Gently roll along each part — the oil flows as you go." },
-      { title: "Massage", body: "Finish with a slow fingertip massage and take a deep breath." },
+      { title: "Fill", body: "Pour your favorite scalp oil or serum directly into the wide-mouth reservoir." },
+      { title: "Part", body: "Place the rollerball comb gently against your scalp along your natural part." },
+      { title: "Glide", body: "Glide slowly across your crown — oil dispenses evenly with light rolling pressure." },
+      { title: "Massage", body: "Finish with a slow fingertip massage and enjoy effortless root absorption." },
     ],
     faqs: [
-      { q: "What oils can I use?", a: "Most hair oils and serums work well. Very thick oils may flow more slowly — warming the bottle in your hands helps." },
-      { q: "How do I clean it?", a: "Empty the tank, rinse with warm soapy water, and let it air dry before refilling." },
-      { q: "Will it leak in my bag?", a: "Keep the cap on and store it upright for travel to keep everything tidy." },
+      { q: "What oils can I use?", a: "Rosemary, jojoba, castor, argan, and lightweight hair growth serums all flow effortlessly." },
+      { q: "How do I clean it?", a: "Empty any leftover oil, rinse with warm soapy water, and allow to air dry before your next ritual." },
+      { q: "Does it leak in transit?", a: "The secure snap-fit cap seals the reservoir and teeth tightly to keep your vanity and travel bag clean." },
     ],
   },
   {
@@ -58,17 +60,17 @@ export const products: Product[] = [
     short: "Silk Heatless Curler",
     tagline: "Fall asleep. Wake up to soft curls.",
     price: 28.99,
-    images: [curler, curls],
+    images: [curlerSet, curler, curls],
     tone: "pink",
     description: [
-      "A soft, flat ribbon wrapped in 22-momme mulberry silk with a gentle cotton filling. Wrap your hair before bed and wake up to bouncy, heat-free curls.",
-      "There are no rigid rods or wires inside, so it stays comfortable even if you sleep on your side. Your hair — and your pillow — will thank you.",
+      "A cloud-soft ribbon wrapped in 22-momme pure mulberry silk with a featherlight memory foam core. Wrap your hair before bed and wake up to bouncy, salon-level curls without heat damage.",
+      "Engineered completely wire-free so it stays cushioned and comfortable even if you sleep on your side. Includes two matching pure silk scrunchies.",
     ],
     details: [
-      "22-momme mulberry silk exterior",
-      "Soft cotton filling",
-      "Flat, wire-free design for side sleepers",
-      "Includes two silk scrunchies",
+      "22-momme pure mulberry silk exterior",
+      "Featherlight cloud-foam core — zero rigid wires",
+      "Ergonomic flat ribbon engineered for side sleepers",
+      "Includes two matching silk scrunchies",
     ],
     steps: [
       { title: "Prep", body: "Start with hair that's dry or just slightly damp." },

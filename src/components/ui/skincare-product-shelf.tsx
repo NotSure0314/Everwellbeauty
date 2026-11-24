@@ -18,12 +18,12 @@ import { useEffect, useId, useRef, useState, type PointerEvent as ReactPointerEv
 import { AnimatePresence, LayoutGroup, animate, motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { ChevronDown, ChevronLeft, ChevronRight, Minus, Plus, Rotate3d, ShoppingBag, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import combImg from "@/assets/comb.jpg";
+import combTransparentHero from "@/assets/comb-transparent-hero.jpg";
+import combTransparentDetail from "@/assets/comb-transparent-detail.jpg";
+import curlerSilkSet from "@/assets/curler-silk-set.jpg";
 import curlerImg from "@/assets/curler.jpg";
 import curlsLifestyleImg from "@/assets/curls-lifestyle.jpg";
 import heroImg from "@/assets/hero.jpg";
-import curlerStudioImg from "@/assets/heatless-curler.png";
-import combStudioImg from "@/assets/scalp-oil-comb.png";
 
 type Kind = "jar" | "tube" | "pump" | "dropper" | "perfume" | "mist" | "bottle" | "stick" | "lip" | "comb" | "curler";
 
@@ -62,33 +62,33 @@ export const DEFAULT_PRODUCTS: Product[] = [
     kind: "comb",
     name: "Scalp Treatment Oil Infuser Comb",
     short: "Scalp Oil Comb",
-    sub: "Oil Infuser 50 ml",
+    sub: "Liquid Guide Comb",
     category: "Hair & Scalp Tool",
-    color: "#fcfaf7",
-    cap: "#f5ece2",
+    color: "#ffffff",
+    cap: "#f0f4f7",
     label: "#ffffff",
     ink: "#1d1715",
     glass: true,
     liquid: "#e8af38", // Warm golden rosemary & scalp treatment oil
     price: 21.99,
     compareAt: 28.0,
-    sizes: ["50 ml"],
+    sizes: ["1 Tool"],
     rating: 4.9,
     reviews: 1420,
     tagline: "Your oil ritual, beautifully simple.",
     description:
-      "Precision surgical-grade dispenser teeth distribute scalp oils and treatments directly to the roots without mess, waste, or greasy hands. 50ml graduated reservoir with comfort ergonomic grip, knurled rose-gold accents, and airtight silicone seal.",
+      "Crystal-clear ergonomic comb with extended wide-mouth reservoir and stainless steel rollerball teeth. Glides directly across roots to distribute oils and serums cleanly with zero mess, spills, or greasy fingers.",
     benefits: [
-      "Targeted root-level delivery",
-      "Zero oil on hands or hair lengths",
-      "9 soothing massage rollerball pins",
-      "Graduated 50ml reservoir with knurled grip",
+      "Extended wide-mouth top-fill reservoir",
+      "Surgical stainless steel rollerball teeth",
+      "Zero oil on hands, face, or hair lengths",
+      "Crystal-clear acrylic body with soothing massage pins",
     ],
     ingredients:
-      "BPA-free medical resin reservoir, surgical stainless steel rollerball dispensers, rose-gold electroplated alloy accent bands, airtight silicone seal.",
+      "High-clarity crystal-clear medical acrylic body, surgical stainless steel rollerball teeth, airtight leakproof seal.",
     howTo:
-      "Fill reservoir with your favorite hair oil or serum up to 50ml. Part dry or towel-damp hair and gently glide comb over scalp in slow passes. Rollerballs dispense oil evenly as they roll.",
-    images: [combImg, combStudioImg, heroImg],
+      "Fill the wide opening directly with your favorite hair oil or elixir. Glide gently across scalp sections — rollerballs dispense smoothly with light pressure.",
+    images: [combTransparentHero, combTransparentDetail, heroImg],
   },
   {
     id: "heatless-curler",
@@ -119,7 +119,7 @@ export const DEFAULT_PRODUCTS: Product[] = [
       "100% Grade 6A 22-Momme Mulberry Silk exterior, ultra-soft hypoallergenic memory microfoam core.",
     howTo:
       "Place the curler across the crown of slightly damp or dry hair. Wrap 1-2 inch sections around the rod moving away from your face. Secure ends with the silk scrunchies and sleep comfortably.",
-    images: [curlerImg, curlerStudioImg, curlsLifestyleImg],
+    images: [curlerSilkSet, curlerImg, curlsLifestyleImg],
   },
   {
     id: "coming-soon-1",
@@ -612,12 +612,13 @@ function ProductArt({ p, spin, className }: { p: Product; spin?: MotionValue<num
           <stop offset="85%" stopColor="#676e75" />
           <stop offset="100%" stopColor="#3d4349" />
         </radialGradient>
-        {/* Sculpted ivory handle gradient */}
+        {/* Crystal-clear acrylic handle gradient */}
         <linearGradient id={`${id}-handle`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#ebe4db" />
-          <stop offset="25%" stopColor="#ffffff" />
-          <stop offset="70%" stopColor="#f5efe6" />
-          <stop offset="100%" stopColor="#ded5c8" />
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.75" />
+          <stop offset="25%" stopColor="#eaf4fa" stopOpacity="0.45" />
+          <stop offset="65%" stopColor="#ffffff" stopOpacity="0.3" />
+          <stop offset="85%" stopColor="#d5e8f2" stopOpacity="0.55" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0.8" />
         </linearGradient>
         {/* Blush mulberry silk satin sheen gradient */}
         <linearGradient id={`${id}-silk`} x1="0" y1="0" x2="1" y2="0">
