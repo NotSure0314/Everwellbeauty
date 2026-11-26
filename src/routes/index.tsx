@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import hero from "@/assets/hero.jpg";
 import curls from "@/assets/curls-lifestyle.jpg";
@@ -60,10 +59,6 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { add, setOpen } = useCart();
-  const [compared, setCompared] = useState<string[]>([]);
-  const toggleCompare = (id: string) => (on: boolean) => {
-    setCompared((prev) => (on ? [...prev, id] : prev.filter((x) => x !== id)));
-  };
 
   return (
     <>
@@ -110,9 +105,6 @@ function Home() {
                 variants={combVariants}
                 stock="in-stock"
                 shipping="Free standard shipping · In stock"
-                comparable={true}
-                compared={compared.includes("comb")}
-                onComparedChange={toggleCompare("comb")}
                 onAddToCart={async () => {
                   add("rollerball-scalp-oil-comb", 1);
                   setOpen(true);
@@ -138,9 +130,6 @@ function Home() {
                 defaultSelection={{ Color: "Blush Silk" }}
                 stock="in-stock"
                 shipping="Free standard shipping · In stock"
-                comparable={true}
-                compared={compared.includes("curler")}
-                onComparedChange={toggleCompare("curler")}
                 onAddToCart={async () => {
                   add("silk-heatless-curler", 1);
                   setOpen(true);
