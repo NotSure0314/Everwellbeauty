@@ -98,6 +98,8 @@ export interface ProductCardProps extends Omit<React.ComponentProps<"div">, "tit
   onAddToCart?: (selection: Record<string, string>) => unknown | Promise<unknown>
   /** Controlled cart state. */
   cartState?: ProductCartState
+  /** Called when the user clicks the product image or title to inspect it. */
+  onSelect?: () => void
   /** Show the compare checkbox. On when `compared` or `onComparedChange` is set. */
   comparable?: boolean
   compared?: boolean
@@ -738,6 +740,7 @@ export function ProductCard({
   shipping,
   onAddToCart,
   cartState: cartProp,
+  onSelect,
   comparable,
   compared: comparedProp,
   defaultCompared = false,
@@ -887,7 +890,15 @@ export function ProductCard({
     )
   }
 
-  const titleNode = href ? (
+  const titleNode = onSelect ? (
+    <button
+      type="button"
+      onClick={onSelect}
+      className="chatcn-focus cursor-pointer rounded-(--chatcn-radius-xs) text-left hover:decoration-(color:--chatcn-border-strong) underline-offset-2 hover:underline"
+    >
+      {title}
+    </button>
+  ) : href ? (
     <a
       href={href}
       className="chatcn-focus rounded-(--chatcn-radius-xs) hover:decoration-(color:--chatcn-border-strong) underline-offset-2 hover:underline"
@@ -1059,7 +1070,18 @@ export function ProductCard({
       {...props}
     >
       <span className="relative block">
-        <ProductImage src={image} alt={imageAlt} className="aspect-[4/3] w-full" />
+        {onSelect ? (
+          <button
+            type="button"
+            onClick={onSelect}
+            aria-label={title ? `Inspect ${title}` : "Inspect product"}
+            className="chatcn-focus block w-full cursor-pointer text-left"
+          >
+            <ProductImage src={image} alt={imageAlt} className="aspect-[4/3] w-full" />
+          </button>
+        ) : (
+          <ProductImage src={image} alt={imageAlt} className="aspect-[4/3] w-full" />
+        )}
         {badge ? (
           <span className="bg-(color:--chatcn-card) text-(color:--chatcn-fg) text-[0.75rem]/[1rem] shadow-(--chatcn-shadow-xs) rounded-(--chatcn-radius-sm) absolute start-2 top-2 inline-flex h-6 items-center px-1.5 font-medium">
             {badge}

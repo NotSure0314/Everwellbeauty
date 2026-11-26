@@ -888,18 +888,36 @@ export function ProductShelf({
   );
 }
 
-function ProductPage({
+export type ProductPageVariantOption = {
+  value: string;
+  label: string;
+  swatch?: string;
+  available?: boolean;
+};
+
+export type ProductPageVariantGroup = {
+  name: string;
+  options: ProductPageVariantOption[];
+};
+
+export function ProductPage({
   p,
-  currency,
+  currency = "$",
   onClose,
   onAdd,
   bagRef,
+  variants,
+  selection,
+  onSelectionChange,
 }: {
   p: Product;
-  currency: string;
+  currency?: string;
   onClose: () => void;
   onAdd: (qty: number, size: string) => void;
-  bagRef: RefObject<HTMLButtonElement | null>;
+  bagRef?: RefObject<HTMLButtonElement | null>;
+  variants?: ProductPageVariantGroup[];
+  selection?: Record<string, string>;
+  onSelectionChange?: (selection: Record<string, string>) => void;
 }) {
   const reduce = useReducedMotion();
   const spin = useMotionValue(0);
@@ -937,7 +955,7 @@ function ProductPage({
   const add = () => {
     onAdd(qty, size);
     setAdded(true);
-    bagRef.current?.animate(
+    bagRef?.current?.animate(
       [{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }],
       { duration: 320, easing: "ease-out" }
     );
@@ -1210,6 +1228,87 @@ function ProductPage({
           )}
 
           <p className="mt-4 max-w-[54ch] text-[16px] leading-[1.5] tracking-[-0.01em] text-[#111111]/85">{p.description}</p>
+
+          {p.price > 0 && variants && variants.length > 0 && (
+            <div className="mt-7 flex flex-col gap-5">
+              {variants.map((group) => {
+                const options = group.options.filter((o) => o?.value);
+                const hasSwatches = options.some((o) => o.swatch);
+                const currentValue = selection?.[group.name];
+                const currentOption = options.find((o) => o.value === currentValue);
+                return (
+                  <fieldset key={group.name}>
+                    <legend className="mb-2.5 text-[15px] font-semibold tracking-[-0.01em]">
+                      {group.name}
+                      {currentOption ? (
+                        <span className="font-normal text-[#6f6a64]">: {currentOption.label}</span>
+                      ) : null}
+                    </legend>
+                    <div className="flex flex-wrap gap-2.5">
+                      {options.map((option) => {
+                        const on = option.value === currentValue;
+                        const unavailable = option.available === false;
+                        return hasSwatches ? (
+                          <label
+                            key={option.value}
+                            title={option.label}
+                            className={cn(
+                              "relative grid size-9 cursor-pointer place-items-center rounded-full border transition-all",
+                              on
+                                ? "border-[#111111] ring-2 ring-[#111111]/20"
+                                : "border-[#d9d4cd] hover:border-[#8f8982]",
+                              unavailable && "cursor-not-allowed opacity-40"
+                            )}
+                          >
+                            <input
+                              type="radio"
+                              name={`page-${p.id}-${group.name}`}
+                              value={option.value}
+                              checked={on}
+                              disabled={unavailable}
+                              onChange={() =>
+                                onSelectionChange?.({ ...(selection ?? {}), [group.name]: option.value })
+                              }
+                              className="sr-only"
+                            />
+                            <span
+                              aria-hidden="true"
+                              className="size-6 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]"
+                              style={{ background: option.swatch }}
+                            />
+                          </label>
+                        ) : (
+                          <label
+                            key={option.value}
+                            className={cn(
+                              "flex cursor-pointer items-center justify-center rounded-xl border bg-white px-4 py-2.5 text-[14px] font-medium transition-[border-color,box-shadow] duration-150 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#111111]",
+                              on
+                                ? "border-[#111111] shadow-[0_0_0_1px_#111111]"
+                                : "border-[#d9d4cd] hover:border-[#8f8982]",
+                              unavailable && "cursor-not-allowed opacity-40 line-through"
+                            )}
+                          >
+                            <input
+                              type="radio"
+                              name={`page-${p.id}-${group.name}`}
+                              value={option.value}
+                              checked={on}
+                              disabled={unavailable}
+                              onChange={() =>
+                                onSelectionChange?.({ ...(selection ?? {}), [group.name]: option.value })
+                              }
+                              className="sr-only"
+                            />
+                            <span>{option.label}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+                );
+              })}
+            </div>
+          )}
 
           {p.price > 0 && p.sizes.length > 1 && (
             <fieldset className="mt-7">

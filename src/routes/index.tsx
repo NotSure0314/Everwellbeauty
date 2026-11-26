@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { AnimatePresence } from "framer-motion";
 import hero from "@/assets/hero.jpg";
 import curls from "@/assets/curls-lifestyle.jpg";
 import combMain from "@/assets/comb-main.jpg";
@@ -9,6 +11,7 @@ import { Newsletter, Reveal, TrustBar } from "@/components/site";
 import StickerSwapHeadline, { type StickerWord } from "@/components/ui/sticker-swap-headline";
 import { words as demoWords } from "@/components/ui/hero-words";
 import { ProductCard, type ProductVariantGroup } from "@/components/ui/product-card";
+import { DEFAULT_PRODUCTS, ProductPage } from "@/components/ui/skincare-product-shelf";
 import { MarqueeTestimonials } from "@/components/ui/marquee-card";
 import { Star } from "lucide-react";
 
@@ -59,6 +62,13 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { add, setOpen } = useCart();
+  const [activeProductId, setActiveProductId] = useState<"scalp-oil-comb" | "heatless-curler" | null>(null);
+  const [combSelection, setCombSelection] = useState<Record<string, string>>({ Model: "Crystal Clear" });
+  const [curlerSelection, setCurlerSelection] = useState<Record<string, string>>({ Color: "Blush Silk" });
+
+  const activeProduct = activeProductId
+    ? DEFAULT_PRODUCTS.find((p) => p.id === activeProductId) ?? null
+    : null;
 
   return (
     <>
@@ -93,7 +103,6 @@ function Home() {
               <ProductCard
                 title="Rollerball Scalp Oil Applicator Comb"
                 merchant="Everwell Rituals"
-                href="/products/rollerball-scalp-oil-comb"
                 image={combMain}
                 imageAlt="Crystal-clear rollerball scalp oil applicator comb"
                 badge="Bestseller"
@@ -103,8 +112,11 @@ function Home() {
                 rating={4.9}
                 reviewCount={1420}
                 variants={combVariants}
+                selection={combSelection}
+                onSelectionChange={setCombSelection}
                 stock="in-stock"
                 shipping="Free standard shipping · In stock"
+                onSelect={() => setActiveProductId("scalp-oil-comb")}
                 onAddToCart={async () => {
                   add("rollerball-scalp-oil-comb", 1);
                   setOpen(true);
@@ -117,7 +129,6 @@ function Home() {
               <ProductCard
                 title="Wire-Free Side-Sleeper Heatless Curler Set"
                 merchant="Everwell Rituals"
-                href="/products/silk-heatless-curler"
                 image={curlerMain}
                 imageAlt="Blush mulberry silk wire-free heatless curler set"
                 badge="Customer Favorite"
@@ -127,9 +138,11 @@ function Home() {
                 rating={4.9}
                 reviewCount={2180}
                 variants={curlerVariants}
-                defaultSelection={{ Color: "Blush Silk" }}
+                selection={curlerSelection}
+                onSelectionChange={setCurlerSelection}
                 stock="in-stock"
                 shipping="Free standard shipping · In stock"
+                onSelect={() => setActiveProductId("heatless-curler")}
                 onAddToCart={async () => {
                   add("silk-heatless-curler", 1);
                   setOpen(true);
@@ -184,6 +197,30 @@ function Home() {
       </section>
 
       <Newsletter />
+
+      <AnimatePresence>
+        {activeProduct && (
+          <ProductPage
+            key={activeProduct.id}
+            p={activeProduct}
+            currency="$"
+            variants={activeProduct.id === "heatless-curler" ? curlerVariants : combVariants}
+            selection={activeProduct.id === "heatless-curler" ? curlerSelection : combSelection}
+            onSelectionChange={
+              activeProduct.id === "heatless-curler" ? setCurlerSelection : setCombSelection
+            }
+            onClose={() => setActiveProductId(null)}
+            onAdd={(qty) => {
+              const slug =
+                activeProduct.id === "heatless-curler"
+                  ? "silk-heatless-curler"
+                  : "rollerball-scalp-oil-comb";
+              add(slug, qty);
+              setOpen(true);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }
